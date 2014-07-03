@@ -44,28 +44,20 @@
 <div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacy</span>
     <span class="o">&gt;&gt;&gt;</span> <span class="n">string</span> <span class="o">=</span> <span class="s">"Features are calculated easily! And much more speedily…"</span>
     <span class="o">&gt;&gt;&gt;</span> <span class="n">word_ids</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">ids_from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-</pre></div>
-
-<p>You won't need to unhash like this often</p>
-
-<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">unhash</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">lex_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])))</span>
-    <span class="s">"easily"</span>
-</pre></div>
-
-<p>Common string-based features are pre-computed for you:</p>
-
-<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># Common string-based features are pre-computed for you:</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
     <span class="bp">True</span>
-</pre></div>
-
-<p>But <em>DON'T</em> do this --- it'll be <em>almost always</em> correct, the WORST kind of incorrect:</p>
-
-<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c"># NO, WRONG WAY, GO BACK</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># If you do need the string:</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">unhash</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">lex_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])))</span>
+    <span class="s">"easily"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># But *DON'T* do this --- it's *almost always* correct</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># ...Which is the worst kind of incorrect.</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c"># NO, WRONG WAY, GO BACK</span>
     <span class="p">(</span><span class="n">Answer</span> <span class="n">too</span> <span class="n">full</span> <span class="n">of</span> <span class="n">deceit</span> <span class="ow">and</span> <span class="n">treachery</span> <span class="n">to</span> <span class="n">display</span><span class="p">)</span>
 </pre></div>
 
 <h2>
-<a name="why-is-this-good" class="anchor" href="#why-is-this-good"><span class="octicon octicon-link"></span></a>Why is this good?</h2>
+<a name="why-is-it-good" class="anchor" href="#why-is-it-good"><span class="octicon octicon-link"></span></a>Why is it good?</h2>
 
 <p>Instead of strings, you get a pointer to a set of all sorts of lexical type information. These are computed once per word in the vocabulary, so we can do sophisticated string normalization, or supply properties pre-computed from from large samples:</p>
 
