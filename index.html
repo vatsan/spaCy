@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>spaCy by honnibal</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>spaCy</h1>
+          <h2>Lightning fast, full-cream NL tokenization for Python/Cython. Tokens are pointers to rich Lexeme structs.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/honnibal/spaCy/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/honnibal/spaCy/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/honnibal/spaCy" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h2>
+<a name="if-youre-tokenizing-english-like-its-a-programming-language-youre-doing-it-all-wrong" class="anchor" href="#if-youre-tokenizing-english-like-its-a-programming-language-youre-doing-it-all-wrong"><span class="octicon octicon-link"></span></a>If you're tokenizing English like it's a programming language, you're doing it all wrong</h2>
+
+<p>I've been doing NLP research for almost ten years now, and I've hated every tokenizer I've ever used. Now that I've quit academia to work on my own projects and do some consulting, my need for a better solution has become more urgent. So, here's spaCy: a whitespace-based tokenizer, implemented in Cython. The idea in a nutshell:</p>
+
+<p>We look-up whitespace-delimited chunks of text in a global vocabulary, and receive back a pointer to a linked-list node. We traverse the linked list to add all the tokens from the chunk, and return a vector of ints. To a Python client, the ints will be token IDs, but to our Cython internals, they're really points.</p>
+
+<p>Like this:</p>
+
+<pre><code>cpdef tokenize(unicode string):
+    start = -1
+    collect = False
+    vector[size_t] tokens = vector[size_t]()
+    for i in range(len(string)):
+        if is_whitespace(string[i]):
+            if start != -1:
+                token = lookup(substr(string, start, i)))
+                while token is not NULL:
+                    tokens.push_back(token)
+                    token = token.tail
+                start = -1
+        elif start == -1:
+            start = i
+    return tokens
+</code></pre>
+
+<p>To see what's so good here, realize that almost all tokens already have a Lexeme object ready in the vocabulary --- only a small fraction of tokens represent new words. And if the word's in our vocabulary, all we're doing is hashing a substring, returning a pointer, and maybe traversing a linked list.</p>
+
+<p>This approach is both much more efficient, and much more powerful. We can easily write tokenization rules to deal with all sorts of tricky cases, and we can tell every token all sorts of information about its lexical type, with almost no increase in memory usage.</p>
+
+<p>Let's look at some token properties we might want to ask about when writing feature functions.</p>
+
+<p>For POS tagging, we often really care about capitalisation:</p>
+
+<pre><code>&gt;&gt;&gt; from nltk.tokenize import word_tokenize
+&gt;&gt;&gt; string = "Words are split on spaces, punctuation's split too."
+&gt;&gt;&gt; word_tokenize(string)
+['Words', 'are', 'split', 'on', 'spaces', ',', 'punctuation', "'s", 'split', 'too', '.']
+&gt;&gt;&gt; [word[0].isupper() for word in string]
+[True, False…]
+</code></pre>
+
+<p>We don't have the string anymore, but this property is type-constant --- so we can just store it. To the client, the API is only slightly different:</p>
+
+<pre><code>&gt;&gt;&gt; from spacy import tokenize, is_upper
+&gt;&gt;&gt; string = "Words are split on spaces, punctuation's split too."
+&gt;&gt;&gt; token_ids = tokenize(string)
+&gt;&gt;&gt; [is_upper(t) for t in token_ids]
+[True, False…]
+</code></pre>
+
+<p>But internally, we are more efficient:</p>
+
+<pre><code>cdef bint is_upper(size_t token_addr):
+    return (&lt;Lexeme*&gt;token_addr).is_upper
+</code></pre>
+
+<p>Our approach is more powerful because we can cache the results of any function of a lexical type. The costs of the computation will be amortized over all of the individual occurrences of the word, so it's basically free.</p>
+
+<p>For instance, the is_upper feature is trying to figure out whether the word is a named entity. So maybe what we want to do is load a frequencies file, pre-build from a huge sample, that asks how often "words" is spelled as "Words", how often it's spelled as "WORDS", and how often it's spelled as "words".</p>
+
+<p>We then give the client a function oft_upper:</p>
+
+<pre><code>&gt;&gt;&gt; from spacy import tokenize, oft_upper
+&gt;&gt;&gt; string = "Words are split on spaces, punctuation's split too."
+&gt;&gt;&gt; token_ids = tokenize(string)
+&gt;&gt;&gt; [oft_title(t) for t in token_ids]
+[False, False…]
+</code></pre>
+
+<p>Which we might implement as:</p>
+
+<pre><code>cdef bint oft_titlte(size_t token_addr):
+    return (&lt;Lexeme*&gt;token_addr).upper_pc &gt;= 0.95
+</code></pre>
+
+<p>i.e., across a large sample of text, is the lower-cased version of that word spelled title-cased at least 95% of the time? Here's my current Lexeme struct:</p>
+
+<pre><code>cdef struct Lexeme:
+    uint64_t orig # Hash of the original string
+    uint64_t lex # Hash of the word, with extra stuff split off
+    uint64_t normed # Want to stem words, map dates to DATE, etc? Store the hash of that.
+    uint64_t cluster # Brown clusters are a useful distributional representation
+    Py_UNICODE first # First character of the token is often useful
+    uint64_t suffix # Last 3 characters of the token is often useful
+    bint oft_upper # Is the word often seen in all caps?
+    bint oft_title # Is the word often seen title-cased?
+    bint is_stop # Is the word in our stoplist?
+    bint can_noun # Do we ever see this word as a noun?
+    bint can_verb # ..A verb?
+    bint can_adj # ..An adjective?
+    bint can_adv # ..An adverb?
+</code></pre>
+
+<p>Once we do the work of consuming the lexical resource and adding it to our Lexeme representation, it'll be available for all of our applications from then on, at no extra client cost.
+Because we only hold one Lexeme object per lexical <em>type</em>, not lexical token, we can make our Lexeme representation as rich as we want. Why not store the frequency of the word, estimated from a large sample of text? Whether the word can be noun? Its Brown cluster? Loading in this type-based knowledge is easy, and even web-scale text-processing tasks won't need a vocabulary of more than a few million lexical types, so we can fatten our lexical type objects freely.</p>
+
+<p>The project, spaCy, is here on github. The rant, which you're reading, is below :).</p>
+
+<p>Your average tokenizer works like this:</p>
+
+<pre><code>&gt;&gt;&gt; from nltk.tokenize import word_tokenize
+&gt;&gt;&gt; string = "words are split on spaces, punctuation's split too."
+&gt;&gt;&gt; word_tokenize(string)
+['words', 'are', 'split', 'on', 'spaces', ',', 'punctuation', "'s", 'split', 'too', '.']
+</code></pre>
+
+<p>We consume a string, and return a list of strings, one per token. This seems fine, but it actually really sucks, for almost any non-trivial application:</p>
+
+<ol>
+<li>Aligning the tokens back to string indices is difficult/impossible. Want to display text with mark-up? Have fun.</li>
+<li>The regex rules are hard to get right, and generally illegible. </li>
+<li>Naive implementations are terribly inefficient. </li>
+<li>For machine learning, we don't want strings anyway --- we want to compute with int vectors.</li>
+</ol><p>My solution is to tightly couple the tokenizer to a global vocabulary store. The tokenizer returns a vector of pointers/references to lexical types. In any normal sample of natural language, we'll have far fewer types than tokens. So, tokens are just references to types.</p>
+
+<p>Of these problems, only the first has really received much attention. The main proposal is to have the tokenizer return indexes into the string, which can then be used to fetch slices. I suppose that's okay if you didn't really plan to get anything much done, but for the rest of us it's hopelessly impractical.</p>
+
+<p>My solution is to maintain a global vocabulary, and use it to map the string into a vector of integers. At first this seems inconvenient:</p>
+
+<pre><code>&gt;&gt;&gt; from spacy.vocab import id_from_string, string_from_id
+&gt;&gt;&gt; word_id = id_from_string("words")
+88969807009L
+&gt;&gt;&gt; string_from_id(word_id)
+"words"
+</code></pre>
+
+<p>So far, this seems inconvenient. But now we're only ever computing on each lexical <em>type</em> once, instead of performing a bunch of work on every <em>token</em>. This means we can add all sorts of goodies to our Lexeme struct, which our word_id is secretly a pointer to: </p>
+
+<p>We don't have to worry about keeping these structs thin, because we only ever pass around const pointers to them --- the vocabulary maintains the sole reference to each lexeme. So even in truly enormous text processing tasks, we're not going to need more than a few hundred thousand Lexeme instances, so the vocabulary is unlikely to be our memory bottleneck.</p>
+
+<p>The centralized vocabulary is also our secret weapon in writing a sane, lightning fast tokenizer. Here's the magic:</p>
+
+<pre><code>cdef struct Lexeme:
+    …
+    cdef Lexeme* tail
+</code></pre>
+
+<p>The client need never know, but the Lexeme is actually a linked list. This means we can split the string <em>exclusively</em> on whitespace:</p>
+
+<pre><code>cpdef tokenize(unicode string):
+    start = -1
+    collect = False
+    tokens = vector[size_t]()
+    ws_positions = vector[size_t]()
+    ws_chars = vector[Py_UNICODE]()
+    for i in range(len(string)):
+        if is_whitespace(string[i]):
+            if start != -1:
+                token = lookup(substr(string, start, i)))
+                while token is not NULL:
+                    tokens.push_back(token)
+                    token = token.tail
+                start = -1
+            ws_positions.push_back(i)
+            ws_chars.push_back(&lt;Py_UNICODE&gt;string[i])
+        elif start == -1:
+            start = i
+    return tokens
+</code></pre>
+
+<p>The idea here is that even when we stick on punctuation etc, we'll still see the same strings again and again, due to Zipf's law. So we cache the computation of "I'm" into "I", "'m" etc, by adding "I'm" to our vocabulary, and ensuring that we extend the token vector with tokens that have useful properties. Crucially, we want to get sensible results out of this:</p>
+
+<pre><code>&gt;&gt;&gt; token_ids = tokenize("I'm a tricky string, aren't I?")
+&gt;&gt;&gt; [lex_of(t) for t in token_ids]       
+["I", "'m", "a", "tricky", "string", ",", "are" "n't", "I", "?"]
+</code></pre>
+
+<p>The tokenization is also fully reversible. All we have to do is store the inverse mapping, from token IDs to strings, use the whitespace characters and positions we stored when we tokenized, and count how many tokens to skip when we hit a token with a non-NULL tail. It's a bit fiddly, but it's a library function --- it never needs to be reimplemented.</p>
+
+<p>Unless we hit a word we've never seen before, "lookup" is just a hash table look up. And because the function that <em>does</em> hit new words is called so seldom, we're free to make it quite complicated, and deal with all sorts of tricky phenomena if we want. </p>
+        </section>
+
+        <footer>
+          spaCy is maintained by <a href="https://github.com/honnibal">honnibal</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
