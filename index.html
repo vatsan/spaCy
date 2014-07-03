@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="spaCy : Lightning fast, full-cream NL tokenization for Python/Cython. Tokens are pointers to rich Lexeme structs." />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>spaCy</title>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>spaCy by honnibal</title>
   </head>
 
   <body>
+    <div id="container">
+      <div class="inner">
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/honnibal/spaCy">View on GitHub</a>
-
-          <h1 id="project_title">spaCy</h1>
-          <h2 id="project_tagline">Lightning fast, full-cream NL tokenization for Python/Cython. Tokens are pointers to rich Lexeme structs.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/honnibal/spaCy/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/honnibal/spaCy/tarball/master">Download this project as a tar.gz file</a>
-            </section>
+        <header>
+          <h1>spaCy</h1>
+          <h2>Lightning fast, full-cream NL tokenization for Python/Cython. Tokens are pointers to rich Lexeme structs.</h2>
         </header>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h2>
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/honnibal/spaCy/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/honnibal/spaCy/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/honnibal/spaCy" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h2>
 <a name="why-did-you-write-this" class="anchor" href="#why-did-you-write-this"><span class="octicon octicon-link"></span></a>Why did you write this?</h2>
 
 <p>I've been doing NLP research for about ten years now, and I've hated every tokenizer I've ever used. They're inefficient, brittle, and inexpressive. spaCy takes a very different approach.</p>
@@ -41,37 +41,46 @@
 
 <p>Given a string of text, get a list of token IDs, and use them to access a variety of properties. You'll almost never need to do additional string processing:</p>
 
-<pre><code>&gt;&gt;&gt; import spacy
-&gt;&gt;&gt; string = "Features are calculated easily! And much more speedily…"
-&gt;&gt;&gt; word_ids = spacy.ids_from_string(string)
-&gt;&gt;&gt; # You won't need to unhash like this often
-&gt;&gt;&gt; print(spacy.unhash(spacy.lex_of(word_ids[3])))
-"easily"
-&gt;&gt;&gt; # Instead, do this (check suffix match of easily/speedily)
-&gt;&gt;&gt; spacy.last3_of(word_ids[3]) == spacy.last3_of(word_ids[8])
-True
-&gt;&gt;&gt; But _DON'T_ do this --- the raw ID ints have only internal significance
-&gt;&gt;&gt; word_ids[0] == word_ids[1] # NO, WRONG WAY, GO BACK
-(This answer may be full of lies! It'll do what you want about 95% of the time --- much worse than 0%)
-</code></pre>
+<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacy</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">string</span> <span class="o">=</span> <span class="s">"Features are calculated easily! And much more speedily…"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">word_ids</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">ids_from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+
+<p>You won't need to unhash like this often</p>
+
+<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">unhash</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">lex_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])))</span>
+    <span class="s">"easily"</span>
+</pre></div>
+
+<p>Common string-based features are pre-computed for you:</p>
+
+<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+    <span class="bp">True</span>
+</pre></div>
+
+<p>But <em>DON'T</em> do this --- it'll be <em>almost always</em> correct, the WORST kind of incorrect:</p>
+
+<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c"># NO, WRONG WAY, GO BACK</span>
+    <span class="p">(</span><span class="n">Answer</span> <span class="n">too</span> <span class="n">full</span> <span class="n">of</span> <span class="n">deceit</span> <span class="ow">and</span> <span class="n">treachery</span> <span class="n">to</span> <span class="n">display</span><span class="p">)</span>
+</pre></div>
 
 <h2>
-<a name="why-is-it-good" class="anchor" href="#why-is-it-good"><span class="octicon octicon-link"></span></a>Why is it good?</h2>
+<a name="why-is-this-good" class="anchor" href="#why-is-this-good"><span class="octicon octicon-link"></span></a>Why is this good?</h2>
 
 <p>Instead of strings, you get a pointer to a set of all sorts of lexical type information. These are computed once per word in the vocabulary, so we can do sophisticated string normalization, or supply properties pre-computed from from large samples:</p>
 
-<pre><code>&gt;&gt;&gt; import spacy
-&gt;&gt;&gt; from spacy.lex import prob_of, cluster, normed, best_lemma, is_oft_title, is_oft_upper
-&gt;&gt;&gt; Apples, grappled, oranges = space.ids_from_string("Apples grappled oranges
-&gt;&gt;&gt; # Load your own unigram probabilities, or use my Knesser-Ney smoothed estimates from Wikipedia.
-&gt;&gt;&gt; spacy.prob_of(Apples)
--30.6548
-&gt;&gt;&gt; # We store a bit-field of possible tags. Again, load your own data, or use good defaults.
-&gt;&gt;&gt; can_noun(Apples), can_verb(Apples), can_verb(grappled)
-True False True
-&gt;&gt;&gt; # Integer of Brown cluster bit-string. Similar words receive better-than-chance similar values.
-&gt;&gt;&gt; (cluster_of(Apples) - cluster_of(grappled)) &gt; cluster_of(oranges) - cluster_of(grappled)
-</code></pre>
+<div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacy</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacy.lex</span> <span class="kn">import</span> <span class="n">prob_of</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">normed</span><span class="p">,</span> <span class="n">best_lemma</span><span class="p">,</span> <span class="n">is_oft_title</span><span class="p">,</span> <span class="n">is_oft_upper</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">Apples</span><span class="p">,</span> <span class="n">grappled</span><span class="p">,</span> <span class="n">oranges</span> <span class="o">=</span> <span class="n">space</span><span class="o">.</span><span class="n">ids_from_string</span><span class="p">(</span><span class="s">"Apples grappled oranges</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># Load your own unigram probabilities, or use my Knesser-Ney smoothed estimates from Wikipedia.</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">spacy</span><span class="o">.</span><span class="n">prob_of</span><span class="p">(</span><span class="n">Apples</span><span class="p">)</span>
+    <span class="o">-</span><span class="mf">30.6548</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># We store a bit-field of possible tags. Again, load your own data, or use good defaults.</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">can_noun</span><span class="p">(</span><span class="n">Apples</span><span class="p">),</span> <span class="n">can_verb</span><span class="p">(</span><span class="n">Apples</span><span class="p">),</span> <span class="n">can_verb</span><span class="p">(</span><span class="n">grappled</span><span class="p">)</span>
+    <span class="bp">True</span> <span class="bp">False</span> <span class="bp">True</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># Integer of Brown cluster bit-string. Similar words receive better-than-chance similar values.</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">cluster_of</span><span class="p">(</span><span class="n">Apples</span><span class="p">)</span> <span class="o">-</span> <span class="n">cluster_of</span><span class="p">(</span><span class="n">grappled</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">cluster_of</span><span class="p">(</span><span class="n">oranges</span><span class="p">)</span> <span class="o">-</span> <span class="n">cluster_of</span><span class="p">(</span><span class="n">grappled</span><span class="p">)</span>
+</pre></div>
 
 <p>spaCy returns you pointers to these rich lexical types over N times faster than a normal tokenizer can give you a list of strings:</p>
 
@@ -87,40 +96,37 @@ True False True
 <li>Cython, a language that lets us write code that seamlessly mixes low-level pointer semantics, and high level Python constructs. </li>
 </ol><p>What we do is iterate through the characters in the text, and look up white-space delimited chunks in a global hash table. The table returns pointers to nodes in a linked-list, which we traverse to extend our vector of tokens. Like this:</p>
 
-<pre><code>cpdef tokenize(unicode string):
-    start = -1
-    collect = False
-    vector[size_t] tokens = vector[size_t]()
-    for i in range(len(string)):
-        if is_whitespace(string[i]):
-            if start != -1:
-                token = lookup(substr(string, start, i)))
-                while token is not NULL:
-                    tokens.push_back(token)
-                    token = token.tail
-                start = -1
-        elif start == -1:
-            start = i
-    return tokens
-</code></pre>
+<div class="highlight highlight-cython"><pre>    <span class="k">cpdef</span> <span class="nf">tokenize</span><span class="p">(</span><span class="nb">unicode</span> <span class="n">string</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1</span>
+        <span class="n">collect</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">vector</span><span class="p">[</span><span class="n">size_t</span><span class="p">]</span> <span class="n">tokens</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">size_t</span><span class="p">]()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">is_whitespace</span><span class="p">(</span><span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">start</span> <span class="o">!=</span> <span class="o">-</span><span class="mf">1</span><span class="p">:</span>
+                    <span class="n">token</span> <span class="o">=</span> <span class="n">lookup</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">i</span><span class="p">)))</span>
+                    <span class="k">while</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">NULL</span><span class="p">:</span>
+                        <span class="n">tokens</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+                        <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">tail</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1</span>
+            <span class="k">elif</span> <span class="n">start</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1</span><span class="p">:</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="n">tokens</span>
+</pre></div>
 
 <p>Because of Zipf's law, almost every call to lookup is served by the hash-table. It's only when we see a previously unseen chunk that we must look within the string and create new Lexeme structs. By avoiding calls to that process, we're free to do more sophisticated processing, and use a simpler, more maintainable and reliable implementation than we would otherwise.</p>
 
 <p>A chunk is any sequence of non-whitespace characters, e.g. "(Hello!)" is a single chunk. When we encounter a previously-unseen chunk, we create a Lexeme for the first substring, "(", which knows its verbatim string ("(Hello!)". We then lookup the other substrings,  "Hello!)", "!)", and ")", creating new Lexeme structs when we encounter one we haven't seen.</p>
 
 <p>By maintaining a global vocabulary, each token is represented by a 64-bit integer, which we can easily use in numpy arrays, vectors, etc. But those 64-bit integers instantly decode to a rich representation, giving us everything we need to calculate features. And remember: our vocabulary of seen chunks is exponentially smaller than the number of tokens we have processed.</p>
-      </section>
+        </section>
+
+        <footer>
+          spaCy is maintained by <a href="https://github.com/honnibal">honnibal</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">spaCy maintained by <a href="https://github.com/honnibal">honnibal</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
   </body>
 </html>
