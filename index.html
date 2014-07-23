@@ -53,7 +53,7 @@
 <h2>
 <a name="why-is-it-good" class="anchor" href="#why-is-it-good"><span class="octicon octicon-link"></span></a>Why is it good?</h2>
 
-<p>Instead of strings, you get a pointer to a struct housing all sorts of pre-computed lexical-type information. Because our lexical tokens are pointers, we can give you all sorts of goodies. We only need one Lexeme instance per word in the vocabulary, so we can do sophisticated string normalization, or supply properties pre-computed from from large samples:</p>
+<p>Instead of strings, you get a pointer to a struct housing all sorts of pre-computed lexical-type information. Because our lexical tokens are pointers, we can give you all sorts of goodies:</p>
 
 <div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacy</span>
     <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">en</span>
@@ -69,11 +69,11 @@
     <span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">cluster_of</span><span class="p">(</span><span class="n">Apples</span><span class="p">)</span> <span class="o">-</span> <span class="n">cluster_of</span><span class="p">(</span><span class="n">grappled</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">cluster_of</span><span class="p">(</span><span class="n">oranges</span><span class="p">)</span> <span class="o">-</span> <span class="n">cluster_of</span><span class="p">(</span><span class="n">grappled</span><span class="p">)</span>
 </pre></div>
 
-<p>spaCy is 100% reversible/non-destructive: you can always recover indices into the original string, which is always difficult and sometimes impossible with standard tokenizers. Want to display text with inline mark-up? We have you covered. Other tokenizers? Not so much.</p>
-
 <p>And spaCy returns you pointers to these rich lexical types over N times faster than a normal tokenizer can give you a list of strings:</p>
 
 <p>(benchmarks)</p>
+
+<p>spaCy is also 100% reversible/non-destructive: you can always recover indices into the original string, which is always difficult and sometimes impossible with standard tokenizers. Want to display text with inline mark-up? We have you covered. Other tokenizers? Not so much.</p>
 
 <h2>
 <a name="what-is-this-sorcery-or-how-does-it-work" class="anchor" href="#what-is-this-sorcery-or-how-does-it-work"><span class="octicon octicon-link"></span></a>What is this sorcery? (Or, how does it work)</h2>
