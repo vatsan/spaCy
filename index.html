@@ -42,18 +42,12 @@
 <p>Given a string of text, get a list of token IDs, and use them to access a variety of properties. You'll almost never need to do additional string processing:</p>
 
 <div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacy</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="n">string</span> <span class="o">=</span> <span class="s">"Features are calculated easily! And much more speedily…"</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="n">word_ids</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">ids_from_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="c"># Common string-based features are pre-computed for you:</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">==</span> <span class="n">spacy</span><span class="o">.</span><span class="n">last3_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
-    <span class="bp">True</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="c"># If you do need the string:</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">unhash</span><span class="p">(</span><span class="n">spacy</span><span class="o">.</span><span class="n">lex_of</span><span class="p">(</span><span class="n">word_ids</span><span class="p">[</span><span class="mi">3</span><span class="p">])))</span>
-    <span class="s">"easily"</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="c"># But *DON'T* do this --- it's *almost always* correct</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="c"># ...Which is the worst kind of incorrect.</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c"># NO, WRONG WAY, GO BACK</span>
-    <span class="p">(</span><span class="n">Answer</span> <span class="n">too</span> <span class="n">full</span> <span class="n">of</span> <span class="n">deceit</span> <span class="ow">and</span> <span class="n">treachery</span> <span class="n">to</span> <span class="n">display</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">en</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">string</span> <span class="o">=</span> <span class="s">u"Features are calculated easily! And much more speedily…"</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">tokens</span> <span class="o">=</span> <span class="n">en</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">tokens</span>
+    <span class="o">&lt;</span><span class="n">spacy</span><span class="o">.</span><span class="n">tokens</span><span class="o">.</span><span class="n">Tokens</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x1041e6960</span><span class="o">&gt;</span>
+
 </pre></div>
 
 <h2>
@@ -62,9 +56,10 @@
 <p>Instead of strings, you get a pointer to a struct housing all sorts of pre-computed lexical-type information. Because our lexical tokens are pointers, we can give you all sorts of goodies. We only need one Lexeme instance per word in the vocabulary, so we can do sophisticated string normalization, or supply properties pre-computed from from large samples:</p>
 
 <div class="highlight highlight-python"><pre>    <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">spacy</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacy.lex</span> <span class="kn">import</span> <span class="n">prob_of</span><span class="p">,</span> <span class="n">cluster_of</span><span class="p">,</span> <span class="n">can_noun</span><span class="p">,</span> <span class="n">can_verb</span> <span class="c"># ...More</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="n">Apples</span><span class="p">,</span> <span class="n">grappled</span><span class="p">,</span> <span class="n">oranges</span> <span class="o">=</span> <span class="n">space</span><span class="o">.</span><span class="n">ids_from_string</span><span class="p">(</span><span class="s">"Apples grappled oranges</span>
-    <span class="o">&gt;&gt;&gt;</span> <span class="c"># Load your own unigram probabilities, or use my Knesser-Ney smoothed estimates from Wikipedia.</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">en</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">spacy.lexeme</span> <span class="kn">import</span> <span class="n">prob_of</span><span class="p">,</span> <span class="n">cluster_of</span><span class="p">,</span> <span class="n">can_noun</span><span class="p">,</span> <span class="n">can_verb</span> <span class="c"># ...More</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="n">Apples</span><span class="p">,</span> <span class="n">grappled</span><span class="p">,</span> <span class="n">oranges</span> <span class="o">=</span> <span class="n">en</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s">u"Apples grappled oranges"</span><span class="p">)</span>
+    <span class="o">&gt;&gt;&gt;</span> <span class="c"># Load your own unigram probabilities, or use my Good-Turing smoothed estimates from Wikipedia.</span>
     <span class="o">&gt;&gt;&gt;</span> <span class="n">spacy</span><span class="o">.</span><span class="n">prob_of</span><span class="p">(</span><span class="n">Apples</span><span class="p">)</span>
     <span class="o">-</span><span class="mf">30.6548</span>
     <span class="o">&gt;&gt;&gt;</span> <span class="c"># We store a bit-field of possible tags. Again, load your own data, or use good defaults.</span>
@@ -87,24 +82,51 @@
 
 <ol>
 <li>Zipf's law. The frequency distribution of word types is heavily skewed. The number of word tokens in a sample of text grows exponentially faster than the number of types. i.e., vocabularies are much smaller than texts.</li>
-<li>Cython, a language that lets us write code that seamlessly mixes low-level pointer semantics, and high level Python constructs. </li>
+<li>Cython. A language that lets us write code that seamlessly mixes low-level pointer semantics, and high level Python constructs. </li>
 </ol><p>What we do is iterate through the characters in the text, and look up white-space delimited chunks in a global hash table. The table returns pointers to nodes in a linked-list, which we traverse to extend our vector of tokens. Like this:</p>
 
-<div class="highlight highlight-cython"><pre>    <span class="k">cpdef</span> <span class="nf">tokenize</span><span class="p">(</span><span class="nb">unicode</span> <span class="n">string</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1</span>
-        <span class="n">collect</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="n">vector</span><span class="p">[</span><span class="n">size_t</span><span class="p">]</span> <span class="n">tokens</span> <span class="o">=</span> <span class="n">vector</span><span class="p">[</span><span class="n">size_t</span><span class="p">]()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">is_whitespace</span><span class="p">(</span><span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
-                <span class="k">if</span> <span class="n">start</span> <span class="o">!=</span> <span class="o">-</span><span class="mf">1</span><span class="p">:</span>
-                    <span class="n">token</span> <span class="o">=</span> <span class="n">lookup</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">i</span><span class="p">)))</span>
-                    <span class="k">while</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">NULL</span><span class="p">:</span>
-                        <span class="n">tokens</span><span class="o">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<div class="highlight highlight-cython"><pre>    <span class="k">cpdef</span> <span class="kt">Tokens</span> <span class="nf">tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">unicode</span> <span class="n">string</span><span class="p">):</span>
+        <span class="k">cdef</span> <span class="kt">size_t</span> <span class="nf">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">cdef</span> <span class="kt">Py_UNICODE</span>* <span class="nf">characters</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Py_UNICODE</span><span class="o">*&gt;</span><span class="n">string</span>
+
+        <span class="k">cdef</span> <span class="kt">size_t</span> <span class="nf">i</span>
+        <span class="k">cdef</span> <span class="kt">Py_UNICODE</span> <span class="nf">c</span>
+
+        <span class="k">cdef</span> <span class="kt">Tokens</span> <span class="nf">tokens</span> <span class="o">=</span> <span class="n">Tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">cdef</span> <span class="kt">Py_UNICODE</span>* <span class="nf">current</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Py_UNICODE</span><span class="o">*&gt;</span><span class="n">calloc</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">),</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">Py_UNICODE</span><span class="p">))</span>
+        <span class="k">cdef</span> <span class="kt">size_t</span> <span class="nf">word_len</span> <span class="o">=</span> <span class="mf">0</span>
+        <span class="k">cdef</span> <span class="kt">Lexeme</span>* <span class="nf">token</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">characters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="c"># Look for whitespace-delimited chunks, e.g.</span>
+            <span class="c"># Hi! world</span>
+            <span class="c"># is two chunks with three tokens.</span>
+            <span class="k">if</span> <span class="n">_is_whitespace</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">word_len</span> <span class="o">!=</span> <span class="mf">0</span><span class="p">:</span>
+                    <span class="c"># Lookup the chunk in a hash table. Even with punctuation</span>
+                    <span class="c"># and affixes, almost all chunks are previously seen.</span>
+                    <span class="n">token</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Lexeme</span><span class="o">*&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="o">-</span><span class="mf">1</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">word_len</span><span class="p">)</span>
+                    <span class="c"># Get back a pointer to a linked list node, which we traverse to</span>
+                    <span class="c"># get all the tokens from the chunk.</span>
+                    <span class="k">while</span> <span class="n">token</span> <span class="o">!=</span> <span class="bp">NULL</span><span class="p">:</span>
+                        <span class="c"># A Token is a pointer to a Lexeme struct.</span>
+                        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">&lt;</span><span class="n">Lexeme_addr</span><span class="o">&gt;</span><span class="n">token</span><span class="p">)</span>
                         <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">tail</span>
-                    <span class="n">start</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1</span>
-            <span class="k">elif</span> <span class="n">start</span> <span class="o">==</span> <span class="o">-</span><span class="mf">1</span><span class="p">:</span>
-                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span>
+                        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">word_len</span><span class="o">+</span><span class="mf">1</span><span class="p">):</span>
+                            <span class="n">current</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0</span>
+                    <span class="n">word_len</span> <span class="o">=</span> <span class="mf">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">word_len</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+                <span class="n">word_len</span> <span class="o">+=</span> <span class="mf">1</span>
+        <span class="c"># Do the last chunk.</span>
+        <span class="k">if</span> <span class="n">word_len</span> <span class="o">!=</span> <span class="mf">0</span><span class="p">:</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Lexeme</span><span class="o">*&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="o">-</span><span class="mf">1</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">word_len</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">token</span> <span class="o">!=</span> <span class="bp">NULL</span><span class="p">:</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">&lt;</span><span class="n">Lexeme_addr</span><span class="o">&gt;</span><span class="n">token</span><span class="p">)</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">tail</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tokens</span>
+
 </pre></div>
 
 <p>Because of Zipf's law, almost every call to lookup is served by the hash-table. It's only when we see a previously unseen chunk that we must look within the string and create new Lexeme structs. By avoiding calls to that process, we're free to do more sophisticated processing, and use a simpler, more maintainable and reliable implementation than we would otherwise.</p>
@@ -112,6 +134,8 @@
 <p>A chunk is any sequence of non-whitespace characters, e.g. "(Hello!)" is a single chunk. When we encounter a previously-unseen chunk, we create a Lexeme for the first substring, "(", which knows its verbatim string ("(Hello!)". We then lookup the other substrings,  "Hello!)", "!)", and ")", creating new Lexeme structs when we encounter one we haven't seen.</p>
 
 <p>By maintaining a global vocabulary, each token is represented by a 64-bit integer, which we can easily use in numpy arrays, vectors, etc. But those 64-bit integers instantly decode to a rich representation, giving us everything we need to calculate features. And remember: our vocabulary of seen chunks is exponentially smaller than the number of tokens we have processed.</p>
+
+<p>Despite the relatively friendly syntax, all of our operations are low-level. The call to _is_whitespace is implemented as a Cython conditional, which compiles into an inlined C++ case-switch statement. This case-switch statement is the only thing that's executed on every character. Once we see a whole chunk, we hash it (using MurmurHash), and look it up in a hash table (Google's dense_hash_map), which serves us a pointer. On the rare occasions that we encounter an unseen chunk, we can apply Python string-processing functions at our leisure.</p>
         </section>
 
         <footer>
