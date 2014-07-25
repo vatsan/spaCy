@@ -100,7 +100,10 @@
 </tbody>
 </table><p>(A quick experiment on 30m words, or about 100mb gzipped text, of the Gigaword corpus. I'll do something more formal with other string-based implementations soon. The tokenizer.sed script is much faster than NLTK, since it goes in a single pass, but still about 4x slower than spaCy.)</p>
 
-<p>spaCy is also 100% reversible/non-destructive: you can always recover indices into the original string, which is always difficult and sometimes impossible with standard tokenizers. Want to display text with inline mark-up? We have you covered. Other tokenizers? Not so much.</p>
+<h3>
+<a name="reversible" class="anchor" href="#reversible"><span class="octicon octicon-link"></span></a>Reversible</h3>
+
+<p>spaCy is 100% reversible/non-destructive: you can always recover indices into the original string, which is always difficult and sometimes impossible if the tokenizer returns a list of strings. Reversibility is necessary if you want to display text with inline mark-up, e.g. for grammar checking, entity linking, etc.</p>
 
 <h2>
 <a name="what-is-this-sorcery-or-how-does-it-work" class="anchor" href="#what-is-this-sorcery-or-how-does-it-work"><span class="octicon octicon-link"></span></a>What is this sorcery? (Or, how does it work)</h2>
