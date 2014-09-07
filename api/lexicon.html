@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>spacy.word.Lexeme &mdash; spaCy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="API" href="index.html"/>
+        <link rel="next" title="Module Reference" href="../modules/index.html"/>
+        <link rel="prev" title="spacy.ptb3.PTB3" href="tokenizers/ptb3.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../guide/overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide/overview.html#what-and-why">What and Why</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/overview.html#benchmark">Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/overview.html#pros-and-cons">Pros and Cons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide/install.html#pip-install-spacy">pip install spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/install.html#git-clone-http-github-com-honnibal-spacy-git">git clone http://github.com/honnibal/spaCy.git</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tokenizers/index.html">Tokenizers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">spacy.word.Lexeme</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/index.html">Module Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.lang">spacy.lang</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.word">spacy.word</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.orth">spacy.orth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.util">spacy.util</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API</a> &raquo;</li>
+      
+    <li>spacy.word.Lexeme</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="spacy-word-lexeme">
+<h1>spacy.word.Lexeme<a class="headerlink" href="#spacy-word-lexeme" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="spacy.word.Lexeme">
+<em class="property">class </em><tt class="descclassname">spacy.word.</tt><tt class="descname">Lexeme</tt><a class="headerlink" href="#spacy.word.Lexeme" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lexical type &#8212; a word, punctuation symbol, whitespace sequence, etc
+keyed by a case-sensitive unicode string. All tokens with the same string,
+e.g. all instances of &#8220;dog&#8221;, &#8221;,&#8221;, &#8220;NASA&#8221; etc should be mapped to the same
+Lexeme.</p>
+<p>You should avoid instantiating Lexemes directly, and instead use the
+<tt class="xref py py-meth docutils literal"><span class="pre">space.lang.Language.tokenize()</span></tt> and <a class="reference internal" href="../modules/index.html#spacy.lang.Language.lookup" title="spacy.lang.Language.lookup"><tt class="xref py py-meth docutils literal"><span class="pre">spacy.lang.Language.lookup()</span></tt></a>
+methods on the global object exposed by the language you&#8217;re working with,
+e.g. <tt class="xref py py-data docutils literal"><span class="pre">spacy.en.EN</span></tt>.</p>
+<dl class="attribute">
+<dt id="Lexeme.string">
+<tt class="descname">string</tt><a class="headerlink" href="#Lexeme.string" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>unicode</em></p>
+<p>The unicode string.</p>
+<p>Implemented as a property; relatively expensive.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.length">
+<tt class="descname">length</tt><a class="headerlink" href="#Lexeme.length" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>size_t</em></p>
+<p>The number of unicode code-points in the string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.prob">
+<tt class="descname">prob</tt><a class="headerlink" href="#Lexeme.prob" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>double</em></p>
+<p>An estimate of the word&#8217;s unigram log probability.</p>
+<p>Probabilities are calculated from a large text corpus, and smoothed using
+simple Good-Turing.  Estimates are read from data/en/probabilities, and
+can be replaced using spacy.en.load_probabilities.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.cluster">
+<tt class="descname">cluster</tt><a class="headerlink" href="#Lexeme.cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>size_t</em></p>
+<p>An integer representation of the word&#8217;s Brown cluster.</p>
+<p>A Brown cluster is an address into a binary tree, which gives some (noisy)
+information about the word&#8217;s distributional context.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">strings</span> <span class="o">=</span> <span class="p">(</span><span class="s">u&#39;pineapple&#39;</span><span class="p">,</span> <span class="s">u&#39;apple&#39;</span><span class="p">,</span> <span class="s">u&#39;dapple&#39;</span><span class="p">,</span> <span class="s">u&#39;scalable&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">[</span><span class="s">&quot;{0:b&quot;</span><span class="p">}</span> <span class="o">%</span> <span class="n">lookup</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">cluster</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strings</span><span class="p">]</span>
+<span class="go">[&quot;100111110110&quot;, &quot;100111100100&quot;, &quot;01010111011001&quot;, &quot;100111110110&quot;]</span>
+</pre></div>
+</div>
+<p>The clusterings are unideal, but often slightly useful.
+&#8220;pineapple&#8221; and &#8220;apple&#8221; share a long prefix, indicating a similar meaning,
+while &#8220;dapple&#8221; is totally different. On the other hand, &#8220;scalable&#8221; receives
+the same cluster ID as &#8220;pineapple&#8221;, which is not what we&#8217;d like.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.word.Lexeme.check_flag">
+<tt class="descname">check_flag</tt><big>(</big><em>self</em>, <em>size_t flag_id</em><big>)</big> &rarr; bool<a class="headerlink" href="#spacy.word.Lexeme.check_flag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lexemes may store language-specific boolean features in a bit-field,
+with values accessed by providing an ID constant to this function.</p>
+<p>The ID constants are exposed as global variables in the language module,
+e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">EN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">EN</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">u&#39;Nasa&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">IS_UPPER</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">OFT_UPPER</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.word.Lexeme.string_view">
+<tt class="descname">string_view</tt><big>(</big><em>self</em>, <em>size_t view_id</em><big>)</big> &rarr; unicode<a class="headerlink" href="#spacy.word.Lexeme.string_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lexemes may store language-specific string-view features, obtained
+by transforming the string, possibly in light of distributional information.
+The string-view features are accessed by providing an ID constant to this
+function.</p>
+<p>The ID constants are exposed as global variables in the language module,
+e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">EN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">EN</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">u&#39;Nasa&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">string_view</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">CANON_CASED</span><span class="p">)</span>
+<span class="go">u&#39;NASA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">string_view</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">SHAPE</span><span class="p">)</span>
+<span class="go">u&#39;Xxxx&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">string_view</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">NON_SPARSE</span><span class="p">)</span>
+<span class="go">u&#39;Xxxx&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../modules/index.html" class="btn btn-neutral float-right" title="Module Reference"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tokenizers/ptb3.html" class="btn btn-neutral" title="spacy.ptb3.PTB3"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+Module Reference
+================
+
+spacy.lang
+----------
+
+.. automodule:: spacy.lang
+    :members:
+    :private-members:
+    :undoc-members:
+
+spacy.word
+----------
+
+.. automodule:: spacy.word
+    :members:
+    :private-members:
+    :undoc-members:
+
+spacy.orth
+----------
+
+.. automodule:: spacy.orth
+    :members:
+    :private-members:
+    :undoc-members:
+
+spacy.util
+----------
+
+.. automodule:: spacy.util
+    :members:
+    :private-members:
+    :undoc-members:

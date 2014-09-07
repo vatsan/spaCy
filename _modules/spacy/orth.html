@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>spacy.orth &mdash; spaCy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/overview.html#what-and-why">What and Why</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/overview.html#benchmark">Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/overview.html#pros-and-cons">Pros and Cons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/install.html#pip-install-spacy">pip install spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/install.html#git-clone-http-github-com-honnibal-spacy-git">git clone http://github.com/honnibal/spaCy.git</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/tokenizers/index.html">Tokenizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/lexicon.html">spacy.word.Lexeme</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/index.html">Module Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.lang">spacy.lang</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.word">spacy.word</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.orth">spacy.orth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.util">spacy.util</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>spacy.orth</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for spacy.orth</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf8 -*-</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">unicodedata</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="c"># Binary string features</span>
+<div class="viewcode-block" id="is_alpha"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_alpha">[docs]</a><span class="k">def</span> <span class="nf">is_alpha</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="is_digit"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_digit">[docs]</a><span class="k">def</span> <span class="nf">is_digit</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="is_punct"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_punct">[docs]</a><span class="k">def</span> <span class="nf">is_punct</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">category</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;P&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+</div>
+<div class="viewcode-block" id="is_space"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_space">[docs]</a><span class="k">def</span> <span class="nf">is_space</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">isspace</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="is_ascii"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_ascii">[docs]</a><span class="k">def</span> <span class="nf">is_ascii</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">128</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+</div>
+<div class="viewcode-block" id="is_title"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_title">[docs]</a><span class="k">def</span> <span class="nf">is_title</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">istitle</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="is_lower"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_lower">[docs]</a><span class="k">def</span> <span class="nf">is_lower</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="is_upper"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.is_upper">[docs]</a><span class="k">def</span> <span class="nf">is_upper</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span>
+
+
+<span class="c"># Statistics features</span></div>
+<div class="viewcode-block" id="oft_case"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.oft_case">[docs]</a><span class="k">def</span> <span class="nf">oft_case</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">thresh</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span>
+    <span class="k">return</span> <span class="n">wrapped</span>
+
+</div>
+<div class="viewcode-block" id="can_tag"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.can_tag">[docs]</a><span class="k">def</span> <span class="nf">can_tag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">thresh</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span>
+    <span class="k">return</span> <span class="n">wrapped</span>
+
+
+<span class="c"># String features</span></div>
+<div class="viewcode-block" id="canon_case"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.canon_case">[docs]</a><span class="k">def</span> <span class="nf">canon_case</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="n">upper_pc</span> <span class="o">=</span> <span class="n">case_stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;upper&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">title_pc</span> <span class="o">=</span> <span class="n">case_stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">lower_pc</span> <span class="o">=</span> <span class="n">case_stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;lower&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">upper_pc</span> <span class="o">&gt;=</span> <span class="n">lower_pc</span> <span class="ow">and</span> <span class="n">upper_pc</span> <span class="o">&gt;=</span> <span class="n">title_pc</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">title_pc</span> <span class="o">&gt;=</span> <span class="n">lower_pc</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="word_shape"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.word_shape">[docs]</a><span class="k">def</span> <span class="nf">word_shape</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">shape_char</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+                <span class="n">shape_char</span> <span class="o">=</span> <span class="s">&quot;X&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">shape_char</span> <span class="o">=</span> <span class="s">&quot;x&quot;</span>
+        <span class="k">elif</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="n">shape_char</span> <span class="o">=</span> <span class="s">&quot;d&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shape_char</span> <span class="o">=</span> <span class="n">c</span>
+        <span class="k">if</span> <span class="n">shape_char</span> <span class="o">==</span> <span class="n">last</span><span class="p">:</span>
+            <span class="n">seq</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="n">shape_char</span>
+        <span class="k">if</span> <span class="n">seq</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">shape</span> <span class="o">+=</span> <span class="n">shape_char</span>
+    <span class="k">return</span> <span class="n">shape</span>
+
+</div>
+<div class="viewcode-block" id="non_sparse"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.non_sparse">[docs]</a><span class="k">def</span> <span class="nf">non_sparse</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_alpha</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">canon_case</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">prob</span> <span class="o">&gt;=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">string</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">word_shape</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">case_stats</span><span class="p">,</span> <span class="n">tag_stats</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="asciify"><a class="viewcode-back" href="../../modules/index.html#spacy.orth.asciify">[docs]</a><span class="k">def</span> <span class="nf">asciify</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;&quot;ASCIIfy&quot; a Unicode string by stripping all umlauts, tildes, etc.&#39;&#39;&#39;</span> 
+    <span class="c"># Snippet from</span>
+    <span class="c"># http://www.physic.ut.ee/~kkannike/english/prog/python/util/asciify/index.html</span>
+    <span class="c"># TODO: Rewrite and improve this</span>
+    <span class="n">lookup_table</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">u&#39;“&#39;</span><span class="p">:</span> <span class="s">&#39;&quot;&#39;</span><span class="p">,</span>
+        <span class="s">u&#39;”&#39;</span><span class="p">:</span> <span class="s">&#39;&quot;&#39;</span>
+    <span class="p">}</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="s">u&#39;&#39;</span> 
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">lookup_table</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">+=</span> <span class="n">lookup_table</span><span class="p">[</span><span class="n">char</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">decomp</span> <span class="o">=</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">decomposition</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">decomp</span><span class="p">:</span> <span class="c"># Not an empty string </span>
+                <span class="n">temp</span> <span class="o">+=</span> <span class="nb">unichr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">decomp</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">+=</span> <span class="n">char</span>
+    <span class="k">return</span> <span class="n">temp</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

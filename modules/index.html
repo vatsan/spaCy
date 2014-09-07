@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Module Reference &mdash; spaCy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.1 documentation" href="../index.html"/>
+        <link rel="prev" title="spacy.word.Lexeme" href="../api/lexicon.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../guide/overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide/overview.html#what-and-why">What and Why</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/overview.html#benchmark">Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/overview.html#pros-and-cons">Pros and Cons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide/install.html#pip-install-spacy">pip install spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guide/install.html#git-clone-http-github-com-honnibal-spacy-git">git clone http://github.com/honnibal/spaCy.git</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/tokenizers/index.html">Tokenizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lexicon.html">spacy.word.Lexeme</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Module Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-spacy.lang">spacy.lang</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-spacy.word">spacy.word</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-spacy.orth">spacy.orth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-spacy.util">spacy.util</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Module Reference</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="module-reference">
+<h1>Module Reference<a class="headerlink" href="#module-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-spacy.lang">
+<span id="spacy-lang"></span><h2>spacy.lang<a class="headerlink" href="#module-spacy.lang" title="Permalink to this headline">¶</a></h2>
+<p>Common classes and utilities across languages.</p>
+<p>Provides the main implementation for the spacy tokenizer. Specific languages
+subclass the Language class, over-writing the tokenization rules as necessary.
+Special-case tokenization rules are read from data/&lt;lang&gt;/tokenization .</p>
+<dl class="class">
+<dt id="spacy.lang.Language">
+<em class="property">class </em><tt class="descclassname">spacy.lang.</tt><tt class="descname">Language</tt><a class="headerlink" href="#spacy.lang.Language" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for language-specific tokenizers.</p>
+<p>Most subclasses will override the _split or _split_one methods, which take
+a string of non-whitespace characters and output a list of strings.  This
+function is called by _tokenize, which sits behind a cache and turns the
+list of strings into Lexeme objects via the Lexicon. Most languages will not
+need to override _tokenize or tokenize.</p>
+<p>The language is supplied a list of boolean functions, used to compute flag
+features. These are passed to the language&#8217;s Lexicon object.</p>
+<p>The language&#8217;s name is used to look up default data-files, found in data/&lt;name.</p>
+<dl class="method">
+<dt id="spacy.lang.Language._load_special_tokenization">
+<tt class="descname">_load_special_tokenization</tt><big>(</big><em>self</em>, <em>token_rules</em><big>)</big><a class="headerlink" href="#spacy.lang.Language._load_special_tokenization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load special-case tokenization rules.</p>
+<p>Loads special-case tokenization rules into the Language.cache cache,
+read from data/&lt;lang&gt;/tokenization . The special cases are loaded before
+any language data is tokenized, giving these priority.  For instance,
+the English tokenization rules map &#8220;ain&#8217;t&#8221; to [&#8220;are&#8221;, &#8220;not&#8221;].</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>token_rules</strong> (<em>list</em>) &#8211; A list of (chunk, tokens) pairs, where chunk is
+a string and tokens is a list of strings.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.lang.Language.lexicon">
+<tt class="descname">lexicon</tt><a class="headerlink" href="#spacy.lang.Language.lexicon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.lang.Language.lookup">
+<tt class="descname">lookup</tt><big>(</big><em>self</em>, <em>unicode string</em><big>)</big> &rarr; Lexeme<a class="headerlink" href="#spacy.lang.Language.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve (or create, if not found) a Lexeme for a string, and return it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>unicode</em>) &#8211; The string to be looked up. Must be unicode, not bytes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>lexeme</strong> &#8211;
+A reference to a lexical type.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Lexeme</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.lang.Language.tokenize">
+<tt class="descname">tokenize</tt><big>(</big><em>self</em>, <em>unicode string</em><big>)</big> &rarr; list<a class="headerlink" href="#spacy.lang.Language.tokenize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tokenize a string.</p>
+<p>The tokenization rules are defined in two places:</p>
+<ul class="simple">
+<li>The data/&lt;lang&gt;/tokenization table, which handles special cases like contractions;</li>
+<li>The appropriate <tt class="xref py py-meth docutils literal"><span class="pre">find_split()</span></tt> function, which is used to split
+off punctuation etc.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>unicode</em>) &#8211; The string to be tokenized.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>tokens</strong> &#8211;
+A Tokens object, giving access to a sequence of LexIDs.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Tokens</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spacy.lang.Lexicon">
+<em class="property">class </em><tt class="descclassname">spacy.lang.</tt><tt class="descname">Lexicon</tt><a class="headerlink" href="#spacy.lang.Lexicon" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="spacy.lang.Lexicon.lookup">
+<tt class="descname">lookup</tt><big>(</big><em>self</em>, <em>unicode string</em><big>)</big> &rarr; Lexeme<a class="headerlink" href="#spacy.lang.Lexicon.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve (or create, if not found) a Lexeme for a string, and return it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>unicode</em>) &#8211; The string to be looked up. Must be unicode, not bytes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>lexeme</strong> &#8211;
+A reference to a lexical type.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Lexeme</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-spacy.word">
+<span id="spacy-word"></span><h2>spacy.word<a class="headerlink" href="#module-spacy.word" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="spacy.word.Lexeme">
+<em class="property">class </em><tt class="descclassname">spacy.word.</tt><tt class="descname">Lexeme</tt><a class="headerlink" href="#spacy.word.Lexeme" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lexical type &#8212; a word, punctuation symbol, whitespace sequence, etc
+keyed by a case-sensitive unicode string. All tokens with the same string,
+e.g. all instances of &#8220;dog&#8221;, &#8221;,&#8221;, &#8220;NASA&#8221; etc should be mapped to the same
+Lexeme.</p>
+<p>You should avoid instantiating Lexemes directly, and instead use the
+<tt class="xref py py-meth docutils literal"><span class="pre">space.lang.Language.tokenize()</span></tt> and <a class="reference internal" href="#spacy.lang.Language.lookup" title="spacy.lang.Language.lookup"><tt class="xref py py-meth docutils literal"><span class="pre">spacy.lang.Language.lookup()</span></tt></a>
+methods on the global object exposed by the language you&#8217;re working with,
+e.g. <tt class="xref py py-data docutils literal"><span class="pre">spacy.en.EN</span></tt>.</p>
+<dl class="attribute">
+<dt id="spacy.word.Lexeme.string">
+<tt class="descname">string</tt><a class="headerlink" href="#spacy.word.Lexeme.string" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>unicode</em></p>
+<p>The unicode string.</p>
+<p>Implemented as a property; relatively expensive.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.word.Lexeme.length">
+<tt class="descname">length</tt><a class="headerlink" href="#spacy.word.Lexeme.length" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>size_t</em></p>
+<p>The number of unicode code-points in the string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.word.Lexeme.prob">
+<tt class="descname">prob</tt><a class="headerlink" href="#spacy.word.Lexeme.prob" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>double</em></p>
+<p>An estimate of the word&#8217;s unigram log probability.</p>
+<p>Probabilities are calculated from a large text corpus, and smoothed using
+simple Good-Turing.  Estimates are read from data/en/probabilities, and
+can be replaced using spacy.en.load_probabilities.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.word.Lexeme.cluster">
+<tt class="descname">cluster</tt><a class="headerlink" href="#spacy.word.Lexeme.cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>size_t</em></p>
+<p>An integer representation of the word&#8217;s Brown cluster.</p>
+<p>A Brown cluster is an address into a binary tree, which gives some (noisy)
+information about the word&#8217;s distributional context.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">strings</span> <span class="o">=</span> <span class="p">(</span><span class="s">u&#39;pineapple&#39;</span><span class="p">,</span> <span class="s">u&#39;apple&#39;</span><span class="p">,</span> <span class="s">u&#39;dapple&#39;</span><span class="p">,</span> <span class="s">u&#39;scalable&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">[</span><span class="s">&quot;{0:b&quot;</span><span class="p">}</span> <span class="o">%</span> <span class="n">lookup</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">cluster</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">strings</span><span class="p">]</span>
+<span class="go">[&quot;100111110110&quot;, &quot;100111100100&quot;, &quot;01010111011001&quot;, &quot;100111110110&quot;]</span>
+</pre></div>
+</div>
+<p>The clusterings are unideal, but often slightly useful.
+&#8220;pineapple&#8221; and &#8220;apple&#8221; share a long prefix, indicating a similar meaning,
+while &#8220;dapple&#8221; is totally different. On the other hand, &#8220;scalable&#8221; receives
+the same cluster ID as &#8220;pineapple&#8221;, which is not what we&#8217;d like.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.word.Lexeme.check_flag">
+<tt class="descname">check_flag</tt><big>(</big><em>self</em>, <em>size_t flag_id</em><big>)</big> &rarr; bool<a class="headerlink" href="#spacy.word.Lexeme.check_flag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lexemes may store language-specific boolean features in a bit-field,
+with values accessed by providing an ID constant to this function.</p>
+<p>The ID constants are exposed as global variables in the language module,
+e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">EN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">EN</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">u&#39;Nasa&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">IS_UPPER</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">OFT_UPPER</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">cluster</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.word.Lexeme.flags">
+<tt class="descname">flags</tt><a class="headerlink" href="#spacy.word.Lexeme.flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">length</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">prob</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">string</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.word.Lexeme.string_view">
+<tt class="descname">string_view</tt><big>(</big><em>self</em>, <em>size_t view_id</em><big>)</big> &rarr; unicode<a class="headerlink" href="#spacy.word.Lexeme.string_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lexemes may store language-specific string-view features, obtained
+by transforming the string, possibly in light of distributional information.
+The string-view features are accessed by providing an ID constant to this
+function.</p>
+<p>The ID constants are exposed as global variables in the language module,
+e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">EN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">EN</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">u&#39;Nasa&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">string_view</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">CANON_CASED</span><span class="p">)</span>
+<span class="go">u&#39;NASA&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">string_view</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">SHAPE</span><span class="p">)</span>
+<span class="go">u&#39;Xxxx&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">string_view</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">NON_SPARSE</span><span class="p">)</span>
+<span class="go">u&#39;Xxxx&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.word.Lexeme.views">
+<tt class="descname">views</tt><a class="headerlink" href="#spacy.word.Lexeme.views" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-spacy.orth">
+<span id="spacy-orth"></span><h2>spacy.orth<a class="headerlink" href="#module-spacy.orth" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="spacy.orth.asciify">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">asciify</tt><big>(</big><em>string</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#asciify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.asciify" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;ASCIIfy&#8221; a Unicode string by stripping all umlauts, tildes, etc.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.can_tag">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">can_tag</tt><big>(</big><em>name</em>, <em>thresh</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#can_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.can_tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.canon_case">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">canon_case</tt><big>(</big><em>string</em>, <em>prob</em>, <em>cluster</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#canon_case"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.canon_case" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_alpha">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_alpha</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_alpha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_ascii">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_ascii</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_ascii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_ascii" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_digit">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_digit</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_digit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_digit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_lower">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_lower</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_lower"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_lower" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_punct">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_punct</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_punct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_punct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_space">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_space</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_title">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_title</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_title"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.is_upper">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">is_upper</tt><big>(</big><em>string</em>, <em>prob</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#is_upper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.is_upper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.non_sparse">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">non_sparse</tt><big>(</big><em>string</em>, <em>prob</em>, <em>cluster</em>, <em>case_stats</em>, <em>tag_stats</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#non_sparse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.non_sparse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.oft_case">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">oft_case</tt><big>(</big><em>name</em>, <em>thresh</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#oft_case"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.oft_case" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.orth.word_shape">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">word_shape</tt><big>(</big><em>string</em>, <em>*args</em><big>)</big><a class="reference internal" href="../_modules/spacy/orth.html#word_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.orth.word_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-spacy.util">
+<span id="spacy-util"></span><h2>spacy.util<a class="headerlink" href="#module-spacy.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="spacy.util.load_resource">
+<tt class="descclassname">spacy.util.</tt><tt class="descname">load_resource</tt><big>(</big><em>data_dir</em>, <em>name</em><big>)</big><a class="reference internal" href="../_modules/spacy/util.html#load_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.util.load_resource" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.util.read_lang_data">
+<tt class="descclassname">spacy.util.</tt><tt class="descname">read_lang_data</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../_modules/spacy/util.html#read_lang_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.util.read_lang_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.util.read_tokenization">
+<tt class="descclassname">spacy.util.</tt><tt class="descname">read_tokenization</tt><big>(</big><em>lang</em><big>)</big><a class="reference internal" href="../_modules/spacy/util.html#read_tokenization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.util.read_tokenization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="spacy.util.utf8open">
+<tt class="descclassname">spacy.util.</tt><tt class="descname">utf8open</tt><big>(</big><em>loc</em>, <em>mode='r'</em><big>)</big><a class="reference internal" href="../_modules/spacy/util.html#utf8open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.util.utf8open" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../api/lexicon.html" class="btn btn-neutral" title="spacy.word.Lexeme"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

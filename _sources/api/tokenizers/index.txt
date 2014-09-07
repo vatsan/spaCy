@@ -1,0 +1,14 @@
+Tokenizers
+==========
+
+Each module implements a different tokenization scheme, and exposes the
+tokenizer as a global object.  Tokenizers are intended to be used as
+singletons, so that Lexeme objects can be reused.
+
+However, the implementation does not enforce this as a constraint, and does not
+depend on it.  The only consequence of creating a second tokenizer should be
+poor efficiency.
+
+.. toctree::
+    en.rst
+    ptb3.rst

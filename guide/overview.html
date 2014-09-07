@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; spaCy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.1 documentation" href="../index.html"/>
+        <link rel="next" title="Installation" href="install.html"/>
+        <link rel="prev" title="spaCy NLP Tokenizer and Lexicon" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-and-why">What and Why</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#benchmark">Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pros-and-cons">Pros and Cons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#pip-install-spacy">pip install spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#git-clone-http-github-com-honnibal-spacy-git">git clone http://github.com/honnibal/spaCy.git</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/tokenizers/index.html">Tokenizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lexicon.html">spacy.word.Lexeme</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/index.html">Module Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.lang">spacy.lang</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.word">spacy.word</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.orth">spacy.orth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modules/index.html#module-spacy.util">spacy.util</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Overview</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-and-why">
+<h2>What and Why<a class="headerlink" href="#what-and-why" title="Permalink to this headline">¶</a></h2>
+<p>spaCy is a lightning-fast, full-cream NLP tokenizer and lexicon.</p>
+<p>Most tokenizers give you a sequence of strings. That&#8217;s barbaric.
+Giving you strings invites you to compute on every <em>token</em>, when what
+you should be doing is computing on every <em>type</em>.  Remember
+<a class="reference external" href="http://en.wikipedia.org/wiki/Zipf's_law">Zipf&#8217;s law</a>: you&#8217;ll
+see exponentially fewer types than tokens.</p>
+<p>Instead of strings, spaCy gives you references to Lexeme objects, from which you
+can access an excellent set of pre-computed orthographic and distributional features:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">en</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apples</span><span class="p">,</span> <span class="n">are</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">oranges</span><span class="p">,</span> <span class="n">dots</span> <span class="o">=</span> <span class="n">en</span><span class="o">.</span><span class="n">EN</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s">u&quot;Apples aren&#39;t oranges...&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">are</span><span class="o">.</span><span class="n">prob</span> <span class="o">&gt;=</span> <span class="n">oranges</span><span class="o">.</span><span class="n">prob</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apples</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">en</span><span class="o">.</span><span class="n">IS_TITLE</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apples</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">en</span><span class="o">.</span><span class="n">OFT_TITLE</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">are</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">en</span><span class="o">.</span><span class="n">CAN_NOUN</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>spaCy makes it easy to write very efficient NLP applications, because your feature
+functions have to do almost no work: almost every lexical property you&#8217;ll want
+is pre-computed for you.  See the tutorial for an example POS tagger.</p>
+</div>
+<div class="section" id="benchmark">
+<h2>Benchmark<a class="headerlink" href="#benchmark" title="Permalink to this headline">¶</a></h2>
+<p>The tokenizer itself is also very efficient:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="16%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>System</td>
+<td>Time</td>
+<td>Words/second</td>
+<td>Speed Factor</td>
+</tr>
+<tr class="row-even"><td>NLTK</td>
+<td>6m4s</td>
+<td>89,000</td>
+<td>1.00</td>
+</tr>
+<tr class="row-odd"><td>spaCy</td>
+<td>9.5s</td>
+<td>3,093,000</td>
+<td>38.30</td>
+</tr>
+</tbody>
+</table>
+<p>The comparison refers to 30 million words from the English Gigaword, on
+a Maxbook Air.  For context, calling string.split() on the data completes in
+about 5s.</p>
+</div>
+<div class="section" id="pros-and-cons">
+<h2>Pros and Cons<a class="headerlink" href="#pros-and-cons" title="Permalink to this headline">¶</a></h2>
+<p>Pros:</p>
+<ul class="simple">
+<li>All tokens come with indices into the original string</li>
+<li>Full unicode support</li>
+<li>Extensible to other languages</li>
+<li>Batch operations computed efficiently in Cython</li>
+<li>Cython API</li>
+<li>numpy interoperability</li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li>It&#8217;s new (released September 2014)</li>
+<li>Security concerns, from memory management</li>
+<li>Higher memory usage (up to 1gb)</li>
+<li>More conceptually complicated</li>
+<li>Tokenization rules expressed in code, not as data</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="Installation"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="spaCy NLP Tokenizer and Lexicon"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

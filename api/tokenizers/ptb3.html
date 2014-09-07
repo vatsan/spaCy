@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>spacy.ptb3.PTB3 &mdash; spaCy 0.1 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Tokenizers" href="index.html"/>
+        <link rel="next" title="spacy.word.Lexeme" href="../lexicon.html"/>
+        <link rel="prev" title="spacy.en.EN" href="en.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../guide/overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/overview.html#what-and-why">What and Why</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/overview.html#benchmark">Benchmark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/overview.html#pros-and-cons">Pros and Cons</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guide/install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/install.html#pip-install-spacy">pip install spacy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/install.html#git-clone-http-github-com-honnibal-spacy-git">git clone http://github.com/honnibal/spaCy.git</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Tokenizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lexicon.html">spacy.word.Lexeme</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/index.html">Module Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.lang">spacy.lang</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.word">spacy.word</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.orth">spacy.orth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../modules/index.html#module-spacy.util">spacy.util</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">API</a> &raquo;</li>
+      
+          <li><a href="index.html">Tokenizers</a> &raquo;</li>
+      
+    <li>spacy.ptb3.PTB3</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="spacy-ptb3-ptb3">
+<h1>spacy.ptb3.PTB3<a class="headerlink" href="#spacy-ptb3-ptb3" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tokenizer-api">
+<h2>Tokenizer API<a class="headerlink" href="#tokenizer-api" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="lexeme-features-flag-ids">
+<h2>Lexeme Features Flag IDs<a class="headerlink" href="#lexeme-features-flag-ids" title="Permalink to this headline">¶</a></h2>
+<p>A number of boolean features are computed for English Lexemes. To access a feature,
+pass its ID to the <a class="reference internal" href="../../modules/index.html#spacy.word.Lexeme.check_flag" title="spacy.word.Lexeme.check_flag"><tt class="xref py py-meth docutils literal"><span class="pre">spacy.word.Lexeme.check_flag()</span></tt></a> function.</p>
+</div>
+<div class="section" id="orthographic-features">
+<h2>Orthographic Features<a class="headerlink" href="#orthographic-features" title="Permalink to this headline">¶</a></h2>
+<p>These features describe the <cite>orthographic</cite> (lettering) type of the word. The
+function used to compute the value is listed along with the flag.</p>
+<dl class="data">
+<dt id="IS_ALPHA">
+<tt class="descname">IS_ALPHA</tt><a class="headerlink" href="#IS_ALPHA" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_alpha" title="spacy.orth.is_alpha"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_alpha()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="IS_DIGIT">
+<tt class="descname">IS_DIGIT</tt><a class="headerlink" href="#IS_DIGIT" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_digit" title="spacy.orth.is_digit"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_digit()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="IS_UPPER">
+<tt class="descname">IS_UPPER</tt><a class="headerlink" href="#IS_UPPER" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_upper" title="spacy.orth.is_upper"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_upper()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="IS_PUNCT">
+<tt class="descname">IS_PUNCT</tt><a class="headerlink" href="#IS_PUNCT" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_punct" title="spacy.orth.is_punct"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_punct()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="IS_SPACE">
+<tt class="descname">IS_SPACE</tt><a class="headerlink" href="#IS_SPACE" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_space" title="spacy.orth.is_space"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_space()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="IS_ASCII">
+<tt class="descname">IS_ASCII</tt><a class="headerlink" href="#IS_ASCII" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_ascii" title="spacy.orth.is_ascii"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_ascii()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="IS_TITLE">
+<tt class="descname">IS_TITLE</tt><a class="headerlink" href="#IS_TITLE" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_title" title="spacy.orth.is_title"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_title()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="IS_LOWER">
+<tt class="descname">IS_LOWER</tt><a class="headerlink" href="#IS_LOWER" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_lower" title="spacy.orth.is_lower"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_lower()</span></tt></a></p>
+</dd></dl>
+
+<dl class="data">
+<dt>
+<tt class="descname">IS_UPPER</tt></dt>
+<dd><p><a class="reference internal" href="../../modules/index.html#spacy.orth.is_upper" title="spacy.orth.is_upper"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.is_upper()</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="distributional-orthographic-features">
+<h2>Distributional Orthographic Features<a class="headerlink" href="#distributional-orthographic-features" title="Permalink to this headline">¶</a></h2>
+<p>These features describe how often the lower-cased form of the word appears
+in various case-styles in a large sample of English text. See <a class="reference internal" href="../../modules/index.html#spacy.orth.oft_case" title="spacy.orth.oft_case"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.oft_case()</span></tt></a></p>
+<dl class="data">
+<dt id="OFT_UPPER">
+<tt class="descname">OFT_UPPER</tt><a class="headerlink" href="#OFT_UPPER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="OFT_LOWER">
+<tt class="descname">OFT_LOWER</tt><a class="headerlink" href="#OFT_LOWER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="OFT_TITLE">
+<tt class="descname">OFT_TITLE</tt><a class="headerlink" href="#OFT_TITLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="tag-dictionary-features">
+<h2>Tag Dictionary Features<a class="headerlink" href="#tag-dictionary-features" title="Permalink to this headline">¶</a></h2>
+<p>These features describe whether the word commonly occurs with a given
+part-of-speech, in a large text corpus, using a part-of-speech tagger designed
+to reduce the tag-dictionary bias of its training corpus. See
+<a class="reference internal" href="../../modules/index.html#spacy.orth.can_tag" title="spacy.orth.can_tag"><tt class="xref py py-func docutils literal"><span class="pre">spacy.orth.can_tag()</span></tt></a>.</p>
+<dl class="data">
+<dt id="CAN_PUNCT">
+<tt class="descname">CAN_PUNCT</tt><a class="headerlink" href="#CAN_PUNCT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_CONJ">
+<tt class="descname">CAN_CONJ</tt><a class="headerlink" href="#CAN_CONJ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_NUM">
+<tt class="descname">CAN_NUM</tt><a class="headerlink" href="#CAN_NUM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_DET">
+<tt class="descname">CAN_DET</tt><a class="headerlink" href="#CAN_DET" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_ADP">
+<tt class="descname">CAN_ADP</tt><a class="headerlink" href="#CAN_ADP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_ADJ">
+<tt class="descname">CAN_ADJ</tt><a class="headerlink" href="#CAN_ADJ" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_ADV">
+<tt class="descname">CAN_ADV</tt><a class="headerlink" href="#CAN_ADV" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_VERB">
+<tt class="descname">CAN_VERB</tt><a class="headerlink" href="#CAN_VERB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_NOUN">
+<tt class="descname">CAN_NOUN</tt><a class="headerlink" href="#CAN_NOUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_PDT">
+<tt class="descname">CAN_PDT</tt><a class="headerlink" href="#CAN_PDT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_POS">
+<tt class="descname">CAN_POS</tt><a class="headerlink" href="#CAN_POS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_PRON">
+<tt class="descname">CAN_PRON</tt><a class="headerlink" href="#CAN_PRON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="CAN_PRT">
+<tt class="descname">CAN_PRT</tt><a class="headerlink" href="#CAN_PRT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../lexicon.html" class="btn btn-neutral float-right" title="spacy.word.Lexeme"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="en.html" class="btn btn-neutral" title="spacy.en.EN"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
