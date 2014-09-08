@@ -29,7 +29,7 @@
 
   
     <link rel="top" title="spaCy 0.1 documentation" href="#"/>
-        <link rel="next" title="Overview" href="guide/overview.html"/> 
+        <link rel="next" title="Don’t Settle for a List of Strings" href="guide/overview.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -57,8 +57,7 @@
         
         
             <ul>
-<li class="toctree-l1"><a class="reference internal" href="guide/overview.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/overview.html#what-and-why">What and Why</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/overview.html">Don&#8217;t Settle for a List of Strings</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="guide/overview.html#benchmark">Benchmark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/overview.html#pros-and-cons">Pros and Cons</a></li>
 </ul>
@@ -114,10 +113,46 @@
             
   <div class="section" id="spacy-nlp-tokenizer-and-lexicon">
 <h1>spaCy NLP Tokenizer and Lexicon<a class="headerlink" href="#spacy-nlp-tokenizer-and-lexicon" title="Permalink to this headline">¶</a></h1>
+<p>spaCy splits a string of natural language into a list of references to lexical types:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">EN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">EN</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s">u&quot;Examples aren&#39;t easy, are they?&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">spacy.word.Lexeme</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Other tokenizers return lists of strings, which is
+<a class="reference external" href="guide/overview.html">downright barbaric</a>.</p>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="75%" />
+<col width="25%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Non-commercial</td>
+<td>$0</td>
+</tr>
+<tr class="row-even"><td>Trial commercial</td>
+<td>$0</td>
+</tr>
+<tr class="row-odd"><td>Full commercial</td>
+<td>$500</td>
+</tr>
+</tbody>
+</table>
+<p>spaCy is non-free software. Its source is published, but the copyright is
+retained by the author (Matthew Honnibal).  Licenses are currently under preparation.</p>
+<p>There is currently a gap between the output of academic NLP researchers, and
+the needs of a small software companiess. I left academia to try to correct this.</p>
+<p>My idea is that non-commercial and trial commercial use should &#8220;feel&#8221; just like
+free software. But, if you do use the code in a commercial product, a small
+fixed license-fee will apply, in order to fund development.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="guide/overview.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/overview.html#what-and-why">What and Why</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/overview.html">Don&#8217;t Settle for a List of Strings</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="guide/overview.html#benchmark">Benchmark</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/overview.html#pros-and-cons">Pros and Cons</a></li>
 </ul>
@@ -145,17 +180,6 @@
 </li>
 </ul>
 </div>
-<div class="section" id="source-github">
-<h2>Source (GitHub)<a class="headerlink" href="#source-github" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://github.com/honnibal/spaCy">http://github.com/honnibal/spaCy</a></p>
-</div>
-<div class="section" id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
-<p>Copyright Matthew Honnibal</p>
-<p>Non-commercial use: $0
-Commercial trial use: $0
-Full commercial license: $500</p>
-<p><a class="reference external" href="mailto:honnibal&#37;&#52;&#48;gmail&#46;com">honnibal<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
 </div>
 </div>
 
@@ -165,7 +189,7 @@ Full commercial license: $500</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="guide/overview.html" class="btn btn-neutral float-right" title="Overview"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="guide/overview.html" class="btn btn-neutral float-right" title="Don’t Settle for a List of Strings"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
