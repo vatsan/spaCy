@@ -117,29 +117,46 @@
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-and-why">
 <h2>What and Why<a class="headerlink" href="#what-and-why" title="Permalink to this headline">¶</a></h2>
-<p>spaCy is a lightning-fast, full-cream NLP tokenizer and lexicon.</p>
-<p>Most tokenizers give you a sequence of strings. That&#8217;s barbaric.
-Giving you strings invites you to compute on every <em>token</em>, when what
-you should be doing is computing on every <em>type</em>.  Remember
-<a class="reference external" href="http://en.wikipedia.org/wiki/Zipf's_law">Zipf&#8217;s law</a>: you&#8217;ll
-see exponentially fewer types than tokens.</p>
-<p>Instead of strings, spaCy gives you references to Lexeme objects, from which you
-can access an excellent set of pre-computed orthographic and distributional features:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">en</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">apples</span><span class="p">,</span> <span class="n">are</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">oranges</span><span class="p">,</span> <span class="n">dots</span> <span class="o">=</span> <span class="n">en</span><span class="o">.</span><span class="n">EN</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s">u&quot;Apples aren&#39;t oranges...&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">are</span><span class="o">.</span><span class="n">prob</span> <span class="o">&gt;=</span> <span class="n">oranges</span><span class="o">.</span><span class="n">prob</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">apples</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">en</span><span class="o">.</span><span class="n">IS_TITLE</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">apples</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">en</span><span class="o">.</span><span class="n">OFT_TITLE</span><span class="p">)</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">are</span><span class="o">.</span><span class="n">check_flag</span><span class="p">(</span><span class="n">en</span><span class="o">.</span><span class="n">CAN_NOUN</span><span class="p">)</span>
-<span class="go">False</span>
-</pre></div>
-</div>
-<p>spaCy makes it easy to write very efficient NLP applications, because your feature
-functions have to do almost no work: almost every lexical property you&#8217;ll want
-is pre-computed for you.  See the tutorial for an example POS tagger.</p>
+<blockquote>
+<div><p><em>&#8220;Other tokenizers return lists of strings, which is downright
+barbaric.&#8221;</em></p>
+<blockquote>
+<div>&#8212; me, now</div></blockquote>
+</div></blockquote>
+<p>spaCy splits a string of natural language into a list of lexical types,
+which come with a variety of features pre-computed.
+Its design makes the right thing easy: your NLP applications will be more
+efficient if you use a global vocabulary store, and will probably be more
+accurate if you use the features we provide.</p>
+<p>Other tokenizers give you a list of strings, which makes the <em>wrong</em> thing
+easy. The wrong thing is to compute string features and look-up distributional
+data on every <em>token</em>, instead of every <em>type</em>.</p>
+<p>For instance, let&#8217;s say you&#8217;re writing an entity tagger, and your feature
+functions need to know whether the word you&#8217;re tagging is lower-cased.  The right
+thing is to call string.isalpha() once for every <em>type</em> in your vocabulary, instead
+of once for every <em>token</em> in the text you&#8217;re tagging.</p>
+<p>And the right thing isn&#8217;t just better, it&#8217;s <em>exponentially</em> better, because of
+<a class="reference external" href="http://en.wikipedia.org/wiki/Zipf's_law">Zipf&#8217;s law</a>.
+In a sample of natural language, you can expect to see exponentially fewer types
+than tokens.</p>
+<p>Because of Zipf&#8217;s Law, you want to cache all your per-type computations. This
+is exactly what spaCy does for you.  Zipf&#8217;s Law also makes distributional
+information a really powerful source of type-based features. It&#8217;s really handy
+to know where a word falls in the language&#8217;s frequency distribution, especially
+compared to variants of the word.  For instance, we might be processing
+a Twitter comment that contains the string &#8220;nasa&#8221;. We have little hope of
+recognising this as an entity except by noting that the string &#8220;NASA&#8221; is much
+more common, and that both strings are quite rare.</p>
+<p>Each spaCy Lexeme comes with a rich, curated set of orthographic and
+distributional features.  The exact set of features is language-specific,
+to take into account different orthographic conventions and morphological
+complexity. It&#8217;s also easy to define your own features, which should be pure
+functions from the string and its distributional data to a string, bool or
+real-value.</p>
+<p>Finally, spaCy also takes care to get the details right. No unicode problems
+here, and indices into the original text are always easy to calculate. You&#8217;ll
+also receive tokens for newlines, tabs and other non-space whitespace, making
+it easy to do paragraph and sentence recognition.</p>
 </div>
 <div class="section" id="benchmark">
 <h2>Benchmark<a class="headerlink" href="#benchmark" title="Permalink to this headline">¶</a></h2>
