@@ -67,6 +67,88 @@ to that function than if you had computed it on a per-token basis.
 Benchmarks
 ----------
 
+The tutorial section describes a relation extraction system, consisting of
+a POS tagger, named entity recogniser, a dependency parser, and some
+hand-written heuristics.  I aimed to strike a good balance between implementation
+simplicity, accuracy and efficiency.
+
+The pipeline is able to return a list of relations faster than the NLTK
+tokenizer can return a list of strings.  We also show the efficiency of various
+other pieces of well-known NLP software.
+
+The NLTK implementation does not try to be particularly inefficient, for good
+reason. Optimization is like that old joke: you don't have to out-run the
+tiger, only the guy running beside you.  And, typically, the NLTK tokenizer
+would be running beside some very slow processes.
+
+it's
+trying to out-run its subsequent processes
+the efficiency of the tokenizer
+
+1. spaCy computes atomic features once per lexical type;
+
+2. 
+
+are
+computed on a per-type basis, we use linear models backed by numpy arrays
+
+The pipeline is very fast: we're able to process
+a whole document faster than the NLTK tokenizer It tells you how I think NLP software should be
+written
+
+that does POS
+tagging, named entity recognition, dependency parsing and 
+
+spaCy uses more memory than a standard tokenizer, but is far more efficient. We
+compare against the NLTK tokenizer and the Penn Treebank's tokenizer.sed script.
+We also give the performance of Python's native string.split, for reference.
+
+
+It's plain that spaCy is fast and NLTK is slow. What's less obvious is whether
+it matters.  Efficiency is relative, like running from a tiger: you only need to be
+quicker than the next guy.  There's no point in doubling the speed of a process
+that already runs in 1% of the time of your actual bottleneck.
+
+So, how often will the NLTK tokenizer bottleneck you?
+
+mostly slow for implementation reasons. The grammar is not compiled
+into a single expression, so the tokenizer makes multiple passes over the data
+(
+
+It's natural to compare against NLTK, which is by far the most popular NLP
+software for Python.  The NLTK tokenizer uses a sequence of regular
+expressions, applied in several passes. It's inefficient, but that won't matter
+if the rest of your pipeline is even slower.
+
+The spaCy tokenizer
+
+
+implementation is geared for
+readability, not efficiency.  The idea is that the tokenizer is probably much
+faster than your slowest component anyway. 
+
+good argument for this: the tokenizer
+should really be faster than your slowest 
+
+it's happy to make mulitple passes over the data, so that the
+grammar can be written as a list of separate expressions.
+Arguably, the
+tokenizer will be much faster than the slowest component 
+
+inefficient: we could instead have a single big expressions, which would save
+us making so many passes over the data. On the other hand, the compiled
+expression would be unreadable
+
+We first look at the efficiency of the tokenizers by
+themselves, 
+
+
+We here ask two things:
+
+1. How fast is the spaCy tokenizer itself, relative to other tokenizers?
+
+2. How fast are applications using spaCy's pre-computed lexical features,
+   compared to applications that re-compute their features on every token?
 
 +--------+-------+--------------+--------------+
 | System | Time	 | Words/second | Speed Factor |
@@ -76,9 +158,7 @@ Benchmarks
 | spaCy	 |       |           	|              |
 +--------+-------+--------------+--------------+
 
-The comparison refers to 30 million words from the English Gigaword, on
-a Maxbook Air.  For context, calling string.split() on the data completes in
-about 5s.
+Why is NLTK so slow? Well, arguably it isn't: bear in mind that 
 
 Pros and Cons
 -------------
