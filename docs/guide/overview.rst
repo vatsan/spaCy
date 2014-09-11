@@ -3,7 +3,7 @@ Don't Settle for a List of Strings
 
 
     *"Other tokenizers return lists of strings, which is downright
-    barbaric."* --- me
+    barbaric."* --- Tmp
 
 
 spaCy splits text into a list of lexical types, which come with a variety of
@@ -31,25 +31,28 @@ the wrong thing. And the wrong thing isn't just a little bit worse: it's
 **exponentially** worse, because of
 `Zipf's law <http://en.wikipedia.org/wiki/Zipf's_law>`_. 
 
-.. figure:: chart.svg
-   :align: center
+.. raw:: html
 
-   The Gigaword corpus of English contains TODO tokens, with TODO lexical
-   types. The graph above shows how the number of tokens and types grows as the
-   corpus is tokenized. As we expect from Zipf's law, the vocabulary grows
-   exponentially slower than the number of tokens.
+    <center>
+    <figure>
+      <embed 
+        width="650em" height="auto"
+        type="image/svg+xml" src="chart.svg"/>
+    </figure>
+    </center>
 
-Yes, it's a bit snarky to present the graph in a linear scale. It's not what I'd
-put in a paper. But it isn't misleading. Over the Gigaword corpus,
-if you compute some feature on a per-type basis, you'll make TODO fewer calls
-to that function than if you had computed it on a per-token basis.  
+Mouse-over a line to see its value at that point.
+Yes, it's a bit snarky to present the graph in a linear scale ---
+but it isn't misleading. Over the Gigaword corpus,
+if you compute some feature on a per-token basis, you'll make **500x more
+calls** to that function than if you had computed it on a per-token basis.  
 
-.. Zipf's Law also makes distributional information a really powerful source of
-.. type-based features. It's really handy to know where a word falls in the language's
-.. frequency distribution, especially compared to variants of the word.  For instance,
-.. we might be processing a Twitter comment that contains the string "nasa". We have
-.. little hope of recognising this as an entity except by noting that the string "NASA"
-.. is much more common, and that both strings are quite rare.
+Zipf's Law also makes distributional information a really powerful source of
+type-based features. It's really handy to know where a word falls in the language's
+frequency distribution, especially compared to variants of the word.  For instance,
+we might be processing a Twitter comment that contains the string "nasa". We have
+little hope of recognising this as an entity except by noting that the string "NASA"
+is much more common, and that both strings are quite rare.
 
 .. Each spaCy Lexeme comes with a rich, curated set of orthographic and
 .. distributional features.  Different languages get a different set of features,

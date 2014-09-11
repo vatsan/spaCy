@@ -116,7 +116,7 @@
 <h1>Don&#8217;t Settle for a List of Strings<a class="headerlink" href="#don-t-settle-for-a-list-of-strings" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div><em>&#8220;Other tokenizers return lists of strings, which is downright
-barbaric.&#8221;</em> &#8212; me</div></blockquote>
+barbaric.&#8221;</em> &#8212; Tmp</div></blockquote>
 <p>spaCy splits text into a list of lexical types, which come with a variety of
 features pre-computed.  It&#8217;s designed to <strong>make the right thing easy</strong>, where the right
 thing is:</p>
@@ -138,18 +138,86 @@ for you.</p>
 the wrong thing. And the wrong thing isn&#8217;t just a little bit worse: it&#8217;s
 <strong>exponentially</strong> worse, because of
 <a class="reference external" href="http://en.wikipedia.org/wiki/Zipf's_law">Zipf&#8217;s law</a>.</p>
-<div class="figure align-center">
-<img src="../_images/chart.svg" /><p class="caption">The Gigaword corpus of English contains TODO tokens, with TODO lexical
-types. The graph above shows how the number of tokens and types grows as the
-corpus is tokenized. As we expect from Zipf&#8217;s law, the vocabulary grows
-exponentially slower than the number of tokens.</p>
-</div>
-<p>Yes, it&#8217;s a bit snarky to present the graph in a linear scale. It&#8217;s not what I&#8217;d
-put in a paper. But it isn&#8217;t misleading. Over the Gigaword corpus,
-if you compute some feature on a per-type basis, you&#8217;ll make TODO fewer calls
-to that function than if you had computed it on a per-token basis.</p>
+<center>
+<figure>
+  <embed
+    width="650em" height="auto"
+    type="image/svg+xml" src="chart.svg"/>
+</figure>
+</center><p>Mouse-over a line to see its value at that point.
+Yes, it&#8217;s a bit snarky to present the graph in a linear scale &#8212;
+but it isn&#8217;t misleading. Over the Gigaword corpus,
+if you compute some feature on a per-token basis, you&#8217;ll make <strong>500x more
+calls</strong> to that function than if you had computed it on a per-token basis.</p>
+<p>Zipf&#8217;s Law also makes distributional information a really powerful source of
+type-based features. It&#8217;s really handy to know where a word falls in the language&#8217;s
+frequency distribution, especially compared to variants of the word.  For instance,
+we might be processing a Twitter comment that contains the string &#8220;nasa&#8221;. We have
+little hope of recognising this as an entity except by noting that the string &#8220;NASA&#8221;
+is much more common, and that both strings are quite rare.</p>
 <div class="section" id="benchmarks">
 <h2>Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this headline">¶</a></h2>
+<p>The tutorial section describes a relation extraction system, consisting of
+a POS tagger, named entity recogniser, a dependency parser, and some
+hand-written heuristics.  I aimed to strike a good balance between implementation
+simplicity, accuracy and efficiency.</p>
+<p>The pipeline is able to return a list of relations faster than the NLTK
+tokenizer can return a list of strings.  We also show the efficiency of various
+other pieces of well-known NLP software.</p>
+<p>The NLTK implementation does not try to be particularly inefficient, for good
+reason. Optimization is like that old joke: you don&#8217;t have to out-run the
+tiger, only the guy running beside you.  And, typically, the NLTK tokenizer
+would be running beside some very slow processes.</p>
+<p>it&#8217;s
+trying to out-run its subsequent processes
+the efficiency of the tokenizer</p>
+<ol class="arabic simple">
+<li>spaCy computes atomic features once per lexical type;</li>
+<li></li>
+</ol>
+<p>are
+computed on a per-type basis, we use linear models backed by numpy arrays</p>
+<p>The pipeline is very fast: we&#8217;re able to process
+a whole document faster than the NLTK tokenizer It tells you how I think NLP software should be
+written</p>
+<p>that does POS
+tagging, named entity recognition, dependency parsing and</p>
+<p>spaCy uses more memory than a standard tokenizer, but is far more efficient. We
+compare against the NLTK tokenizer and the Penn Treebank&#8217;s tokenizer.sed script.
+We also give the performance of Python&#8217;s native string.split, for reference.</p>
+<p>It&#8217;s plain that spaCy is fast and NLTK is slow. What&#8217;s less obvious is whether
+it matters.  Efficiency is relative, like running from a tiger: you only need to be
+quicker than the next guy.  There&#8217;s no point in doubling the speed of a process
+that already runs in 1% of the time of your actual bottleneck.</p>
+<p>So, how often will the NLTK tokenizer bottleneck you?</p>
+<p>mostly slow for implementation reasons. The grammar is not compiled
+into a single expression, so the tokenizer makes multiple passes over the data
+(</p>
+<p>It&#8217;s natural to compare against NLTK, which is by far the most popular NLP
+software for Python.  The NLTK tokenizer uses a sequence of regular
+expressions, applied in several passes. It&#8217;s inefficient, but that won&#8217;t matter
+if the rest of your pipeline is even slower.</p>
+<p>The spaCy tokenizer</p>
+<p>implementation is geared for
+readability, not efficiency.  The idea is that the tokenizer is probably much
+faster than your slowest component anyway.</p>
+<p>good argument for this: the tokenizer
+should really be faster than your slowest</p>
+<p>it&#8217;s happy to make mulitple passes over the data, so that the
+grammar can be written as a list of separate expressions.
+Arguably, the
+tokenizer will be much faster than the slowest component</p>
+<p>inefficient: we could instead have a single big expressions, which would save
+us making so many passes over the data. On the other hand, the compiled
+expression would be unreadable</p>
+<p>We first look at the efficiency of the tokenizers by
+themselves,</p>
+<p>We here ask two things:</p>
+<ol class="arabic simple">
+<li>How fast is the spaCy tokenizer itself, relative to other tokenizers?</li>
+<li>How fast are applications using spaCy&#8217;s pre-computed lexical features,
+compared to applications that re-compute their features on every token?</li>
+</ol>
 <table border="1" class="docutils">
 <colgroup>
 <col width="19%" />
@@ -175,9 +243,7 @@ to that function than if you had computed it on a per-token basis.</p>
 </tr>
 </tbody>
 </table>
-<p>The comparison refers to 30 million words from the English Gigaword, on
-a Maxbook Air.  For context, calling string.split() on the data completes in
-about 5s.</p>
+<p>Why is NLTK so slow? Well, arguably it isn&#8217;t: bear in mind that</p>
 </div>
 <div class="section" id="pros-and-cons">
 <h2>Pros and Cons<a class="headerlink" href="#pros-and-cons" title="Permalink to this headline">¶</a></h2>
