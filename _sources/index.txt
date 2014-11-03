@@ -16,8 +16,7 @@ values are:
 * **Accuracy**:  All spaCy tools are within 0.5% of the current published
   state-of-the-art, on both news and web text. NLP moves fast, so always check
   the numbers --- and don't settle for tools that aren't backed by
-  rigorous recent evaluation. An algorithm that was "close enough to state-of-the-art"
-  5 years ago is probably crap by today's standards.
+  rigorous recent evaluation.
 
 * **Minimalism**:  This isn't a library that covers 43 known algorithms to do X. You
   get 1 --- the best one --- with a simple, low-level interface. This keeps the
