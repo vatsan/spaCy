@@ -113,55 +113,61 @@
             
   <div class="section" id="spacy-nlp-tokenizer-and-lexicon">
 <h1>spaCy NLP Tokenizer and Lexicon<a class="headerlink" href="#spacy-nlp-tokenizer-and-lexicon" title="Permalink to this headline">¶</a></h1>
-<p>spaCy is an industrial-strength multi-language tokenizer, bristling with features
-you never knew you wanted. You do want these features though &#8212; your current
-tokenizer has been doing it wrong.
-Where other tokenizers give you a list of strings, spaCy gives you references
-to rich lexical types, for easy, excellent and efficient feature extraction.</p>
-<ul>
-<li><p class="first"><strong>Easy</strong>: Tokenizer returns a sequence of rich lexical types, with features
-pre-computed:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">EN</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">EN</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-<span class="gp">... </span>  <span class="k">print</span> <span class="n">w</span><span class="o">.</span><span class="n">sic</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">cluster</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">oft_title</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">can_verb</span>
-</pre></div>
-</div>
-</li>
-</ul>
-<p>Check out the tutorial and API docs.</p>
+<p>spaCy is a library for industrial strength NLP in Python.  Its core
+values are:</p>
 <ul class="simple">
-<li><strong>Excellent</strong>: Distributional and orthographic features are crucial to robust
-NLP. Without them, models can only learn from tiny annotated training
-corpora.  Read more.</li>
-<li><strong>Efficient</strong>: spaCy serves you rich lexical objects faster than most
-tokenizers can give you a list of strings.</li>
+<li><strong>Efficiency</strong>: You won&#8217;t find faster NLP tools. For shallow analysis, it&#8217;s 10x
+faster than Stanford Core NLP, and over 200x faster than NLTK.  Its parser is
+over 100x faster than Stanford&#8217;s.</li>
+<li><strong>Accuracy</strong>:  All spaCy tools are within 0.5% of the current published
+state-of-the-art, on both news and web text. NLP moves fast, so always check
+the numbers &#8212; and don&#8217;t settle for tools that aren&#8217;t backed by
+rigorous recent evaluation. An algorithm that was &#8220;close enough to state-of-the-art&#8221;
+5 years ago is probably crap by today&#8217;s standards.</li>
+<li><strong>Minimalism</strong>:  This isn&#8217;t a library that covers 43 known algorithms to do X. You
+get 1 &#8212; the best one &#8212; with a simple, low-level interface. This keeps the
+code-base small and concrete.  Our Python APIs use lists and
+dictionaries, and our C/Cython APIs use arrays and simple structs.</li>
 </ul>
+<div class="section" id="comparison">
+<h2>Comparison<a class="headerlink" href="#comparison" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="docutils">
 <colgroup>
-<col width="19%" />
-<col width="16%" />
-<col width="33%" />
-<col width="33%" />
+<col width="24%" />
+<col width="20%" />
+<col width="12%" />
+<col width="23%" />
+<col width="21%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>System</td>
-<td>Time</td>
-<td>Words/second</td>
-<td>Speed Factor</td>
+<tr class="row-odd"><td>Tokenize &amp; Tag</td>
+<td>Speed (w/s)</td>
+<td>Memory</td>
+<td>% Acc. (news)</td>
+<td>% Acc. (web)</td>
+</tr>
+<tr class="row-even"><td>spaCy</td>
+<td>107,000</td>
+<td>1.3gb</td>
+<td>96.7</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>Stanford</td>
+<td>8,000</td>
+<td>1.5gb</td>
+<td>96.7</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-even"><td>NLTK</td>
-<td>6m4s</td>
-<td>89,000</td>
-<td>1.00</td>
-</tr>
-<tr class="row-odd"><td>spaCy</td>
-<td>9.5s</td>
-<td>3,093,000</td>
-<td>38.30</td>
+<td>543</td>
+<td>61mb</td>
+<td>94.0</td>
+<td>&nbsp;</td>
 </tr>
 </tbody>
 </table>
 <div class="toctree-wrapper compound">
+</div>
 </div>
 </div>
 

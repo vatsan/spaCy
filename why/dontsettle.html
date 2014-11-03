@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Don’t Settle for a List of Strings &mdash; spaCy 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 1.0 documentation" href="../index.html"/>
+        <link rel="next" title="How" href="../how/index.html"/>
+        <link rel="prev" title="What" href="../what/index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../what/index.html">What</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../what/index.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../what/index.html#languages">Languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../what/index.html#reversibility">Reversibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../what/index.html#customization">Customization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../what/index.html#license-for-the-code">License (for the code)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../what/index.html#pricing-for-the-data">Pricing (for the data)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Why</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how/index.html">How</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how/index.html#tutorial">Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how/index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how/index.html#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Don&#8217;t Settle for a List of Strings</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/why/dontsettle.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="don-t-settle-for-a-list-of-strings">
+<h1>Don&#8217;t Settle for a List of Strings<a class="headerlink" href="#don-t-settle-for-a-list-of-strings" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><em>&#8220;Other NLP tokenizers return lists of strings, which is downright
+barbaric.&#8221;</em> &#8212; me</div></blockquote>
+<p>spaCy splits text into a list of lexical types, which come with a variety of
+features pre-computed.  It&#8217;s designed to <strong>make the right thing easy</strong>, where the right
+thing is:</p>
+<ul class="simple">
+<li>A global vocabulary store;</li>
+<li>Cached orthographic features;</li>
+<li>Clever use of distributional data.</li>
+</ul>
+<p>Let&#8217;s say you&#8217;re writing an entity tagger for English. Case distinctions are an
+important feature here: you need to know whether the word you&#8217;re tagging is
+upper-cased, lower-cased, title-cased, non-alphabetic, etc.
+The right thing is to call the string.isupper(), string.islower(), string.isalpha()
+etc functions once for every <em>type</em> in your vocabulary, instead
+of once for every <em>token</em> in the text you&#8217;re tagging.
+When you encounter a new word, you want to create a lexeme object, calculate its
+features, and save it.</p>
+<p>That&#8217;s the <em>right</em> way to do it, so it&#8217;s what spaCy does for you.</p>
+<p>Other tokenizers give you a list of strings, which makes it really easy to do
+the wrong thing. And the wrong thing isn&#8217;t just a little bit worse: it&#8217;s
+<strong>exponentially</strong> worse, because of
+<a class="reference external" href="http://en.wikipedia.org/wiki/Zipf's_law">Zipf&#8217;s law</a>.</p>
+<center>
+<figure>
+  <embed
+    width="650em" height="auto"
+    type="image/svg+xml" src="chart.svg"/>
+</figure>
+</center><p>Over the Gigaword corpus, if you compute some feature on a per-token basis, you&#8217;ll
+make <strong>500x more calls</strong> to that function than if you had computed it on a per-token
+basis.
+(Mouse-over a line to see its value at that point. And yes, it&#8217;s a bit snarky
+to present the graph in a linear scale &#8212; but it isn&#8217;t misleading.)</p>
+<p>Zipf&#8217;s Law also makes distributional information a really powerful source of
+type-based features. It&#8217;s really handy to know where a word falls in the language&#8217;s
+frequency distribution, especially compared to variants of the word.  For instance,
+we might be processing a Twitter comment that contains the string &#8220;nasa&#8221;. We have
+little hope of recognising this as an entity except by noting that the string &#8220;NASA&#8221;
+is much more common, and that both strings are quite rare.</p>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../how/index.html" class="btn btn-neutral float-right" title="How"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../what/index.html" class="btn btn-neutral" title="What"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

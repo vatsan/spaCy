@@ -6,36 +6,36 @@
 spaCy NLP Tokenizer and Lexicon
 ================================
 
-spaCy is an industrial-strength multi-language tokenizer, bristling with features
-you never knew you wanted. You do want these features though --- your current
-tokenizer has been doing it wrong.
-Where other tokenizers give you a list of strings, spaCy gives you references
-to rich lexical types, for easy, excellent and efficient feature extraction.
+spaCy is a library for industrial strength NLP in Python.  Its core
+values are:
 
-* **Easy**: Tokenizer returns a sequence of rich lexical types, with features
-  pre-computed:
+* **Efficiency**: You won't find faster NLP tools. For shallow analysis, it's 10x
+  faster than Stanford Core NLP, and over 200x faster than NLTK.  Its parser is
+  over 100x faster than Stanford's.
 
-    >>> from spacy.en import EN
-    >>> for w in EN.tokenize(string):
-    ...   print w.sic, w.shape, w.cluster, w.oft_title, w.can_verb
+* **Accuracy**:  All spaCy tools are within 0.5% of the current published
+  state-of-the-art, on both news and web text. NLP moves fast, so always check
+  the numbers --- and don't settle for tools that aren't backed by
+  rigorous recent evaluation. An algorithm that was "close enough to state-of-the-art"
+  5 years ago is probably crap by today's standards.
 
-Check out the tutorial and API docs.
-
-* **Excellent**: Distributional and orthographic features are crucial to robust
-  NLP. Without them, models can only learn from tiny annotated training
-  corpora.  Read more.
+* **Minimalism**:  This isn't a library that covers 43 known algorithms to do X. You
+  get 1 --- the best one --- with a simple, low-level interface. This keeps the
+  code-base small and concrete.  Our Python APIs use lists and
+  dictionaries, and our C/Cython APIs use arrays and simple structs.
   
-* **Efficient**: spaCy serves you rich lexical objects faster than most
-  tokenizers can give you a list of strings.  
 
-+--------+-------+--------------+--------------+
-| System | Time	 | Words/second | Speed Factor |
-+--------+-------+--------------+--------------+
-| NLTK	 | 6m4s  | 89,000       | 1.00         |
-+--------+-------+--------------+--------------+
-| spaCy	 | 9.5s	 | 3,093,000	| 38.30        |
-+--------+-------+--------------+--------------+
-
+Comparison
+----------
++----------------+-------------+--------+---------------+--------------+
+| Tokenize & Tag | Speed (w/s) | Memory | % Acc. (news) | % Acc. (web) |
++----------------+-------------+--------+---------------+--------------+
+| spaCy          | 107,000     |  1.3gb | 96.7          |              |
++----------------+-------------+--------+---------------+--------------+
+| Stanford       | 8,000       |  1.5gb | 96.7          |              |
++----------------+-------------+--------+---------------+--------------+
+| NLTK           | 543         |  61mb  | 94.0          |              |
++----------------+-------------+--------+---------------+--------------+
 
 
 .. toctree::
