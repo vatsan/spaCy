@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Lexeme Features &mdash; spaCy 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 1.0 documentation" href="index.html"/>
+        <link rel="prev" title="spaCy NLP Tokenizer and Lexicon" href="index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Lexeme Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#string-features">String features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integer-features">Integer features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boolean-features">Boolean features</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Lexeme Features</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/features.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="lexeme-features">
+<h1>Lexeme Features<a class="headerlink" href="#lexeme-features" title="Permalink to this headline">¶</a></h1>
+<p>A lexeme is an entry in the lexicon &#8212; the vocabulary &#8212; for a word, punctuation
+symbol, whitespace unit, etc.  Lexemes come with lots of pre-computed information,
+that help you write good feature functions.  Features are integer-valued where
+possible &#8212; instead of strings, spaCy refers to strings by consecutive ID numbers,
+which you can use to look up the string values if necessary.</p>
+<div class="section" id="string-features">
+<h2>String features<a class="headerlink" href="#string-features" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>SIC</td>
+<td>The word as it appeared in the sentence, unaltered.</td>
+</tr>
+<tr class="row-even"><td>NORM</td>
+<td>For frequent words, case normalization is applied.
+Otherwise, back-off to SHAPE.</td>
+</tr>
+<tr class="row-odd"><td>SHAPE</td>
+<td><p class="first">Remap the characters of the word as follows:</p>
+<p>a-z &#8211;&gt; x, A-Z &#8211;&gt; X, 0-9 &#8211;&gt; d, ,.;:&#8221;&#8217;?!$- &#8211;&gt; self, other &#8211;&gt; *</p>
+<p>Trim sequences of length 3+ to 3, e.g</p>
+<p class="last">apples &#8211;&gt; xxx, Apples &#8211;&gt; Xxxx, app9LES&#64; &#8211;&gt; xxx9XXX*</p>
+</td>
+</tr>
+<tr class="row-even"><td>ASCIIED</td>
+<td>Use unidecode.unidecode(sic) to approximate the word using the
+ascii characters.</td>
+</tr>
+<tr class="row-odd"><td>PREFIX</td>
+<td>sic_unicode_string[:1]</td>
+</tr>
+<tr class="row-even"><td>SUFFIX</td>
+<td>sic_unicode_string[-3:]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="integer-features">
+<h2>Integer features<a class="headerlink" href="#integer-features" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>LENGTH</td>
+<td>Length of the string, in unicode</td>
+</tr>
+<tr class="row-even"><td>CLUSTER</td>
+<td>Brown cluster</td>
+</tr>
+<tr class="row-odd"><td>POS_TYPE</td>
+<td>K-means cluster of word&#8217;s tag affinities</td>
+</tr>
+<tr class="row-even"><td>SENSE_TYPE</td>
+<td>K-means cluster of word&#8217;s sense affinities</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="boolean-features">
+<h2>Boolean features<a class="headerlink" href="#boolean-features" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>IS_ALPHA</td>
+<td>The result of sic.isalpha()</td>
+</tr>
+<tr class="row-even"><td>IS_ASCII</td>
+<td>Check whether all the word&#8217;s characters are ascii characters</td>
+</tr>
+<tr class="row-odd"><td>IS_DIGIT</td>
+<td>The result of sic.isdigit()</td>
+</tr>
+<tr class="row-even"><td>IS_LOWER</td>
+<td>The result of sic.islower()</td>
+</tr>
+<tr class="row-odd"><td>IS_PUNCT</td>
+<td>Check whether all characters are in the class TODO</td>
+</tr>
+<tr class="row-even"><td>IS_SPACE</td>
+<td>The result of sic.isspace()</td>
+</tr>
+<tr class="row-odd"><td>IS_TITLE</td>
+<td>The result of sic.istitle()</td>
+</tr>
+<tr class="row-even"><td>IS_UPPER</td>
+<td>The result of sic.isupper()</td>
+</tr>
+<tr class="row-odd"><td>LIKE_URL</td>
+<td>Check whether the string looks like it could be a URL. Aims
+for low false negative rate.</td>
+</tr>
+<tr class="row-even"><td>LIKE_NUMBER</td>
+<td>Check whether the string looks like it could be a numeric
+entity, e.g. 10,000 10th .10 . Skews for low false negative
+rate.</td>
+</tr>
+<tr class="row-odd"><td>IN_LIST</td>
+<td>Facility for loading arbitrary run-time word lists?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="spaCy NLP Tokenizer and Lexicon"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

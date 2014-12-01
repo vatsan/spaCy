@@ -1,0 +1,91 @@
+=====================
+License user-stories 
+=====================
+
+The following user-stories were written to describe to my counsel how the
+license is intended to work.  If your counsel believes that they do not
+accurately describe the license terms as they are written, that is an
+**implementation bug** --- please report it!
+
+
+Ashley and Casey: Seed stage start-up
+-------------------------------------
+
+Ashley and Casey have an idea for a start-up.  To explore their idea, they want
+to build a minimum viable product they can put in front of potential users and
+investors.
+
+They have two options.
+
+  1. **Trial commercial license.** If they enter their email and tick a box, they
+    can use spaCy for six months for $0.  They are free to modify spaCy, and they
+    will own the copyright to their modifications for the duration of the license.
+    After the trial period elapses, they can either pay the license fee, or release
+    their contributions under the GPL, with copyright transferred to me as per
+    the contributor agreement.
+
+  2. **GPL.**  Casey and Pat can instead use spaCy under the GPL license.
+     However, they must then release any code that statically or dynamically
+     links to spaCy under the GPL as well (e.g. if they import the module, or
+     import a module that imports it, etc).  If they make any direct modifications
+     to spaCy, these must also be released, and copyright must be released to
+     Honnibal NLP, following the contributor license agreement.
+     
+Ashley and Casey find the GPL license unattractive for commercial use --- as
+they are supposed to.  They decide to take up the trial commercial license.
+However,  over the next six months, Ashley has to move house twice, and Casey gets
+sick.  By the time the trial expires, they still don't have a demo they can show
+investors.  They send an email explaining the situation, and a six month
+extension to their trial license is granted.
+
+By the time the extension period has elapsed, spaCy has helped them secure
+funding, and they even have a little revenue.  They are glad to pay the $5,000
+commercial license fee.
+
+spaCy is now permanently licensed for the product Ashley and Casey are
+developing.  They own the copyright to any modifications they make to spaCy,
+but not to the original spaCy code.
+
+No additional fees will be due when they hire new developers, and if they are
+acquired, the license will be transferred to the company acquiring them.  However,
+to use spaCy in another product, they will have to buy a second license.
+
+
+Alex and Sasha: University Academics
+------------------------------------
+
+Alex and Sasha are post-doctoral researchers working for a university.  Part of
+their funding comes from a grant from Google, but Google will not own any part
+of the work that they produce.  Their mission is just to write papers.
+
+Alex and Sasha find spaCy convenient, so they use it in their system under the
+GPL.  This means that their system must also be released under the GPL, but they're
+cool with that --- they were going to release their code anyway, as it's the only
+way to ensure their experiments are properly repeatable.
+
+Alex and Sasha find and fix a few bugs in spaCy.  They must release these
+modifications, and their patches are accepted into spaCy.  However, Alex and
+Sasha do not retain the copyright to their patches: under the contributor
+license agreement, copyright is transferred to Honnibal NLP.  When Honnibal NLP
+goes on to sell commercial licenses to spaCy, no royalties are due to Alex and
+Sasha.
+
+Later, Alex and Sasha implement new features into spaCy, for another paper. 
+Their implementation uses a lot of memory, and I do not accept their patches into
+the main branch of the project.  However, they can still distribute a fork of the
+project with their changes --- although they are only able to grant GPL licenses to
+their fork, as they do not retain the copyright.
+
+Honnibal NLP agrees to **never prevent contributors from distributing their
+modifications under the GPL.** So, Alex and Sasha know that they'll never be
+prevented from helping other researchers repeat their experiments.
+
+
+Phuong and Jessie: Open Source developers
+-----------------------------------------
+
+Phuong and Jessie use Calibre to manage their e-book libraries.  They have an
+idea for a search feature, and they want to use spaCy to implement it.  Calibre
+is released under the GPL, so Phuong and Jessie can use spaCy to improve
+Calibre.  They'll have to release their code, but that was always their
+intention anyway.
