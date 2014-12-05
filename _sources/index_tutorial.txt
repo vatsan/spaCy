@@ -1,0 +1,68 @@
+=========================================
+Tutorial: Creating an Inverse Index
+=========================================
+
+This tutorial illustrates basic use of spaCy.  We will iterate over the
+documents in our collection, and store a mapping from a word to its frequency
+in each document in the collection.
+
+Implementation 1: dict of dicts
+-------------------------------
+
+
+.. codeblock: python
+
+    from collections import defaultdict
+
+    from spacy.en import EN
+    from spacy.feature_names import SIC
+
+    def list_of_dicts_index(documents):
+        index = defaultdict(dict)
+        for doc_id, doc in enumerate(documents):
+            tokens = EN.tokenize(doc)
+            counts = tokens.count_by(SIC)
+            for term, count in counts.items():
+                index[term][doc_id] = count
+        return index
+
+The tokens.count_by method returns a dict of feature counts, for the given
+feature.  Here we use the SIC feature, which is the ID of the token's string,
+without any normalization etc.
+
+Implementation 2: Sparse matrix
+-------------------------------
+
+Because spaCy gives integer IDs, instead of strings, it's easy to use more
+efficient array-based data structures.  Here we use one of the sparse matrix
+implementations from scipy.  The complication is that we don't know the size of
+our vocabulary in advance, so can't give scipy the shape of the matrix before
+we've processed our documents.  The suggested solution seems to be to use
+scipy.vstack to resize the matrix when it's "full".
+I don't find the API very intuitive, but this makes sense, and seems to work
+well enough. 
+
+.. codeblock: python
+
+    import scipy
+    
+    from spacy.en import EN
+    from spacy.feature_names import SIC
+
+    def csr_matrix_index(documents):
+        n_rows = EN.lexicon.size
+        n_cols = len(documents)
+        index = scipy.sparse.coo_matrix((n_rows, n_cols), dtype=)
+
+        for doc_id, doc in enumerate(documents):
+            tokens = EN.tokenize(doc)
+            counts = tokens.count_by(SIC)
+            for term, count in counts.items():
+                if term >= index.size[0]:
+                    # Resize the matrix to 2*N
+                    scipy.sparse.vstack(
+                        scipy.sparse.coo_matrix(index.shape, index.dtype)
+                    )
+                index[term, doc_id] = count
+        return index.tocsr()
+

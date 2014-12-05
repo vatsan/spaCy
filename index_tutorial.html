@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; spaCy 1.0 documentation</title>
+  <title>Tutorial: Creating an Inverse Index &mdash; spaCy 1.0 documentation</title>
   
 
   
@@ -28,10 +28,7 @@
   
 
   
-    <link rel="top" title="spaCy 1.0 documentation" href="index.html"/>
- 
-
-
+    <link rel="top" title="spaCy 1.0 documentation" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -94,8 +91,10 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>Tutorial: Creating an Inverse Index</li>
       <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/index_tutorial.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -103,29 +102,29 @@
 </div>
           <div role="main">
             
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-s"><strong>s</strong></a>
-   </div>
-
-   <table class="indextable modindextable" cellspacing="0" cellpadding="2">
-     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
-     <tr class="cap" id="cap-s"><td></td><td>
-       <strong>s</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <tt class="xref">spacy</tt></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="how/api/tokenizers/en.html#module-spacy.en"><tt class="xref">spacy.en</tt></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <div class="section" id="tutorial-creating-an-inverse-index">
+<h1>Tutorial: Creating an Inverse Index<a class="headerlink" href="#tutorial-creating-an-inverse-index" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial illustrates basic use of spaCy.  We will iterate over the
+documents in our collection, and store a mapping from a word to its frequency
+in each document in the collection.</p>
+<div class="section" id="implementation-1-dict-of-dicts">
+<h2>Implementation 1: dict of dicts<a class="headerlink" href="#implementation-1-dict-of-dicts" title="Permalink to this headline">¶</a></h2>
+<p>The tokens.count_by method returns a dict of feature counts, for the given
+feature.  Here we use the SIC feature, which is the ID of the token&#8217;s string,
+without any normalization etc.</p>
+</div>
+<div class="section" id="implementation-2-sparse-matrix">
+<h2>Implementation 2: Sparse matrix<a class="headerlink" href="#implementation-2-sparse-matrix" title="Permalink to this headline">¶</a></h2>
+<p>Because spaCy gives integer IDs, instead of strings, it&#8217;s easy to use more
+efficient array-based data structures.  Here we use one of the sparse matrix
+implementations from scipy.  The complication is that we don&#8217;t know the size of
+our vocabulary in advance, so can&#8217;t give scipy the shape of the matrix before
+we&#8217;ve processed our documents.  The suggested solution seems to be to use
+scipy.vstack to resize the matrix when it&#8217;s &#8220;full&#8221;.
+I don&#8217;t find the API very intuitive, but this makes sense, and seems to work
+well enough.</p>
+</div>
+</div>
 
 
           </div>
