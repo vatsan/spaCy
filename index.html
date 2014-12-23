@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>spaCy NLP Tokenizer and Lexicon &mdash; spaCy 1.0 documentation</title>
+  <title>spaCy: Text-processing for products &mdash; spaCy 1.0 documentation</title>
   
 
   
@@ -92,7 +92,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="#">Docs</a> &raquo;</li>
       
-    <li>spaCy NLP Tokenizer and Lexicon</li>
+    <li>spaCy: Text-processing for products</li>
       <li class="wy-breadcrumbs-aside">
         
           <a href="_sources/index.txt" rel="nofollow"> View page source</a>
@@ -103,225 +103,94 @@
 </div>
           <div role="main">
             
-  <div class="section" id="spacy-nlp-tokenizer-and-lexicon">
-<h1>spaCy NLP Tokenizer and Lexicon<a class="headerlink" href="#spacy-nlp-tokenizer-and-lexicon" title="Permalink to this headline">¶</a></h1>
-<p>spaCy is a library for industrial-strength NLP in Python and Cython.  spaCy&#8217;s
-take on NLP is that it&#8217;s mostly about feature extraction &#8212; that&#8217;s the part
-that&#8217;s specific to NLP, so that&#8217;s what an NLP library should focus on.</p>
-<p>spaCy also believes that for NLP, <strong>efficiency is critical</strong>.  If you&#8217;re
-running batch jobs, you probably have an enormous amount of data; if you&#8217;re
-serving requests one-by-one, you want lower latency and fewer servers.  Even if
-you&#8217;re doing exploratory research on relatively small samples, you should still
-value efficiency, because it means you can run more experiments.</p>
-<p>Depending on the task, spaCy is between 10 and 200 times faster than NLTK,
-often with much better accuracy.  See Benchmarks for details, and
-Why is spaCy so fast? for a discussion of the algorithms and implementation
-that makes this possible.</p>
+  <div class="section" id="spacy-text-processing-for-products">
+<h1>spaCy: Text-processing for products<a class="headerlink" href="#spacy-text-processing-for-products" title="Permalink to this headline">¶</a></h1>
+<p>spaCy is a library for industrial-strength text processing in Python and Cython.
+Its core values are efficiency, accuracy and minimalism: you get a fast pipeline of
+state-of-the-art components, a nice API, and no clutter:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;An example sentence&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="k">print</span> <span class="n">token</span><span class="o">.</span><span class="n">sic</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">cluster</span><span class="p">)</span>
+<span class="go">An DT Xx 0b111011110</span>
+<span class="go">example NN xxxx 0b111110001</span>
+<span class="go">sentence NN xxxx 0b1101111110010</span>
+</pre></div>
+</div>
+<p>spaCy is particularly good for feature extraction, because it pre-loads lexical
+resources, maps strings to integer IDs, and supports output of numpy arrays:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">attrs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">((</span><span class="n">attrs</span><span class="o">.</span><span class="n">LEMMA</span><span class="p">,</span> <span class="n">attrs</span><span class="o">.</span><span class="n">POS</span><span class="p">,</span> <span class="n">attrs</span><span class="o">.</span><span class="n">SHAPE</span><span class="p">,</span> <span class="n">attrs</span><span class="o">.</span><span class="n">CLUSTER</span><span class="p">))</span>
+<span class="go">array([[ 1265,    14,    76,   478],</span>
+<span class="go">   [ 1545,    24,   262,   497],</span>
+<span class="go">   [ 3385,    24,   262, 14309]])</span>
+</pre></div>
+</div>
+<p>spaCy also makes it easy to add in-line mark up. Let&#8217;s say you want to mark all
+adverbs in red:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.defs</span> <span class="kn">import</span> <span class="n">ADVERB</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">color</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="s">u&#39;</span><span class="se">\033</span><span class="s">[91m&#39;</span> <span class="o">%</span> <span class="n">t</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADVERB</span> <span class="k">else</span> <span class="s">u&#39;</span><span class="si">%s</span><span class="s">&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">color</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">+</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Easy.  The trick here is that the Token objects know to pad themselves with
+whitespace when you ask for their unicode representation, so you can always get
+back the original string.</p>
+<p>spaCy is also very efficient &#8212; much more efficient than any other language
+processing tools available.  The table below compares the time to tokenize, POS
+tag and parse 100m words of text; it also shows accuracy on the standard
+evaluation, from the Wall Street Journal:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="21%" />
-<col width="24%" />
-<col width="31%" />
-<col width="24%" />
+<col width="22%" />
+<col width="22%" />
+<col width="33%" />
+<col width="22%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>System</td>
 <td>Tokenize</td>
-<td>&#8211;&gt; Counts</td>
-<td>&#8211;&gt; Stem</td>
+<td>POS Tag</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-even"><td>spaCy</td>
-<td>1m42s</td>
-<td>1m59s</td>
-<td>1m59s</td>
+<td>37s</td>
+<td>98s</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-odd"><td>NLTK</td>
-<td>20m2s</td>
-<td>28m24s</td>
-<td>52m28</td>
+<td>626s</td>
+<td>44,310s (12h)</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>CoreNLP</td>
+<td>420s</td>
+<td>1,300s (22m)</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>ZPar</td>
+<td>&nbsp;</td>
+<td>~1,500s</td>
+<td>&nbsp;</td>
 </tr>
 </tbody>
 </table>
-<p>Times for 100m words of text.</p>
-<div class="section" id="unique-lexicon-centric-design">
-<h2>Unique Lexicon-centric design<a class="headerlink" href="#unique-lexicon-centric-design" title="Permalink to this headline">¶</a></h2>
-<p>spaCy helps you build models that generalise better, by making it easy to use
-more robust features.  Instead of a list of strings, the tokenizer returns
-references to rich lexical types.  Features which ask about the word&#8217;s Brown cluster,
-its typical part-of-speech tag, how it&#8217;s usually cased etc require no extra effort:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">EN</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.feature_names</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">feats</span> <span class="o">=</span> <span class="p">(</span>
-<span class="go">        SIC, # ID of the original word form</span>
-<span class="go">        STEM, # ID of the stemmed word form</span>
-<span class="go">        CLUSTER, # ID of the word&#39;s Brown cluster</span>
-<span class="go">        IS_TITLE, # Was the word title-cased?</span>
-<span class="go">        POS_TYPE # A cluster ID describing what POS tags the word is usually assigned</span>
-<span class="go">    )</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">EN</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="s">u&#39;Split words, punctuation, emoticons etc.! ^_^&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">(</span><span class="n">feats</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
-<span class="go">    array([[    1,  2,  3,  4],</span>
-<span class="go">           [...],</span>
-<span class="go">           [...],</span>
-<span class="go">           [...]])</span>
-</pre></div>
-</div>
-<p>spaCy is designed to <strong>make the right thing easy</strong>, where the right thing is to:</p>
-<ul class="simple">
-<li><strong>Use rich distributional and orthographic features</strong>. Without these, your model
-will be very brittle and domain dependent.</li>
-<li><strong>Compute features per type, not per token</strong>. Because of Zipf&#8217;s law, you can
-expect this to be exponentially more efficient.</li>
-<li><strong>Minimize string processing</strong>, and instead compute with arrays of ID ints.</li>
-</ul>
-<p>For the current list of lexical features, see <a class="reference external" href="features.html">Lexical Features</a>.</p>
-</div>
-<div class="section" id="tokenization-done-right">
-<h2>Tokenization done right<a class="headerlink" href="#tokenization-done-right" title="Permalink to this headline">¶</a></h2>
-<p>Most tokenizers rely on complicated regular expressions.  Often, they leave you
-with no way to align the tokens back to the original string &#8212; a vital feature
-if you want to display some mark-up, such as spelling correction.  The regular
-expressions also interact, making it hard to accommodate special cases.</p>
-<p>spaCy introduces a <strong>novel tokenization algorithm</strong> that&#8217;s much faster and much
-more flexible:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">prefixes</span><span class="o">=</span><span class="p">{},</span> <span class="n">suffixes</span><span class="o">=</span><span class="p">{},</span> <span class="n">specials</span><span class="o">=</span><span class="p">{}):</span>
-    <span class="sd">&#39;&#39;&#39;Sketch of spaCy&#39;s tokenization algorithm.&#39;&#39;&#39;</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-        <span class="c"># Because of Zipf&#39;s law, the cache serves the majority of &quot;chunks&quot;.</span>
-        <span class="k">if</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
-            <span class="n">tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="n">chunl</span><span class="p">])</span>
-            <span class="k">continue</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="n">chunk</span>
-
-        <span class="n">subtokens</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c"># Process a chunk by splitting off prefixes e.g. ( &quot; { and suffixes e.g. , . :</span>
-        <span class="c"># If we split one off, check whether we&#39;re left with a special-case,</span>
-        <span class="c"># e.g. contractions (can&#39;t, won&#39;t, etc), emoticons, abbreviations, etc.</span>
-        <span class="c"># This makes the tokenization easy to update and customize.</span>
-        <span class="k">while</span> <span class="n">chunk</span><span class="p">:</span>
-            <span class="n">prefix</span><span class="p">,</span> <span class="n">chunk</span> <span class="o">=</span> <span class="n">_consume_prefix</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">prefixes</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">prefix</span><span class="p">:</span>
-                <span class="n">subtokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">specials</span><span class="p">:</span>
-                    <span class="n">subtokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">specials</span><span class="p">[</span><span class="n">chunk</span><span class="p">])</span>
-                    <span class="k">break</span>
-            <span class="n">suffix</span><span class="p">,</span> <span class="n">chunk</span> <span class="o">=</span> <span class="n">_consume_suffix</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">suffixes</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">suffix</span><span class="p">:</span>
-                <span class="n">subtokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">suffix</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">specials</span><span class="p">:</span>
-                    <span class="n">subtokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">specials</span><span class="p">[</span><span class="n">chunk</span><span class="p">])</span>
-                    <span class="k">break</span>
-        <span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">subtokens</span>
-</pre></div>
-</div>
-<p>Your data is going to have its own quirks, so it&#8217;s really useful to have
-a tokenizer you can easily control.  To see the limitations of the standard
-regex-based approach, check out <a class="reference external" href="http://www.ark.cs.cmu.edu/TweetNLP/">CMU&#8217;s recent work on tokenizing tweets</a>. Despite a lot of careful attention, they can&#8217;t handle all of their
-known emoticons correctly &#8212; doing so would interfere with the way they
-process other punctuation.  This isn&#8217;t a problem for spaCy: we just add them
-all to the special tokenization rules.</p>
-<p>spaCy&#8217;s tokenizer is also incredibly efficient:</p>
-<p>spaCy can create an inverted index of the 1.8 billion word Gigaword corpus,
-in under half an hour &#8212; on a Macbook Air.  See the <a class="reference external" href="index_tutorial.html">inverted
-index tutorial</a>.</p>
-</div>
-<div class="section" id="comparison-with-nltk">
-<h2>Comparison with NLTK<a class="headerlink" href="#comparison-with-nltk" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://nltk.org">NLTK</a> provides interfaces to a wide-variety of NLP
-tools and resources, and its own implementations of a few algorithms.  It comes
-with comprehensive documentation, and a book introducing concepts in NLP.  For
-these reasons, it&#8217;s very widely known.  However, if you&#8217;re trying to make money
-or do cutting-edge research, NLTK is not a good choice.</p>
-<p>The <a class="reference external" href="http://www.nltk.org/py-modindex.html">list of stuff in NLTK</a> looks impressive,
-but almost none of it is useful for real work.  You&#8217;re not going to make any money,
-or do top research, by using the NLTK chat bots, theorem provers, toy CCG implementation,
-etc.  Most of NLTK is there to assist in the explanation ideas in computational
-linguistics, at roughly an undergraduate level.
-But it also claims to support serious work, by wrapping external tools.</p>
-<p>In a pretty well known essay, Joel Spolsky discusses the pain of dealing with
-<a class="reference external" href="http://www.joelonsoftware.com/articles/LeakyAbstractions.html">leaky abstractions</a>.
-An abstraction tells you to not care about implementation
-details, but sometimes the implementation matters after all. When it
-does, you have to waste time revising your assumptions.</p>
-<p>NLTK&#8217;s wrappers call external tools via subprocesses, and wrap this up so
-that it looks like a native API.  This abstraction leaks <em>a lot</em>.  The system
-calls impose far more overhead than a normal Python function call, which makes
-the most natural way to program against the API infeasible.</p>
-<div class="section" id="case-study-pos-tagging">
-<h3>Case study: POS tagging<a class="headerlink" href="#case-study-pos-tagging" title="Permalink to this headline">¶</a></h3>
-<p>Here&#8217;s a quick comparison of the following POS taggers:</p>
-<ul class="simple">
-<li><strong>Stanford (CLI)</strong>: The Stanford POS tagger, invoked once as a batch process
-from the command-line;</li>
-<li><strong>nltk.tag.stanford</strong>: The Stanford tagger, invoked document-by-document via
-NLTK&#8217;s wrapper;</li>
-<li><strong>nltk.pos_tag</strong>: NLTK&#8217;s own POS tagger, invoked document-by-document.</li>
-<li><strong>spacy.en.pos_tag</strong>: spaCy&#8217;s POS tagger, invoked document-by-document.</li>
-</ul>
-<table border="1" class="docutils">
-<colgroup>
-<col width="48%" />
-<col width="33%" />
-<col width="20%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>System</td>
-<td>Speed (w/s)</td>
-<td>% Acc.</td>
-</tr>
-<tr class="row-even"><td>spaCy</td>
-<td>107,000</td>
-<td>96.7</td>
-</tr>
-<tr class="row-odd"><td>Stanford (CLI)</td>
-<td>8,000</td>
-<td>96.7</td>
-</tr>
-<tr class="row-even"><td>nltk.pos_tag</td>
-<td>543</td>
-<td>94.0</td>
-</tr>
-<tr class="row-odd"><td>nltk.tag.stanford</td>
-<td>209</td>
-<td>96.7</td>
-</tr>
-</tbody>
-</table>
-<p>Experimental details TODO.  Three things are apparent from this comparison:</p>
-<ol class="arabic simple">
-<li>The native NLTK tagger, nltk.pos_tag, is both slow and inaccurate;</li>
-<li>Calling the Stanford tagger document-by-document via NLTK is <strong>40x</strong> slower
-than invoking the model once as a batch process, via the command-line;</li>
-<li>spaCy is over 10x faster than the Stanford tagger, even when called
-<strong>sentence-by-sentence</strong>.</li>
-</ol>
-<p>The problem is that NLTK simply wraps the command-line
-interfaces of these tools, so communication is via a subprocess.  NLTK does not
-even hold open a pipe for you &#8212; the model is reloaded, again and again.</p>
-<p>To use the wrapper effectively, you should batch up your text as much as possible.
-This probably isn&#8217;t how you would like to structure your pipeline, and you
-might not be able to batch up much text at all, e.g. if serving a single
-request means processing a single document.
-Technically, NLTK does give you Python functions to access lots of different
-systems &#8212; but, you can&#8217;t use them as you would expect to use a normal Python
-function.  The abstraction leaks.</p>
-<p>Here&#8217;s the bottom-line: the Stanford tools are written in Java, so using them
-from Python sucks.  You shouldn&#8217;t settle for this.  It&#8217;s a problem that springs
-purely from the tooling, rather than the domain.</p>
-</div>
-<div class="section" id="summary">
-<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
-<p>NLTK is a well-known Python library for NLP, but for the important bits, you
-don&#8217;t get actual Python modules.  You get wrappers which throw to external
-tools, via subprocesses.  This is not at all the same thing.</p>
-<p>spaCy is implemented in Cython, just like numpy, scikit-learn, lxml and other
-high-performance Python libraries.  So you get a native Python API, but the
-performance you expect from a program written in C.</p>
+<p>spaCy completes its whole pipeline faster than some of the other libraries can
+tokenize the text.  Its POS tag accuracy is as good as any system available.
+For parsing, I chose an algorithm that sacrificed some accuracy, in favour of
+efficiency.</p>
+<p>I wrote spaCy so that startups and other small companies could take advantage
+of the enormous progress being made by NLP academics.  Academia is competitive,
+and what you&#8217;re competing to do is write papers &#8212; so it&#8217;s very hard to write
+software useful to non-academics. Seeing this gap, I resigned from my post-doc,
+and wrote spaCy.</p>
+<p>spaCy is dual-licensed: you can either use it under the GPL, or pay a one-time
+fee of $5000 for a commercial license.  I think this is excellent value:
+you&#8217;ll find NLTK etc much more expensive, because what you save on license
+cost, you&#8217;ll lose many times over in lost productivity. $5000 does not buy you
+much developer time.</p>
 <div class="toctree-wrapper compound">
-</div>
-</div>
 </div>
 </div>
 
