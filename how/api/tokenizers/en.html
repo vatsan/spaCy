@@ -104,47 +104,6 @@
             
   <div class="section" id="module-spacy.en">
 <span id="spacy-en-en"></span><h1>spacy.en.EN<a class="headerlink" href="#module-spacy.en" title="Permalink to this headline">¶</a></h1>
-<p>from __future__ import unicode_literals
-from os import path</p>
-<p>from .. import orth
-from ..vocab import Vocab
-from ..tokenizer import Tokenizer
-from ..syntax.parser import GreedyParser
-from ..tokens import Tokens
-from .pos import EnPosTagger
-from .pos import POS_TAGS
-from .attrs import get_flags</p>
-<dl class="docutils">
-<dt>def get_lex_props(string):</dt>
-<dd>return {&#8216;flags&#8217;: get_flags(string), &#8216;dense&#8217;: 1}</dd>
-<dt>class English(object):</dt>
-<dd><dl class="first last docutils">
-<dt>def __init__(self, data_dir=None, tag=True, parse=False):</dt>
-<dd><dl class="first docutils">
-<dt>if data_dir is None:</dt>
-<dd>data_dir = path.join(path.dirname(__file__), &#8216;data&#8217;)</dd>
-</dl>
-<p class="last">self.vocab = Vocab(data_dir=data_dir, get_lex_props=get_lex_props)
-self.tokenizer = Tokenizer.from_dir(self.vocab, data_dir)
-self.tagger = EnPosTagger(self.vocab.strings, data_dir) if tag else None
-self.parser = GreedyParser(path.join(data_dir, &#8216;deps&#8217;)) if parse else None
-self.strings = self.vocab.strings
-self.tags = self.tagger.tag_names</p>
-</dd>
-<dt>def __call__(self, text, tag=True, parse=True):</dt>
-<dd><p class="first">tokens = self.tokenizer.tokenize(text)
-if self.tagger and tag:</p>
-<blockquote>
-<div>self.tagger(tokens)</div></blockquote>
-<dl class="docutils">
-<dt>if self.parser and parse:</dt>
-<dd>self.parser.parse(tokens)</dd>
-</dl>
-<p class="last">return tokens</p>
-</dd>
-</dl>
-</dd>
-</dl>
 <div class="section" id="tokenizer-api">
 <h2>Tokenizer API<a class="headerlink" href="#tokenizer-api" title="Permalink to this headline">¶</a></h2>
 </div>

@@ -112,8 +112,8 @@ state-of-the-art components, a nice API, and no clutter:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;An example sentence&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-<span class="gp">... </span>  <span class="k">print</span> <span class="n">token</span><span class="o">.</span><span class="n">sic</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">cluster</span><span class="p">)</span>
-<span class="go">An DT Xx 0b111011110</span>
+<span class="gp">... </span>  <span class="k">print</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">cluster</span><span class="p">)</span>
+<span class="go">an DT Xx 0b111011110</span>
 <span class="go">example NN xxxx 0b111110001</span>
 <span class="go">sentence NN xxxx 0b1101111110010</span>
 </pre></div>
@@ -127,59 +127,76 @@ resources, maps strings to integer IDs, and supports output of numpy arrays:</p>
 <span class="go">   [ 3385,    24,   262, 14309]])</span>
 </pre></div>
 </div>
-<p>spaCy also makes it easy to add in-line mark up. Let&#8217;s say you want to mark all
-adverbs in red:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.defs</span> <span class="kn">import</span> <span class="n">ADVERB</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">color</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="s">u&#39;</span><span class="se">\033</span><span class="s">[91m&#39;</span> <span class="o">%</span> <span class="n">t</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADVERB</span> <span class="k">else</span> <span class="s">u&#39;</span><span class="si">%s</span><span class="s">&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">color</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">+</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span>
+<p>spaCy also makes it easy to add in-line mark up. Let&#8217;s say you&#8217;re convinced by
+Stephen King&#8217;s advice that <a class="reference external" href="http://www.brainpickings.org/2013/03/13/stephen-king-on-adverbs/">adverbs are not your friend</a>, so you want to mark
+them in red. We&#8217;ll use one of the examples he finds particularly egregious:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&quot;‘Give it back,’ he pleaded abjectly, ‘it’s mine.’&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">red</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">string</span><span class="p">:</span> <span class="s">u&#39;</span><span class="se">\033</span><span class="s">[91m{0}</span><span class="se">\033</span><span class="s">[0m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">red</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">string</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="c"># TODO -- make red work on website...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">red</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_adverb</span> <span class="k">else</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span>
+<span class="go">‘Give it BACK,’ he pleaded ABJECTLY, ‘it’s mine.’</span>
 </pre></div>
 </div>
-<p>Easy.  The trick here is that the Token objects know to pad themselves with
-whitespace when you ask for their unicode representation, so you can always get
-back the original string.</p>
+<p>Easy &#8212; except, &#8220;back&#8221; isn&#8217;t the sort of word we&#8217;re looking for, even though
+it&#8217;s undeniably an adverb.  Let&#8217;s search refine the logic a little, and only
+highlight adverbs that modify verbs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">red</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_adverb</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">is_verb</span> <span class="k">else</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span>
+<span class="go">‘Give it back,’ he pleaded ABJECTLY, ‘it’s mine.’</span>
+</pre></div>
+</div>
 <p>spaCy is also very efficient &#8212; much more efficient than any other language
 processing tools available.  The table below compares the time to tokenize, POS
-tag and parse 100m words of text; it also shows accuracy on the standard
+tag and parse 30m words of text; it also shows accuracy on the standard
 evaluation, from the Wall Street Journal:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="22%" />
-<col width="22%" />
-<col width="33%" />
-<col width="22%" />
+<col width="17%" />
+<col width="17%" />
+<col width="15%" />
+<col width="14%" />
+<col width="17%" />
+<col width="20%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>System</td>
 <td>Tokenize</td>
 <td>POS Tag</td>
-<td>&nbsp;</td>
+<td>Parse</td>
+<td>POS Acc.</td>
+<td>Parse Acc.</td>
 </tr>
 <tr class="row-even"><td>spaCy</td>
 <td>37s</td>
 <td>98s</td>
-<td>&nbsp;</td>
+<td>1,011s</td>
+<td>97.3%</td>
+<td>92.4%</td>
 </tr>
 <tr class="row-odd"><td>NLTK</td>
 <td>626s</td>
-<td>44,310s (12h)</td>
-<td>&nbsp;</td>
+<td>44,310s</td>
+<td>n/a</td>
+<td>94.0%</td>
+<td>n/a</td>
 </tr>
 <tr class="row-even"><td>CoreNLP</td>
 <td>420s</td>
-<td>1,300s (22m)</td>
-<td>&nbsp;</td>
+<td>1,300s</td>
+<td>todo</td>
+<td>96.97%</td>
+<td>92.2%</td>
 </tr>
 <tr class="row-odd"><td>ZPar</td>
-<td>&nbsp;</td>
+<td>todo</td>
 <td>~1,500s</td>
-<td>&nbsp;</td>
+<td>todo</td>
+<td>97.3%</td>
+<td>92.9%</td>
 </tr>
 </tbody>
 </table>
-<p>spaCy completes its whole pipeline faster than some of the other libraries can
-tokenize the text.  Its POS tag accuracy is as good as any system available.
-For parsing, I chose an algorithm that sacrificed some accuracy, in favour of
-efficiency.</p>
+<p>(The CoreNLP results refer to their recently published shift-reduce neural
+network parser.)</p>
 <p>I wrote spaCy so that startups and other small companies could take advantage
 of the enormous progress being made by NLP academics.  Academia is competitive,
 and what you&#8217;re competing to do is write papers &#8212; so it&#8217;s very hard to write
