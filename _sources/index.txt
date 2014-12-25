@@ -49,20 +49,20 @@ highlight adverbs that modify verbs:
 
 spaCy is also very efficient --- much more efficient than any other language
 processing tools available.  The table below compares the time to tokenize, POS
-tag and parse 30m words of text; it also shows accuracy on the standard
-evaluation, from the Wall Street Journal:
+tag and parse a document (amortized over 100k samples).  It also shows accuracy
+on the standard evaluation, from the Wall Street Journal:
 
-+----------+----------+---------+--------+----------+------------+
-| System   | Tokenize | POS Tag | Parse  | POS Acc. | Parse Acc. |
-+----------+----------+---------+--------+----------+------------+
-| spaCy    | 37s      | 98s     | 1,011s | 97.3%    | 92.4%      |
-+----------+----------+---------+--------+----------+------------+
-| NLTK     | 626s     | 44,310s | n/a    | 94.0%    | n/a        |
-+----------+----------+---------+--------+----------+------------+
-| CoreNLP  | 420s     | 1,300s  | todo   | 96.97%   | 92.2%      |
-+----------+----------+---------+--------+----------+------------+
-| ZPar     | todo     | ~1,500s | todo   | 97.3%    | 92.9%      |
-+----------+----------+---------+--------+----------+------------+
++----------+----------+---------+----------+----------+------------+
+| System   | Tokenize | POS Tag | Parse    | POS Acc. | Parse Acc. |
++----------+----------+---------+----------+----------+------------+
+| spaCy    | 0.37ms   | 0.98ms  | 10ms     | 97.3%    | 92.4%      |
++----------+----------+---------+----------+----------+------------+
+| NLTK     | 6.2ms    | 443ms   | n/a      | 94.0%    | n/a        |
++----------+----------+---------+----------+----------+------------+
+| CoreNLP  | 4.2ms    | 13ms    | todo     | 96.97%   | 92.2%      |
++----------+----------+---------+----------+----------+------------+
+| ZPar     | n/a      | 15ms    | 850ms    | 97.3%    | 92.9%      |
++----------+----------+---------+----------+----------+------------+
 
 (The CoreNLP results refer to their recently published shift-reduce neural
 network parser.)

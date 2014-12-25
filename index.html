@@ -146,15 +146,15 @@ highlight adverbs that modify verbs:</p>
 </div>
 <p>spaCy is also very efficient &#8212; much more efficient than any other language
 processing tools available.  The table below compares the time to tokenize, POS
-tag and parse 30m words of text; it also shows accuracy on the standard
-evaluation, from the Wall Street Journal:</p>
+tag and parse a document (amortized over 100k samples).  It also shows accuracy
+on the standard evaluation, from the Wall Street Journal:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="17%" />
-<col width="17%" />
+<col width="16%" />
+<col width="16%" />
 <col width="15%" />
-<col width="14%" />
-<col width="17%" />
+<col width="16%" />
+<col width="16%" />
 <col width="20%" />
 </colgroup>
 <tbody valign="top">
@@ -166,30 +166,30 @@ evaluation, from the Wall Street Journal:</p>
 <td>Parse Acc.</td>
 </tr>
 <tr class="row-even"><td>spaCy</td>
-<td>37s</td>
-<td>98s</td>
-<td>1,011s</td>
+<td>0.37ms</td>
+<td>0.98ms</td>
+<td>10ms</td>
 <td>97.3%</td>
 <td>92.4%</td>
 </tr>
 <tr class="row-odd"><td>NLTK</td>
-<td>626s</td>
-<td>44,310s</td>
+<td>6.2ms</td>
+<td>443ms</td>
 <td>n/a</td>
 <td>94.0%</td>
 <td>n/a</td>
 </tr>
 <tr class="row-even"><td>CoreNLP</td>
-<td>420s</td>
-<td>1,300s</td>
+<td>4.2ms</td>
+<td>13ms</td>
 <td>todo</td>
 <td>96.97%</td>
 <td>92.2%</td>
 </tr>
 <tr class="row-odd"><td>ZPar</td>
-<td>todo</td>
-<td>~1,500s</td>
-<td>todo</td>
+<td>n/a</td>
+<td>15ms</td>
+<td>850ms</td>
 <td>97.3%</td>
 <td>92.9%</td>
 </tr>
