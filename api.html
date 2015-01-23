@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation &mdash; spaCy 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 1.0 documentation" href="index.html"/>
+        <link rel="next" title="How spaCy Works" href="howworks.html"/>
+        <link rel="prev" title="Quick Start" href="quickstart.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">spaCy: Industrial-strength NLP</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#example-functionality">Example functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#efficiency">Efficiency</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#accuracy">Accuracy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quick-ref">Quick Ref</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#english-pipeline">English Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tokens">Tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-spacy.vocab">Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-spacy.orth">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/api.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="quick-ref">
+<h2>Quick Ref<a class="headerlink" href="#quick-ref" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">spacy.en.__init__.</tt><tt class="descname">English</tt><big>(</big><em>self</em>, <em>data_dir=join(dirname(__file__</em>, <em>'data'))</em><big>)</big></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__call__(self, unicode text, tag=True, parse=False) --&gt; Tokens</tt></dt>
+<dd></dd></dl>
+
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Type</th>
+<th class="head">Useful</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>strings</td>
+<td>StingStore</td>
+<td>__getitem__</td>
+</tr>
+<tr class="row-odd"><td>vocab</td>
+<td>Vocab</td>
+<td>__getitem__</td>
+</tr>
+<tr class="row-even"><td>tokenizer</td>
+<td>Tokenizer</td>
+<td>__call__</td>
+</tr>
+<tr class="row-odd"><td>tagger</td>
+<td>EnPosTagger</td>
+<td>__call__</td>
+</tr>
+<tr class="row-even"><td>parser</td>
+<td>GreedyParser</td>
+<td>__call__</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="spacy.tokens.Tokens">
+<em class="property">class </em><tt class="descclassname">spacy.tokens.</tt><tt class="descname">Tokens</tt><big>(</big><em>self</em>, <em>vocab: Vocab</em>, <em>string_length=0</em><big>)</big><a class="headerlink" href="#spacy.tokens.Tokens" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__getitem__(self, i) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__iter__(self) --&gt; Iterator[Token]</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__len__(self) --&gt; int</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">to_array(self, attr_ids: List[int]) --&gt; numpy.ndarray[ndim=2, dtype=int32]</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">count_by(self, attr_id: int) --&gt; Dict[int, int]</tt></dt>
+<dd></dd></dl>
+
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="32%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Type</th>
+<th class="head">Useful</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>vocab</td>
+<td>Vocab</td>
+<td>__getitem__</td>
+</tr>
+<tr class="row-odd"><td>vocab.strings</td>
+<td>StringStore</td>
+<td>__getitem__</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="spacy.tokens.Token">
+<em class="property">class </em><tt class="descclassname">spacy.tokens.</tt><tt class="descname">Token</tt><big>(</big><em>self</em>, <em>parent: Tokens</em>, <em>i: int</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__unicode__(self) --&gt; unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__len__(self) --&gt; int</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">nbor(self, i=1) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">child(self, i=1) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">sibling(self, i=1) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">head: Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">check_flag(self, attr_id: int) --&gt; bool</tt></dt>
+<dd></dd></dl>
+
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="11%" />
+<col width="20%" />
+<col width="16%" />
+<col width="20%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Type</th>
+<th class="head">Attribute</th>
+<th class="head">Type</th>
+<th class="head">Attribute</th>
+<th class="head">Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sic</td>
+<td>int</td>
+<td><a href="#id1"><span class="problematic" id="id2">sic_</span></a></td>
+<td>unicode</td>
+<td>idx</td>
+<td>int</td>
+</tr>
+<tr class="row-odd"><td>lemma</td>
+<td>int</td>
+<td><a href="#id3"><span class="problematic" id="id4">lemma_</span></a></td>
+<td>unicode</td>
+<td>cluster</td>
+<td>int</td>
+</tr>
+<tr class="row-even"><td>norm1</td>
+<td>int</td>
+<td><a href="#id5"><span class="problematic" id="id6">norm1_</span></a></td>
+<td>unicode</td>
+<td>length</td>
+<td>int</td>
+</tr>
+<tr class="row-odd"><td>norm2</td>
+<td>int</td>
+<td><a href="#id7"><span class="problematic" id="id8">norm2_</span></a></td>
+<td>unicode</td>
+<td>prob</td>
+<td>float</td>
+</tr>
+<tr class="row-even"><td>shape</td>
+<td>int</td>
+<td><a href="#id9"><span class="problematic" id="id10">shape_</span></a></td>
+<td>unicode</td>
+<td>sentiment</td>
+<td>float</td>
+</tr>
+<tr class="row-odd"><td>prefix</td>
+<td>int</td>
+<td><a href="#id11"><span class="problematic" id="id12">prefix_</span></a></td>
+<td>unicode</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr class="row-even"><td>suffix</td>
+<td>int</td>
+<td><a href="#id13"><span class="problematic" id="id14">suffix_</span></a></td>
+<td>unicode</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>pos</td>
+<td>int</td>
+<td><a href="#id15"><span class="problematic" id="id16">pos_</span></a></td>
+<td>unicode</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr class="row-even"><td>fine_pos</td>
+<td>int</td>
+<td><a href="#id17"><span class="problematic" id="id18">fine_pos_</span></a></td>
+<td>unicode</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>dep_tag</td>
+<td>int</td>
+<td><a href="#id19"><span class="problematic" id="id20">dep_tag_</span></a></td>
+<td>unicode</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="spacy.vocab.Vocab">
+<em class="property">class </em><tt class="descclassname">spacy.vocab.</tt><tt class="descname">Vocab</tt><big>(</big><em>self</em>, <em>data_dir=None</em>, <em>lex_props_getter=None</em><big>)</big><a class="headerlink" href="#spacy.vocab.Vocab" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__len__(self) --&gt; int</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__getitem__(self, id: int) --&gt; unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__getitem__(self, string: unicode) --&gt; int</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__setitem__(self, py_str: unicode, props: Dict[str, int|float]) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">dump(self, loc: unicode) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">load_lexemes(self, loc: unicode) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">load_vectors(self, loc: unicode) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spacy.strings.StringStore">
+<em class="property">class </em><tt class="descclassname">spacy.strings.</tt><tt class="descname">StringStore</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.strings.StringStore" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__len__(self) --&gt; int</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__getitem__(self, id: int) --&gt; unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__getitem__(self, string: byts) --&gt; id</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__getitem__(self, string: unicode) --&gt; id</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">dump(self, loc: unicode) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">load(self, loc: unicode) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spacy.tokenizer.Tokenizer">
+<em class="property">class </em><tt class="descclassname">spacy.tokenizer.</tt><tt class="descname">Tokenizer</tt><big>(</big><em>self</em>, <em>Vocab vocab</em>, <em>rules</em>, <em>prefix_re</em>, <em>suffix_re</em>, <em>infix_re</em>, <em>pos_tags</em>, <em>tag_names</em><big>)</big><a class="headerlink" href="#spacy.tokenizer.Tokenizer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">tokens_from_list(self, List[unicode]) --&gt; spacy.tokens.Tokens</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokenizer.Tokenizer.__call__">
+<tt class="descname">__call__</tt><big>(</big><em>self</em>, <em>string: unicode) --&gt; spacy.tokens.Tokens</em><big>)</big><a class="headerlink" href="#spacy.tokenizer.Tokenizer.__call__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">vocab: spacy.vocab.Vocab</tt></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="spacy.en.pos.EnPosTagger">
+<em class="property">class </em><tt class="descclassname">spacy.en.pos.</tt><tt class="descname">EnPosTagger</tt><big>(</big><em>self</em>, <em>strings: spacy.strings.StringStore</em>, <em>data_dir: unicode</em><big>)</big><a class="headerlink" href="#spacy.en.pos.EnPosTagger" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="spacy.en.pos.EnPosTagger.__call__">
+<tt class="descname">__call__</tt><big>(</big><em>self</em>, <em>tokens: spacy.tokens.Tokens</em><big>)</big><a class="headerlink" href="#spacy.en.pos.EnPosTagger.__call__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">train(self, tokens: spacy.tokens.Tokens, List[int] golds) --&gt; int</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.en.pos.EnPosTagger.load_morph_exceptions">
+<tt class="descname">load_morph_exceptions</tt><big>(</big><em>self, exc: Dict[unicode, Dict]</em><big>)</big><a class="headerlink" href="#spacy.en.pos.EnPosTagger.load_morph_exceptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="GreedyParser">
+<em class="property">class </em><tt class="descname">GreedyParser</tt><big>(</big><em>self</em>, <em>model_dir: unicode</em><big>)</big><a class="headerlink" href="#GreedyParser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__call__(self, tokens: spacy.tokens.Tokens) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">train(self, spacy.tokens.Tokens) --&gt; None</tt></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p>spaCy is designed to easily extend to multiple languages, although presently
+only English components are implemented.  The components are organised into
+a pipeline in the spacy.en.English class.</p>
+<p>Usually, you will only want to create one spacy.en.English object, and pass it
+around your application.  It manages the string-to-integers mapping, and you
+will usually want only a single mapping for all strings.</p>
+</div>
+<div class="section" id="english-pipeline">
+<h2>English Pipeline<a class="headerlink" href="#english-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>The spacy.en package exports a single class, English, and several constants,
+under spacy.en.defs.</p>
+</div>
+<div class="section" id="tokens">
+<h2>Tokens<a class="headerlink" href="#tokens" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">spacy.tokens.</tt><tt class="descname">Token</tt></dt>
+<dd><p>Token(Tokens tokens, int i)
+An individual token.</p>
+<dl class="attribute">
+<dt id="spacy.tokens.Token.__len__">
+<tt class="descname">__len__</tt><a class="headerlink" href="#spacy.tokens.Token.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of unicode code-points in the original string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>length</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.__unicode__">
+<tt class="descname">__unicode__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.__unicode__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.check_flag">
+<tt class="descname">check_flag</tt><big>(</big><em>self</em>, <em>attr_id_t flag</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.check_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.tokens.Token.head">
+<tt class="descname">head</tt><a class="headerlink" href="#spacy.tokens.Token.head" title="Permalink to this definition">¶</a></dt>
+<dd><p>The token predicted by the parser to be the head of the current token.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.is_pos">
+<tt class="descname">is_pos</tt><big>(</big><em>self</em>, <em>univ_tag_t pos</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.is_pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.tokens.Token.string">
+<tt class="descname">string</tt><a class="headerlink" href="#spacy.tokens.Token.string" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unicode string of the word, with no whitespace padding.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-spacy.vocab">
+<span id="lexicon"></span><h2>Lexicon<a class="headerlink" href="#module-spacy.vocab" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">spacy.vocab.</tt><tt class="descname">Vocab</tt></dt>
+<dd><p>A map container for a language&#8217;s LexemeC structs.</p>
+<dl class="attribute">
+<dt id="spacy.vocab.Vocab.__delitem__">
+<tt class="descname">__delitem__</tt><a class="headerlink" href="#spacy.vocab.Vocab.__delitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>x.__delitem__(y) &lt;==&gt; del x[y]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.vocab.Vocab.__getitem__">
+<tt class="descname">__getitem__</tt><a class="headerlink" href="#spacy.vocab.Vocab.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a lexeme, given an int ID or a unicode string.  If a previously
+unseen unicode string is given, a new lexeme is created and stored.</p>
+<blockquote>
+<div>The integer ID of a word, or its unicode string.  If an int &gt;= Lexicon.size,
+IndexError is raised. If id_or_string is neither an int nor a unicode string,
+ValueError is raised.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>lexeme</strong> &#8211;<p>An instance of the Lexeme Python class, with data copied on
+instantiation.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Lexeme</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.vocab.Vocab.__len__">
+<tt class="descname">__len__</tt><a class="headerlink" href="#spacy.vocab.Vocab.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current number of lexemes stored.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.vocab.Vocab.__setitem__">
+<tt class="descname">__setitem__</tt><a class="headerlink" href="#spacy.vocab.Vocab.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>x.__setitem__(i, y) &lt;==&gt; x[i]=y</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tokenizer">
+<h2>Tokenizer<a class="headerlink" href="#tokenizer" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="parser">
+<h2>Parser<a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-spacy.orth">
+<span id="utility-functions"></span><h2>Utility Functions<a class="headerlink" href="#module-spacy.orth" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="spacy.orth.norm1">
+<tt class="descclassname">spacy.orth.</tt><tt class="descname">norm1</tt><big>(</big><big>)</big><a class="headerlink" href="#spacy.orth.norm1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply level 1 normalization:</p>
+<ul class="simple">
+<li>Case is canonicalized, using frequency statistics</li>
+<li>Unicode mapped to ascii, via unidecode</li>
+<li>Regional spelling variations are normalized</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="howworks.html" class="btn btn-neutral float-right" title="How spaCy Works"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quickstart.html" class="btn btn-neutral" title="Quick Start"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

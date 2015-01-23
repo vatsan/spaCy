@@ -57,16 +57,37 @@
         
         
             <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../features.html">Lexeme Features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../features.html#string-features">String features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../features.html#integer-features">Integer features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../features.html#boolean-features">Boolean features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">spaCy: Industrial-strength NLP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#example-functionality">Example functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#efficiency">Efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html#accuracy">Accuracy</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../license_stories.html">License user-stories</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../license_stories.html#ashley-and-casey-seed-stage-start-up">Ashley and Casey: Seed stage start-up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license_stories.html#alex-and-sasha-university-academics">Alex and Sasha: University Academics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license_stories.html#phuong-and-jessie-open-source-developers">Phuong and Jessie: Open Source developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#quick-ref">Quick Ref</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#english-pipeline">English Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#tokens">Tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-spacy.vocab">Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-spacy.orth">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../howworks.html">How spaCy Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../howworks.html#dependency-parser">Dependency Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -106,6 +127,7 @@
   <h1>Source code for spacy.en</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">re</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">orth</span>
 <span class="kn">from</span> <span class="nn">..vocab</span> <span class="kn">import</span> <span class="n">Vocab</span>
@@ -117,34 +139,114 @@
 <span class="kn">from</span> <span class="nn">.attrs</span> <span class="kn">import</span> <span class="n">get_flags</span>
 
 
+<span class="kn">from</span> <span class="nn">..util</span> <span class="kn">import</span> <span class="n">read_lang_data</span>
+
+
 <span class="k">def</span> <span class="nf">get_lex_props</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;flags&#39;</span><span class="p">:</span> <span class="n">get_flags</span><span class="p">(</span><span class="n">string</span><span class="p">),</span> <span class="s">&#39;dense&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s">&#39;flags&#39;</span><span class="p">:</span> <span class="n">get_flags</span><span class="p">(</span><span class="n">string</span><span class="p">),</span>
+        <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">),</span>
+        <span class="s">&#39;sic&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+        <span class="s">&#39;norm1&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+        <span class="s">&#39;norm2&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+        <span class="s">&#39;shape&#39;</span><span class="p">:</span> <span class="n">orth</span><span class="o">.</span><span class="n">word_shape</span><span class="p">(</span><span class="n">string</span><span class="p">),</span>
+        <span class="s">&#39;prefix&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s">&#39;suffix&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:],</span>
+        <span class="s">&#39;cluster&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s">&#39;prob&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s">&#39;sentiment&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
 
 
-<span class="k">class</span> <span class="nc">English</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<span class="n">LOCAL_DATA_DIR</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;data&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="English"><a class="viewcode-back" href="../../api.html#spacy.en.English">[docs]</a><span class="k">class</span> <span class="nc">English</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The English NLP pipeline.</span>
+
+<span class="sd">    Provides a tokenizer, lexicon, part-of-speech tagger and parser.</span>
+
+<span class="sd">    Keyword args:</span>
+<span class="sd">        data_dir (unicode): A path to a directory, from which to load the pipeline.</span>
+<span class="sd">            If None, looks for a directory named &quot;data/&quot; in the same directory as</span>
+<span class="sd">            the present file, i.e. path.join(path.dirname(__file__, &#39;data&#39;)).</span>
+<span class="sd">            If path.join(data_dir, &#39;pos&#39;) exists, the tagger is loaded from it.</span>
+<span class="sd">            If path.join(data_dir, &#39;deps&#39;) exists, the parser is loaded from it.</span>
+<span class="sd">            See Pipeline Directory Structure for details.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        vocab (spacy.vocab.Vocab): The lexicon.</span>
+
+<span class="sd">        strings (spacy.strings.StringStore): Encode/decode strings to/from integer IDs.</span>
+
+<span class="sd">        tokenizer (spacy.tokenizer.Tokenizer): The start of the pipeline.</span>
+
+<span class="sd">        tagger (spacy.en.pos.EnPosTagger):</span>
+<span class="sd">            The part-of-speech tagger, which also performs lemmatization and</span>
+<span class="sd">            morphological analysis.</span>
+
+<span class="sd">        parser (spacy.syntax.parser.GreedyParser):</span>
+<span class="sd">            A greedy shift-reduce dependency parser.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">LOCAL_DATA_DIR</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">Vocab</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;vocab&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_dir</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span>
+                           <span class="n">get_lex_props</span><span class="o">=</span><span class="n">get_lex_props</span><span class="p">)</span>
+        <span class="n">tag_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">POS_TAGS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">tag_names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;data&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">Vocab</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">get_lex_props</span><span class="o">=</span><span class="n">get_lex_props</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="o">.</span><span class="n">from_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span> <span class="o">=</span> <span class="n">EnPosTagger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">tag</span> <span class="k">else</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">GreedyParser</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">parse</span> <span class="k">else</span> <span class="bp">None</span>
+            <span class="n">tok_rules</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">prefix_re</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">suffix_re</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">infix_re</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tok_data_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;tokenizer&#39;</span><span class="p">)</span>
+            <span class="n">tok_rules</span><span class="p">,</span> <span class="n">prefix_re</span><span class="p">,</span> <span class="n">suffix_re</span><span class="p">,</span> <span class="n">infix_re</span> <span class="o">=</span> <span class="n">read_lang_data</span><span class="p">(</span><span class="n">tok_data_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="n">tok_rules</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix_re</span><span class="p">),</span>
+                                   <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">suffix_re</span><span class="p">),</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">infix_re</span><span class="p">),</span>
+                                   <span class="n">POS_TAGS</span><span class="p">,</span> <span class="n">tag_names</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span>
-
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
-        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span> <span class="ow">and</span> <span class="n">tag</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="ow">and</span> <span class="n">parse</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tokens</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span><span class="o">.</span><span class="n">tag_names</span>
+    <span class="k">def</span> <span class="nf">tagger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span> <span class="o">=</span> <span class="n">EnPosTagger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">GreedyParser</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span>
+
+<div class="viewcode-block" id="English.__call__"><a class="viewcode-back" href="../../api.html#spacy.en.English.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply the pipeline to some text.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            text (unicode): The text to be processed.</span>
+
+<span class="sd">        Keyword args:</span>
+<span class="sd">            tag (bool): Whether to add part-of-speech tags to the text.  This</span>
+<span class="sd">                will also set morphological analysis and lemmas.</span>
+
+<span class="sd">            parse (bool): Whether to add dependency-heads and labels to the text.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tokens (spacy.tokens.Tokens):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parse</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tokens</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="English.tags"><a class="viewcode-back" href="../../api.html#spacy.en.English.tags">[docs]</a>    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List of part-of-speech tag names.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span><span class="o">.</span><span class="n">tag_names</span></div></div>
 </pre></div>
 
           </div>

@@ -29,8 +29,7 @@
 
   
     <link rel="top" title="spaCy 1.0 documentation" href="index.html"/>
-        <link rel="next" title="spaCy: Industrial-strength Text Processing" href="index.html"/>
-        <link rel="prev" title="spaCy: Industrial-strength Text Processing" href="index.html"/> 
+        <link rel="prev" title="How spaCy Works" href="howworks.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -58,36 +57,37 @@
         
         
             <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">License</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">spaCy: Industrial-strength Text Processing</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">spaCy: Industrial-strength NLP</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="index.html#example-functionality">Example functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="index.html#efficiency">Efficiency</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html#accuracy">Accuracy</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick start guide</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features.html">Lexeme Features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features.html#string-features">String features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#integer-features">Integer features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#boolean-features">Boolean features</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api.html#quick-ref">Quick Ref</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.tokenizer">Tokenizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.syntax.parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#parser">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -116,7 +116,7 @@
     <li>License</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/license_stories.txt" rel="nofollow"> View page source</a>
+          <a href="_sources/license.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -126,6 +126,11 @@
             
   <div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>I&#8217;ve been writing spaCy for six months now, and I&#8217;m very excited to release it.
+I think it&#8217;s the most valuable thing I could have built.  When I was in
+academia, I noticed that small companies couldn&#8217;t really make use of our work.
+Meanwhile the tech giants have been hiring <em>everyone</em>, and putting this stuff
+into production.  I think spaCy can change that.</p>
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
@@ -150,9 +155,9 @@
 <tr class="row-odd"><td>Trial</td>
 <td>$1</td>
 <td>90 days</td>
-<td>Evalution, seed startup</td>
+<td>Evaluation, seed startup</td>
 </tr>
-<tr class="row-even"><td>AGPL</td>
+<tr class="row-even"><td>AGPLv3</td>
 <td>Free</td>
 <td>Life</td>
 <td>Research, teaching, hobbyists, FOSS</td>
@@ -160,31 +165,17 @@
 </tbody>
 </table>
 </div></blockquote>
-<p>I left academia in June 2014, just when I should have been submitting my first
-grant proposal.  I left because I don&#8217;t like the grant system.  It&#8217;s not the
-best way to create value, and it&#8217;s not the best way to get paid.</p>
-<p>I&#8217;ve been writing spaCy for six months now, and I&#8217;m very excited to release it.
-I think it&#8217;s the most valuable thing I could have built.  It opens up a lot of
-possibilities.  It&#8217;s really right up-to-the-minute with the best systems being
-published, while also being ready for production use.</p>
-<p>To make spaCy as valuable as possible, I&#8217;ve decided against
-a repeating-revenue, SaaS-type business model.  I doubt game developers license
-3d engines on a monthly basis, and I think spaCy is in a similar category.  To
-make use of it, you need to invest significant resources.  Development is
-expensive.  The investment is risky enough without having to worry that the
-engine you&#8217;re using might not be available in a year&#8217;s time.</p>
-<p>expect a flat-fee structure
-will be much more useful to most companies.</p>
-<p>business model.  I want you to have the</p>
-<p>Simply, there are products and features
-a small company can build with spaCy that they cannot build
-that you can build with spaCy that previously would&#8217;ve been impossible</p>
+<p>To make spaCy as valuable as possible, licenses to it are for life.  You get
+complete transparency, certainty and control.  There is much less risk this
+way.  And if you&#8217;re ever in acquisition or IPO talks, the story is simple.</p>
+<p>spaCy can also be used as free open-source software, under the Aferro GPL
+license.  If you use it this way, you must comply with the AGPL license terms.
+When you distribute your project, or offer it as a network service, you must
+distribute the source-code, and grant users an AGPL license to it.</p>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p>The following user-stories were written to describe to my counsel how the
-license is intended to work.  If your counsel believes that they do not
-accurately describe the license terms as they are written, that is an
-<strong>implementation bug</strong> &#8212; please report it!</p>
+<p>In order to clarify how spaCy&#8217;s license structure might apply to you, I&#8217;ve
+written a few examples, in the form of user-stories.</p>
 <div class="section" id="ashley-and-casey-seed-stage-start-up">
 <h3>Ashley and Casey: Seed stage start-up<a class="headerlink" href="#ashley-and-casey-seed-stage-start-up" title="Permalink to this headline">¶</a></h3>
 <p>Ashley and Casey have an idea for a start-up.  To explore their idea, they want
@@ -193,38 +184,38 @@ investors.</p>
 <p>They have two options.</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><strong>Trial commercial license.</strong> If they enter their email and tick a box, they</li>
+<li><strong>Trial commercial license.</strong> With a simple form, they can use spaCy for 90</li>
 </ol>
 <blockquote>
-<div>can use spaCy for six months for $0.  They are free to modify spaCy, and they
+<div>days, for a nominal fee of $1.  They are free to modify spaCy, and they
 will own the copyright to their modifications for the duration of the license.
-After the trial period elapses, they can either pay the license fee, or release
-their contributions under the GPL, with copyright transferred to me as per
-the contributor agreement.</div></blockquote>
+After the trial period elapses, they can either pay the license fee, stop
+using spaCy, release their project under the AGPL.</div></blockquote>
 <ol class="arabic simple" start="2">
-<li><strong>GPL.</strong>  Casey and Pat can instead use spaCy under the GPL license.
+<li><strong>AGPL.</strong>  Casey and Pat can instead use spaCy under the AGPL license.
 However, they must then release any code that statically or dynamically
-links to spaCy under the GPL as well (e.g. if they import the module, or
-import a module that imports it, etc).  If they make any direct modifications
-to spaCy, these must also be released, and copyright must be released to
-Honnibal NLP, following the contributor license agreement.</li>
+links to spaCy under the AGPL as well (e.g. if they import the module, or
+import a module that imports it, etc).  They also cannot use spaCy as
+a network resource, by running it as a service &#8212; this is the
+loophole that the &#8220;A&#8221; part of the AGPL is designed to close.</li>
 </ol>
 </div></blockquote>
-<p>Ashley and Casey find the GPL license unattractive for commercial use &#8212; as
-they are supposed to.  They decide to take up the trial commercial license.
-However,  over the next six months, Ashley has to move house twice, and Casey gets
+<p>Ashley and Casey find the AGPL license unattractive for commercial use.
+They decide to take up the trial commercial license.
+However,  over the next 90 days, Ashley has to move house twice, and Casey gets
 sick.  By the time the trial expires, they still don&#8217;t have a demo they can show
-investors.  They send an email explaining the situation, and a six month
-extension to their trial license is granted.</p>
+investors.  They send an email explaining the situation, and a 90 day extension
+to their trial license is granted.</p>
 <p>By the time the extension period has elapsed, spaCy has helped them secure
 funding, and they even have a little revenue.  They are glad to pay the $5,000
 commercial license fee.</p>
 <p>spaCy is now permanently licensed for the product Ashley and Casey are
 developing.  They own the copyright to any modifications they make to spaCy,
 but not to the original spaCy code.</p>
-<p>No additional fees will be due when they hire new developers, and if they are
-acquired, the license will be transferred to the company acquiring them.  However,
-to use spaCy in another product, they will have to buy a second license.</p>
+<p>No additional fees will be due when they hire new developers, run spaCy on
+additional internal servers, etc. If their company is acquired, the license will
+be transferred to the company acquiring them.  However, to use spaCy in another
+product, they will have to buy a second license.</p>
 </div>
 <div class="section" id="alex-and-sasha-university-academics">
 <h3>Alex and Sasha: University Academics<a class="headerlink" href="#alex-and-sasha-university-academics" title="Permalink to this headline">¶</a></h3>
@@ -232,31 +223,28 @@ to use spaCy in another product, they will have to buy a second license.</p>
 their funding comes from a grant from Google, but Google will not own any part
 of the work that they produce.  Their mission is just to write papers.</p>
 <p>Alex and Sasha find spaCy convenient, so they use it in their system under the
-GPL.  This means that their system must also be released under the GPL, but they&#8217;re
+AGPL.  This means that their system must also be released under the AGPL, but they&#8217;re
 cool with that &#8212; they were going to release their code anyway, as it&#8217;s the only
 way to ensure their experiments are properly repeatable.</p>
 <p>Alex and Sasha find and fix a few bugs in spaCy.  They must release these
-modifications, and their patches are accepted into spaCy.  However, Alex and
-Sasha do not retain the copyright to their patches: under the contributor
-license agreement, copyright is transferred to Honnibal NLP.  When Honnibal NLP
-goes on to sell commercial licenses to spaCy, no royalties are due to Alex and
-Sasha.</p>
-<p>Later, Alex and Sasha implement new features into spaCy, for another paper.
-Their implementation uses a lot of memory, and I do not accept their patches into
-the main branch of the project.  However, they can still distribute a fork of the
-project with their changes &#8212; although they are only able to grant GPL licenses to
-their fork, as they do not retain the copyright.</p>
-<p>Honnibal NLP agrees to <strong>never prevent contributors from distributing their
-modifications under the GPL.</strong> So, Alex and Sasha know that they&#8217;ll never be
-prevented from helping other researchers repeat their experiments.</p>
+modifications, and they ask that they be accepted into the main spaCy repo.
+In order to do this, they must sign a contributor agreement, ceding their
+copyright.  When commercial licenses to spaCy are sold, Alex and Sasha will
+not be able to claim any royalties from their contributions.</p>
+<p>Later, Alex and Sasha implement new features into spaCy, for another paper. The
+code was quite rushed, and they don&#8217;t want to take the time to put together a
+proper pull request. They must release their modifications under the AGPL, but
+they are not obliged to contribute it to the spaCy repository, or concede their
+copyright.</p>
 </div>
 <div class="section" id="phuong-and-jessie-open-source-developers">
 <h3>Phuong and Jessie: Open Source developers<a class="headerlink" href="#phuong-and-jessie-open-source-developers" title="Permalink to this headline">¶</a></h3>
-<p>Phuong and Jessie use Calibre to manage their e-book libraries.  They have an
-idea for a search feature, and they want to use spaCy to implement it.  Calibre
-is released under the GPL, so Phuong and Jessie can use spaCy to improve
-Calibre.  They&#8217;ll have to release their code, but that was always their
-intention anyway.</p>
+<p>Phuong and Jessie use the Calibre to manage their e-book libraries. They have an
+idea for a search feature, and they want to use spaCy to implement it. Calibre is
+released under the GPLv3. The AGPL has additional restrictions for projects
+used as a network resource, but they don&#8217;t apply to this project, so Phuong and
+Jessie can use spaCy to improve Calibre.  They&#8217;ll have to release their code, but
+that was always their intention anyway.</p>
 </div>
 </div>
 </div>
@@ -267,10 +255,8 @@ intention anyway.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="index.html" class="btn btn-neutral float-right" title="spaCy: Industrial-strength Text Processing"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="index.html" class="btn btn-neutral" title="spaCy: Industrial-strength Text Processing"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="howworks.html" class="btn btn-neutral" title="How spaCy Works"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -1,6 +1,45 @@
-=====================
-License user-stories 
-=====================
+=======
+License
+=======
+
+  +------------+-----------+----------+-------------------------------------+
+  | License    | Price     | Term     | Suitable for                        |
+  +============+===========+==========+=====================================+
+  | Commercial | $5,000    | Life     | Production use                      |
+  +------------+-----------+----------+-------------------------------------+
+  | Trial      | $1        | 90 days  | Evalution, seed startup             |
+  +------------+-----------+----------+-------------------------------------+
+  | AGPL       | Free      | Life     | Research, teaching, hobbyists, FOSS |
+  +------------+-----------+----------+-------------------------------------+
+
+I left academia in June 2014, just when I should have been submitting my first
+grant proposal.  I left because I don't like the grant system.  It's not the
+best way to create value, and it's not the best way to get paid.
+
+I've been writing spaCy for six months now, and I'm very excited to release it.
+I think it's the most valuable thing I could have built.  It opens up a lot of
+possibilities.  It's really right up-to-the-minute with the best systems being
+published, while also being ready for production use.
+
+To make spaCy as valuable as possible, I've decided against
+a repeating-revenue, SaaS-type business model.  I doubt game developers license
+3d engines on a monthly basis, and I think spaCy is in a similar category.  To
+make use of it, you need to invest significant resources.  Development is
+expensive.  The investment is risky enough without having to worry that the
+engine you're using might not be available in a year's time.
+
+expect a flat-fee structure
+will be much more useful to most companies.  
+
+business model.  I want you to have the
+
+
+Simply, there are products and features
+a small company can build with spaCy that they cannot build
+that you can build with spaCy that previously would've been impossible
+
+Examples
+--------
 
 The following user-stories were written to describe to my counsel how the
 license is intended to work.  If your counsel believes that they do not
@@ -9,7 +48,7 @@ accurately describe the license terms as they are written, that is an
 
 
 Ashley and Casey: Seed stage start-up
--------------------------------------
+#####################################
 
 Ashley and Casey have an idea for a start-up.  To explore their idea, they want
 to build a minimum viable product they can put in front of potential users and
@@ -52,7 +91,7 @@ to use spaCy in another product, they will have to buy a second license.
 
 
 Alex and Sasha: University Academics
-------------------------------------
+####################################
 
 Alex and Sasha are post-doctoral researchers working for a university.  Part of
 their funding comes from a grant from Google, but Google will not own any part
@@ -82,7 +121,7 @@ prevented from helping other researchers repeat their experiments.
 
 
 Phuong and Jessie: Open Source developers
------------------------------------------
+#########################################
 
 Phuong and Jessie use Calibre to manage their e-book libraries.  They have an
 idea for a search feature, and they want to use spaCy to implement it.  Calibre

@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>spaCy: Text-processing for products &mdash; spaCy 1.0 documentation</title>
+  <title>spaCy: Industrial-strength NLP &mdash; spaCy 1.0 documentation</title>
   
 
   
@@ -29,7 +29,7 @@
 
   
     <link rel="top" title="spaCy 1.0 documentation" href="#"/>
-        <link rel="next" title="Lexeme Features" href="features.html"/> 
+        <link rel="next" title="spaCy: Industrial-strength NLP" href=""/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -56,17 +56,38 @@
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
         
         
-            <ul>
-<li class="toctree-l1"><a class="reference internal" href="features.html">Lexeme Features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features.html#string-features">String features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#integer-features">Integer features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#boolean-features">Boolean features</a></li>
+            <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efficiency">Efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accuracy">Accuracy</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license_stories.html">License user-stories</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="license_stories.html#ashley-and-casey-seed-stage-start-up">Ashley and Casey: Seed stage start-up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="license_stories.html#alex-and-sasha-university-academics">Alex and Sasha: University Academics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="license_stories.html#phuong-and-jessie-open-source-developers">Phuong and Jessie: Open Source developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#quick-ref">Quick Ref</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -92,7 +113,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="#">Docs</a> &raquo;</li>
       
-    <li>spaCy: Text-processing for products</li>
+    <li>spaCy: Industrial-strength NLP</li>
       <li class="wy-breadcrumbs-aside">
         
           <a href="_sources/index.txt" rel="nofollow"> View page source</a>
@@ -103,111 +124,315 @@
 </div>
           <div role="main">
             
-  <div class="section" id="spacy-text-processing-for-products">
-<h1>spaCy: Text-processing for products<a class="headerlink" href="#spacy-text-processing-for-products" title="Permalink to this headline">¶</a></h1>
-<p>spaCy is a library for industrial-strength text processing in Python and Cython.
-Its core values are efficiency, accuracy and minimalism: you get a fast pipeline of
-state-of-the-art components, a nice API, and no clutter:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;An example sentence&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-<span class="gp">... </span>  <span class="k">print</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">cluster</span><span class="p">)</span>
-<span class="go">an DT Xx 0b111011110</span>
-<span class="go">example NN xxxx 0b111110001</span>
-<span class="go">sentence NN xxxx 0b1101111110010</span>
-</pre></div>
-</div>
-<p>spaCy is particularly good for feature extraction, because it pre-loads lexical
-resources, maps strings to integer IDs, and supports output of numpy arrays:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">attrs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">((</span><span class="n">attrs</span><span class="o">.</span><span class="n">LEMMA</span><span class="p">,</span> <span class="n">attrs</span><span class="o">.</span><span class="n">POS</span><span class="p">,</span> <span class="n">attrs</span><span class="o">.</span><span class="n">SHAPE</span><span class="p">,</span> <span class="n">attrs</span><span class="o">.</span><span class="n">CLUSTER</span><span class="p">))</span>
-<span class="go">array([[ 1265,    14,    76,   478],</span>
-<span class="go">   [ 1545,    24,   262,   497],</span>
-<span class="go">   [ 3385,    24,   262, 14309]])</span>
-</pre></div>
-</div>
-<p>spaCy also makes it easy to add in-line mark up. Let&#8217;s say you&#8217;re convinced by
-Stephen King&#8217;s advice that <a class="reference external" href="http://www.brainpickings.org/2013/03/13/stephen-king-on-adverbs/">adverbs are not your friend</a>, so you want to mark
-them in red. We&#8217;ll use one of the examples he finds particularly egregious:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&quot;‘Give it back,’ he pleaded abjectly, ‘it’s mine.’&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">red</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">string</span><span class="p">:</span> <span class="s">u&#39;</span><span class="se">\033</span><span class="s">[91m{0}</span><span class="se">\033</span><span class="s">[0m&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">red</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">string</span><span class="p">:</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="c"># TODO -- make red work on website...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">red</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_adverb</span> <span class="k">else</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span>
+  <div class="section" id="spacy-industrial-strength-nlp">
+<h1>spaCy: Industrial-strength NLP<a class="headerlink" href="#spacy-industrial-strength-nlp" title="Permalink to this headline">¶</a></h1>
+<p>spaCy is a new library for text processing in Python and Cython.</p>
+<p>Most commercial NLP development is based on obsolete
+technology.  Over the last 3-5 years, the field has advanced dramatically, but
+only the tech giants have really been able to capitalize.  The research is all
+public, but it&#8217;s been too hard for small companies to read and apply it.
+Many end up relying on <a class="reference external" href="https://www.nltk.org/">NLTK</a>, which is intended primarily as an educational
+resource.</p>
+<p>If you&#8217;re a small company doing NLP, I think spaCy will seem like a minor miracle.
+It&#8217;s by far the fastest NLP software available.  The full processing pipeline
+completes in 7ms per document, including accurate tagging and parsing.  All strings
+are mapped to integer IDs, tokens are linked to embedded word representations,
+and a range of useful features are pre-calculated and cached.</p>
+<p>If none of that made any sense to you, here&#8217;s the gist of it.  Computers don&#8217;t
+understand text. This is unfortunate, because that&#8217;s what the web almost entirely
+consists of.  We want to recommend people text based on other text they liked.
+We want to shorten text to display it on a mobile screen.  We want to aggregate
+it, link it, filter it, categorise it, generate it and correct it.</p>
+<p>spaCy provides a library of utility functions that help programmers build such
+products.  It&#8217;s commercial open source software: you can either use it under
+the AGPL, or you can <a class="reference external" href="license.rst">buy a commercial license</a> for a one-time fee.</p>
+<div class="section" id="example-functionality">
+<h2>Example functionality<a class="headerlink" href="#example-functionality" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s say you&#8217;re developing a proofreading tool, or possibly an IDE for
+writers.  You&#8217;re convinced by Stephen King&#8217;s advice that <a class="reference external" href="http://www.brainpickings.org/2013/03/13/stephen-king-on-adverbs/">adverbs are not your
+friend</a>, so
+you want to <strong>highlight all adverbs</strong>.  We&#8217;ll use one of the examples he finds
+particularly egregious:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">spacy.en</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.postags</span> <span class="kn">import</span> <span class="n">ADVERB</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Load the pipeline, and call it with some text.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">&quot;‘Give it back,’ he pleaded abjectly, ‘it’s mine.’&quot;</span><span class="p">,</span>
+<span class="go">                 tag=True, parse=True)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">output</span> <span class="o">+=</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADVERB</span> <span class="k">else</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span>
+<span class="gp">... </span>    <span class="n">output</span> <span class="o">+=</span> <span class="n">tok</span><span class="o">.</span><span class="n">whitespace</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 <span class="go">‘Give it BACK,’ he pleaded ABJECTLY, ‘it’s mine.’</span>
 </pre></div>
 </div>
-<p>Easy &#8212; except, &#8220;back&#8221; isn&#8217;t the sort of word we&#8217;re looking for, even though
-it&#8217;s undeniably an adverb.  Let&#8217;s search refine the logic a little, and only
-highlight adverbs that modify verbs:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">u&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">red</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_adverb</span> <span class="ow">and</span> <span class="n">t</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">is_verb</span> <span class="k">else</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">)</span>
+<p>Easy enough &#8212; but the problem is that we&#8217;ve also highlighted &#8220;back&#8221;, when probably
+we only wanted to highlight &#8220;abjectly&#8221;. While &#8220;back&#8221; is undoubtedly an adverb,
+we probably don&#8217;t want to highlight it.</p>
+<p>There are lots of ways we might refine our logic, depending on just what words
+we want to flag.  The simplest way to filter out adverbs like &#8220;back&#8221; and &#8220;not&#8221;
+is by word frequency: these words are much more common than the prototypical
+manner adverbs that the style guides are worried about.</p>
+<p>The prob attribute of a Lexeme or Token object gives a log probability estimate
+of the word, based on smoothed counts from a 3bn word corpus:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;back&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">prob</span>
+<span class="go">-7.403977394104004</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;not&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">prob</span>
+<span class="go">-5.407193660736084</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;quietly&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">prob</span>
+<span class="go">-11.07155704498291</span>
+</pre></div>
+</div>
+<p>So we can easily exclude the N most frequent words in English from our adverb
+marker.  Let&#8217;s try N=1000 for now:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">spacy.en</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.postags</span> <span class="kn">import</span> <span class="n">ADVERB</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Find log probability of Nth most frequent word</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">probs</span> <span class="o">=</span> <span class="p">[</span><span class="n">lex</span><span class="o">.</span><span class="n">prob</span> <span class="k">for</span> <span class="n">lex</span> <span class="ow">in</span> <span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_adverb</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">tok</span><span class="p">:</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADVERB</span> <span class="ow">and</span> <span class="n">tok</span><span class="o">.</span><span class="n">prob</span> <span class="o">&lt;</span> <span class="n">probs</span><span class="p">[</span><span class="o">-</span><span class="mi">1000</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">&quot;‘Give it back,’ he pleaded abjectly, ‘it’s mine.’&quot;</span><span class="p">,</span>
+<span class="go">                 tag=True, parse=True)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">is_adverb</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span> <span class="k">else</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span><span class="p">))</span>
 <span class="go">‘Give it back,’ he pleaded ABJECTLY, ‘it’s mine.’</span>
 </pre></div>
 </div>
-<p>spaCy is also very efficient &#8212; much more efficient than any other language
-processing tools available.  The table below compares the time to tokenize, POS
-tag and parse a document (amortized over 100k samples).  It also shows accuracy
-on the standard evaluation, from the Wall Street Journal:</p>
+<p>There are lots of ways we could refine the logic, depending on just what words we
+want to flag.  Let&#8217;s say we wanted to only flag adverbs that modified words
+similar to &#8220;pleaded&#8221;.  This is easy to do, as spaCy loads a vector-space
+representation for every word (by default, the vectors produced by
+<a class="reference external" href="https://levyomer.wordpress.com/2014/04/25/dependency-based-word-embeddings/">Levy and Goldberg (2014)</a>.  Naturally, the vector is provided as a numpy
+array:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pleaded</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pleaded</span><span class="o">.</span><span class="n">repvec</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(300,)</span>
+</pre></div>
+</div>
+<p>We want to sort the words in our vocabulary by their similarity to &#8220;pleaded&#8221;.
+There are lots of ways to measure the similarity of two vectors.  We&#8217;ll use the
+cosine metric:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">dot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cosine</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">:</span> <span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="n">norm</span><span class="p">(</span><span class="n">v2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span> <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">is_lower</span> <span class="ow">and</span> <span class="n">w</span><span class="o">.</span><span class="n">has_repvec</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">cosine</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">pleaded</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;1-20&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">])</span>
+<span class="go">1-20 pleaded, pled, plead, confessed, interceded, pleads, testified, conspired, motioned, demurred, countersued, remonstrated, begged, apologised, consented, acquiesced, petitioned, quarreled, appealed, pleading</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;50-60&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">50</span><span class="p">:</span><span class="mi">60</span><span class="p">])</span>
+<span class="go">50-60 counselled, bragged, backtracked, caucused, refiled, dueled, mused, dissented, yearned, confesses</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;100-110&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">110</span><span class="p">])</span>
+<span class="go">cabled, ducked, sentenced, perjured, absconded, bargained, overstayed, clerked, confided, sympathizes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;1000-1010&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1010</span><span class="p">])</span>
+<span class="go">scorned, baled, righted, requested, swindled, posited, firebombed, slimed, deferred, sagged</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">50000</span><span class="p">:</span><span class="mi">50010</span><span class="p">])</span>
+<span class="go">fb, ford, systems, puck, anglers, ik, tabloid, dirty, rims, artists</span>
+</pre></div>
+</div>
+<p>As you can see, the similarity model that these vectors give us is excellent
+&#8212; we&#8217;re still getting meaningful results at 1000 words, off a single
+prototype!  The only problem is that the list really contains two clusters of
+words: one associated with the legal meaning of &#8220;pleaded&#8221;, and one for the more
+general sense.  Sorting out these clusters is an area of active research.</p>
+<p>A simple work-around is to average the vectors of several words, and use that
+as our target:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">say_verbs</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;pleaded&#39;</span><span class="p">,</span> <span class="s">u&#39;confessed&#39;</span><span class="p">,</span> <span class="s">u&#39;remonstrated&#39;</span><span class="p">,</span> <span class="s">u&#39;begged&#39;</span><span class="p">,</span>
+<span class="go">                 u&#39;bragged&#39;, u&#39;confided&#39;, u&#39;requested&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">say_vector</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">verb</span> <span class="ow">in</span> <span class="n">say_verbs</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="n">say_vector</span> <span class="o">+=</span> <span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">verb</span><span class="p">]</span><span class="o">.</span><span class="n">repvec</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">cosine</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">repvec</span><span class="p">,</span> <span class="n">say_vector</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;1-20&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">])</span>
+<span class="go">1-20 bragged, remonstrated, enquired, demurred, sighed, mused, intimated, retorted, entreated, motioned, ranted, confided, countersued, gestured, implored, interceded, muttered, marvelled, bickered, despaired</span>
+<span class="go">50-60 flaunted, quarrelled, ingratiated, vouched, agonized, apologised, lunched, joked, chafed, schemed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;1000-1010&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1010</span><span class="p">])</span>
+<span class="go">1000-1010 hoarded, waded, ensnared, clamoring, abided, deploring, shriveled, endeared, rethought, berate</span>
+</pre></div>
+</div>
+<p>These definitely look like words that King might scold a writer for attaching
+adverbs to.  Recall that our previous adverb highlighting function looked like
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">spacy.en</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.postags</span> <span class="kn">import</span> <span class="n">ADVERB</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Load the pipeline, and call it with some text.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">&quot;‘Give it back,’ he pleaded abjectly, ‘it’s mine.’&quot;</span><span class="p">,</span>
+<span class="go">                 tag=True, parse=True)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">output</span> <span class="o">+=</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADVERB</span> <span class="k">else</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span>
+<span class="gp">... </span>    <span class="n">output</span> <span class="o">+=</span> <span class="n">tok</span><span class="o">.</span><span class="n">whitespace</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="go">‘Give it BACK,’ he pleaded ABJECTLY, ‘it’s mine.’</span>
+</pre></div>
+</div>
+<p>We wanted to refine the logic so that only adverbs modifying evocative verbs
+of communication, like &#8220;pleaded&#8221;, were highlighted.  We&#8217;ve now built a vector that
+represents that type of word, so now we can highlight adverbs based on very
+subtle logic, honing in on adverbs that seem the most stylistically
+problematic, given our starting assumptions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">dot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">spacy.en</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.postags</span> <span class="kn">import</span> <span class="n">ADVERB</span><span class="p">,</span> <span class="n">VERB</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">is_bad_adverb</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">target_verb</span><span class="p">,</span> <span class="n">tol</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span> <span class="o">!=</span> <span class="n">ADVERB</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="bp">False</span>
+<span class="gp">... </span>  <span class="k">elif</span> <span class="n">toke</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">pos</span> <span class="o">!=</span> <span class="n">VERB</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="bp">False</span>
+<span class="gp">... </span>  <span class="k">elif</span> <span class="n">cosine</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">repvec</span><span class="p">,</span> <span class="n">target_verb</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="bp">False</span>
+<span class="gp">... </span>  <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>This example was somewhat contrived &#8212; and, truth be told, I&#8217;ve never really
+bought the idea that adverbs were a grave stylistic sin.  But hopefully it got
+the message across: the state-of-the-art NLP technologies are very powerful.
+spaCy gives you easy and efficient access to them, which lets you build all
+sorts of use products and features that were previously impossible.</p>
+</div>
+<div class="section" id="efficiency">
+<h2>Efficiency<a class="headerlink" href="#efficiency" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="docutils">
+<caption>Efficiency comparison. See <a href="#id1"><span class="problematic" id="id2">`Benchmarks`_</span></a> for details.</caption>
 <colgroup>
-<col width="16%" />
-<col width="16%" />
-<col width="15%" />
-<col width="16%" />
-<col width="16%" />
 <col width="20%" />
+<col width="14%" />
+<col width="12%" />
+<col width="10%" />
+<col width="14%" />
+<col width="13%" />
+<col width="16%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>System</td>
+<tr class="row-odd"><td>&nbsp;</td>
+<td colspan="3">Absolute (ms per doc)</td>
+<td colspan="3">Relative (to spaCy)</td>
+</tr>
+<tr class="row-even"><td>System</td>
 <td>Tokenize</td>
-<td>POS Tag</td>
+<td>Tag</td>
 <td>Parse</td>
-<td>POS Acc.</td>
-<td>Parse Acc.</td>
+<td>Tokenize</td>
+<td>Tag</td>
+<td>Parse</td>
 </tr>
-<tr class="row-even"><td>spaCy</td>
-<td>0.37ms</td>
-<td>0.98ms</td>
-<td>10ms</td>
-<td>97.3%</td>
-<td>92.4%</td>
-</tr>
-<tr class="row-odd"><td>NLTK</td>
-<td>6.2ms</td>
-<td>443ms</td>
-<td>n/a</td>
-<td>94.0%</td>
-<td>n/a</td>
+<tr class="row-odd"><td>spaCy</td>
+<td>0.2ms</td>
+<td>1ms</td>
+<td>7ms</td>
+<td>1x</td>
+<td>1x</td>
+<td>1x</td>
 </tr>
 <tr class="row-even"><td>CoreNLP</td>
-<td>4.2ms</td>
-<td>13ms</td>
-<td>todo</td>
-<td>96.97%</td>
-<td>92.2%</td>
+<td>2ms</td>
+<td>10ms</td>
+<td>49ms</td>
+<td>10x</td>
+<td>10x</td>
+<td>7x</td>
 </tr>
 <tr class="row-odd"><td>ZPar</td>
-<td>n/a</td>
-<td>15ms</td>
+<td>1ms</td>
+<td>8ms</td>
 <td>850ms</td>
-<td>97.3%</td>
-<td>92.9%</td>
+<td>5x</td>
+<td>8x</td>
+<td>121x</td>
+</tr>
+<tr class="row-even"><td>NLTK</td>
+<td>4ms</td>
+<td>443ms</td>
+<td>n/a</td>
+<td>20x</td>
+<td>443x</td>
+<td>n/a</td>
 </tr>
 </tbody>
 </table>
-<p>(The CoreNLP results refer to their recently published shift-reduce neural
-network parser.)</p>
-<p>I wrote spaCy so that startups and other small companies could take advantage
-of the enormous progress being made by NLP academics.  Academia is competitive,
-and what you&#8217;re competing to do is write papers &#8212; so it&#8217;s very hard to write
-software useful to non-academics. Seeing this gap, I resigned from my post-doc,
-and wrote spaCy.</p>
-<p>spaCy is dual-licensed: you can either use it under the GPL, or pay a one-time
-fee of $5000 for a commercial license.  I think this is excellent value:
-you&#8217;ll find NLTK etc much more expensive, because what you save on license
-cost, you&#8217;ll lose many times over in lost productivity. $5000 does not buy you
-much developer time.</p>
+<p>Efficiency is a major concern for NLP applications.  It is very common to hear
+people say that they cannot afford more detailed processing, because their
+datasets are too large.  This is a bad position to be in.  If you can&#8217;t apply
+detailed processing, you generally have to cobble together various heuristics.
+This normally takes a few iterations, and what you come up with will usually be
+brittle and difficult to reason about.</p>
+<p>spaCy&#8217;s parser is faster than most taggers, and its tokenizer is fast enough
+for any workload.  And the tokenizer doesn&#8217;t just give you a list
+of strings.  A spaCy token is a pointer to a Lexeme struct, from which you can
+access a wide range of pre-computed features, including embedded word
+representations.</p>
+</div>
+<div class="section" id="accuracy">
+<h2>Accuracy<a class="headerlink" href="#accuracy" title="Permalink to this headline">¶</a></h2>
+<p>The table above compares spaCy to some of the current state-of-the-art systems,
+on the standard evaluation from the Wall Street Journal, given gold-standard
+sentence boundaries and tokenization.  I&#8217;m in the process of completing a more
+realistic evaluation on web text.</p>
+<p>spaCy&#8217;s parser offers a better speed/accuracy trade-off than any published
+system: its accuracy is within 1% of the current state-of-the-art, and it&#8217;s
+seven times faster than the 2014 CoreNLP neural network parser, which is the
+previous fastest parser that I&#8217;m aware of.</p>
 <div class="toctree-wrapper compound">
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efficiency">Efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accuracy">Accuracy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howworks.html">How spaCy Works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#quick-ref">Quick Ref</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howworks.html#what-we-don-t-do">What we don&#8217;t do</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howworks.html#tokenizer-algorithm">Tokenizer Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howworks.html#coupling-the-tokenizer-and-lexicon">Coupling the Tokenizer and Lexicon</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howworks.html#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="license.html#ashley-and-casey-seed-stage-start-up">Ashley and Casey: Seed stage start-up</a></li>
+<li class="toctree-l3"><a class="reference internal" href="license.html#alex-and-sasha-university-academics">Alex and Sasha: University Academics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="license.html#phuong-and-jessie-open-source-developers">Phuong and Jessie: Open Source developers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -217,7 +442,7 @@ much developer time.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="features.html" class="btn btn-neutral float-right" title="Lexeme Features"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="" class="btn btn-neutral float-right" title="spaCy: Industrial-strength NLP"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

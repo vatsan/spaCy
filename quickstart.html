@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quick Start &mdash; spaCy 1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Documentation" href="api.html"/>
+        <link rel="prev" title="License" href="license.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> spaCy</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">spaCy: Industrial-strength NLP</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#example-functionality">Example functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#efficiency">Efficiency</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#accuracy">Accuracy</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#quick-ref">Quick Ref</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/quickstart.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>$ pip install spacy
+$ python -m spacy.en.download</div></blockquote>
+<p>The download command fetches and installs the parser model and word representations,
+which are too big to host on PyPi (about 100mb each).  The data is installed within
+the spacy.en package directory.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The main entry-point is spacy.en.English.__call__, which you use to turn
+a unicode string into a Tokens object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;A fine, very fine, example sentence&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You shouldn&#8217;t need to batch up your text or prepare it in any way.
+Processing times are linear in the length of the string, with minimal per-call
+overhead (apart from the first call, when the tagger and parser are lazy-loaded).</p>
+<p>Usually, you will only want to create one instance of the pipeline. You may
+wish to create a singleton wrapper.  Each instance maintains its own string-to-id
+mapping table, so if you process a new word, it is likely to be assigned different
+integer IDs by the two different instances.</p>
+<p>The Tokens object has a sequence interface, which you can use to get
+individual tokens:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lemma</span>
+<span class="go">&#39;a&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="k">print</span> <span class="n">token</span><span class="o">.</span><span class="n">sic</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span>
+</pre></div>
+</div>
+<p>The Token objects are created during iteration, so this isn&#8217;t the fastest way
+to access the data.
+For feature extraction, you can select a number of features to export to
+a numpy.ndarray:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">enums</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">([</span><span class="n">enums</span><span class="o">.</span><span class="n">LEMMA</span><span class="p">,</span> <span class="n">enums</span><span class="o">.</span><span class="n">SIC</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Another common operation is to export the embeddings vector to a numpy array:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_vec</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create a bag-of-words representation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">LEMMA</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="most-of-the-api-at-a-glance">
+<h2>(Most of the) API at a glance<a class="headerlink" href="#most-of-the-api-at-a-glance" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="spacy.en.English">
+<em class="property">class </em><tt class="descclassname">spacy.en.</tt><tt class="descname">English</tt><big>(</big><em>self</em>, <em>data_dir=join(dirname(__file__)</em>, <em>'data')</em><big>)</big><a class="headerlink" href="#spacy.en.English" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__call__(self, text: unicode, tag=True, parse=False) --&gt; Tokens</tt></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<tt class="descname">spacy.tokens.Tokens via English.__call__</tt></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__getitem__(self, i) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__iter__(self) --&gt; Iterator[Token]</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">to_array(self, attr_ids: List[int]) --&gt; numpy.ndarray[ndim=2, dtype=int32]</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">count_by(self, attr_id: int) --&gt; Dict[int, int]</tt></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<tt class="descname">spacy.tokens.Token via Tokens.__iter__, Tokens.__getitem__</tt></dt>
+<dd><dl class="method">
+<dt>
+<tt class="descname">__unicode__(self) --&gt; unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__len__(self) --&gt; int</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">nbor(self, i=1) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">child(self, i=1) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">sibling(self, i=1) --&gt; Token</tt></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">check_flag(self, attr_id: int) --&gt; bool</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">cluster: int</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">string: unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">string: unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">lemma: unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">dep_tag: unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">pos: unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">fine_pos: unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">sic: unicode</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">head: Token</tt></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td colspan="2">Boolean Features</td>
+</tr>
+<tr class="row-even"><td>IS_ALPHA</td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isalpha" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isalpha()</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td>IS_DIGIT</td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isdigit" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isdigit()</span></tt></a></td>
+</tr>
+<tr class="row-even"><td>IS_LOWER</td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.islower" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.islower()</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td>IS_SPACE</td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isspace" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isspace()</span></tt></a></td>
+</tr>
+<tr class="row-even"><td>IS_TITLE</td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.istitle" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.istitle()</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td>IS_UPPER</td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isupper" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isupper()</span></tt></a></td>
+</tr>
+<tr class="row-even"><td>IS_ASCII</td>
+<td>all(ord(c) &lt; 128 for c in string)</td>
+</tr>
+<tr class="row-odd"><td>IS_PUNCT</td>
+<td>all(unicodedata.category(c).startswith(&#8216;P&#8217;) for c in string)</td>
+</tr>
+<tr class="row-even"><td>LIKE_URL</td>
+<td>Using various heuristics, does the string resemble a URL?</td>
+</tr>
+<tr class="row-odd"><td>LIKE_NUM</td>
+<td>&#8220;Two&#8221;, &#8220;10&#8221;, &#8220;1,000&#8221;, &#8220;10.54&#8221;, &#8220;1/2&#8221; etc all match</td>
+</tr>
+<tr class="row-even"><td colspan="2">ID of string features</td>
+</tr>
+<tr class="row-odd"><td>SIC</td>
+<td>The original string, unmodified.</td>
+</tr>
+<tr class="row-even"><td>NORM1</td>
+<td>The string after level 1 normalization: case, spelling</td>
+</tr>
+<tr class="row-odd"><td>NORM2</td>
+<td>The string after level 2 normalization</td>
+</tr>
+<tr class="row-even"><td>SHAPE</td>
+<td>Word shape, e.g. 10 &#8211;&gt; dd, Garden &#8211;&gt; Xxxx, Hi!5 &#8211;&gt; Xx!d</td>
+</tr>
+<tr class="row-odd"><td>PREFIX</td>
+<td>A short slice from the start of the string.</td>
+</tr>
+<tr class="row-even"><td>SUFFIX</td>
+<td>A short slice from the end of the string.</td>
+</tr>
+<tr class="row-odd"><td>CLUSTER</td>
+<td>Brown cluster ID of the word</td>
+</tr>
+<tr class="row-even"><td>LEMMA</td>
+<td>The word&#8217;s lemma, i.e. morphological suffixes removed</td>
+</tr>
+<tr class="row-odd"><td>TAG</td>
+<td>The word&#8217;s part-of-speech tag</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="Documentation"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="license.html" class="btn btn-neutral" title="License"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
