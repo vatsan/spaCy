@@ -29,7 +29,7 @@
 
   
     <link rel="top" title="spaCy 1.0 documentation" href="../../index.html"/>
-        <link rel="up" title="Module code" href="../index.html"/> 
+        <link rel="up" title="spacy" href="../spacy.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -75,8 +75,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api.html#english-pipeline">English Pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api.html#tokens">Tokens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api.html#module-spacy.vocab">Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api.html#tokenizer">Tokenizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-spacy.tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-spacy.syntax.parser">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api.html#module-spacy.orth">Utility Functions</a></li>
 </ul>
 </li>
@@ -115,6 +115,8 @@
       
           <li><a href="../index.html">Module code</a> &raquo;</li>
       
+          <li><a href="../spacy.html">spacy</a> &raquo;</li>
+      
     <li>spacy.en</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -146,9 +148,9 @@
     <span class="k">return</span> <span class="p">{</span>
         <span class="s">&#39;flags&#39;</span><span class="p">:</span> <span class="n">get_flags</span><span class="p">(</span><span class="n">string</span><span class="p">),</span>
         <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">),</span>
-        <span class="s">&#39;sic&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
-        <span class="s">&#39;norm1&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
-        <span class="s">&#39;norm2&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+        <span class="s">&#39;orth&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
+        <span class="s">&#39;lower&#39;</span><span class="p">:</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="s">&#39;norm&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">,</span>
         <span class="s">&#39;shape&#39;</span><span class="p">:</span> <span class="n">orth</span><span class="o">.</span><span class="n">word_shape</span><span class="p">(</span><span class="n">string</span><span class="p">),</span>
         <span class="s">&#39;prefix&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
         <span class="s">&#39;suffix&#39;</span><span class="p">:</span> <span class="n">string</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:],</span>
@@ -202,10 +204,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tok_data_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;tokenizer&#39;</span><span class="p">)</span>
             <span class="n">tok_rules</span><span class="p">,</span> <span class="n">prefix_re</span><span class="p">,</span> <span class="n">suffix_re</span><span class="p">,</span> <span class="n">infix_re</span> <span class="o">=</span> <span class="n">read_lang_data</span><span class="p">(</span><span class="n">tok_data_dir</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="n">tok_rules</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix_re</span><span class="p">),</span>
-                                   <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">suffix_re</span><span class="p">),</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">infix_re</span><span class="p">),</span>
+            <span class="n">prefix_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix_re</span><span class="p">)</span>
+            <span class="n">suffix_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">suffix_re</span><span class="p">)</span>
+            <span class="n">infix_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">infix_re</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="n">tok_rules</span><span class="p">,</span> <span class="n">prefix_re</span><span class="p">,</span>
+                                   <span class="n">suffix_re</span><span class="p">,</span> <span class="n">infix_re</span><span class="p">,</span>
                                    <span class="n">POS_TAGS</span><span class="p">,</span> <span class="n">tag_names</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="bp">None</span>
 

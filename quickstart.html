@@ -76,8 +76,8 @@
 <li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#tokenizer">Tokenizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.syntax.parser">Parser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
 </ul>
 </li>
@@ -129,105 +129,136 @@
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div>$ pip install spacy
-$ python -m spacy.en.download</div></blockquote>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install spacy
+$ python -m spacy.en.download
+</pre></div>
+</div>
 <p>The download command fetches and installs the parser model and word representations,
 which are too big to host on PyPi (about 100mb each).  The data is installed within
 the spacy.en package directory.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>The main entry-point is spacy.en.English.__call__, which you use to turn
-a unicode string into a Tokens object:</p>
+<p>The main entry-point is <a class="reference internal" href="api.html#spacy.en.English.__call__" title="spacy.en.English.__call__"><tt class="xref py py-meth docutils literal"><span class="pre">en.English.__call__()</span></tt></a>, which accepts a unicode string
+as an argument, and returns a <a class="reference internal" href="api.html#spacy.tokens.Tokens" title="spacy.tokens.Tokens"><tt class="xref py py-class docutils literal"><span class="pre">tokens.Tokens</span></tt></a> object.  You can
+iterate over it to get <a class="reference internal" href="api.html#spacy.tokens.Token" title="spacy.tokens.Token"><tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt></a> objects, which provide
+a convenient API:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;A fine, very fine, example sentence&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;I ate the pizza with anchovies.&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pizza</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">orth</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">orth_</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">(</span><span class="mi">14702</span><span class="p">,</span> <span class="s">u&#39;pizza&#39;</span><span class="p">,</span> <span class="mi">14702</span><span class="p">,</span> <span class="s">u&#39;ate&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You shouldn&#8217;t need to batch up your text or prepare it in any way.
-Processing times are linear in the length of the string, with minimal per-call
-overhead (apart from the first call, when the tagger and parser are lazy-loaded).</p>
-<p>Usually, you will only want to create one instance of the pipeline. You may
-wish to create a singleton wrapper.  Each instance maintains its own string-to-id
-mapping table, so if you process a new word, it is likely to be assigned different
-integer IDs by the two different instances.</p>
-<p>The Tokens object has a sequence interface, which you can use to get
-individual tokens:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lemma</span>
-<span class="go">&#39;a&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-<span class="gp">... </span>  <span class="k">print</span> <span class="n">token</span><span class="o">.</span><span class="n">sic</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos</span>
-</pre></div>
-</div>
-<p>The Token objects are created during iteration, so this isn&#8217;t the fastest way
-to access the data.
-For feature extraction, you can select a number of features to export to
-a numpy.ndarray:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">enums</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">([</span><span class="n">enums</span><span class="o">.</span><span class="n">LEMMA</span><span class="p">,</span> <span class="n">enums</span><span class="o">.</span><span class="n">SIC</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Another common operation is to export the embeddings vector to a numpy array:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_vec</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Create a bag-of-words representation:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="n">enums</span><span class="o">.</span><span class="n">LEMMA</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>spaCy maps all strings to sequential integer IDs &#8212; a common idiom in NLP.
+If an attribute <cite>Token.foo</cite> is an integer ID, then <cite>Token.foo_</cite> is the string,
+e.g. <cite>pizza.orth_</cite> and <cite>pizza.orth</cite> provide the integer ID and the string of
+the original orthographic form of the word, with no string normalizations
+applied.</p>
+<blockquote>
+<div><p>en.English.__call__ is stateful &#8212; it has an important <strong>side-effect</strong>:
+spaCy maps strings to sequential integers, so when it processes a new
+word, the mapping table is updated.</p>
+<p>Future releases will feature a way to reconcile <a class="reference internal" href="api.html#spacy.strings.StringStore" title="spacy.strings.StringStore"><tt class="xref py py-class docutils literal"><span class="pre">strings.StringStore</span></tt></a>
+mappings, but for now, you should only work with one instance of the pipeline
+at a time.</p>
+<p>This issue only affects rare words.  spaCy&#8217;s pre-compiled lexicon has 260,000
+words; the string IDs for these words will always be consistent.</p>
+</div></blockquote>
 </div>
 <div class="section" id="most-of-the-api-at-a-glance">
 <h2>(Most of the) API at a glance<a class="headerlink" href="#most-of-the-api-at-a-glance" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="spacy.en.English">
-<em class="property">class </em><tt class="descclassname">spacy.en.</tt><tt class="descname">English</tt><big>(</big><em>self</em>, <em>data_dir=join(dirname(__file__)</em>, <em>'data')</em><big>)</big><a class="headerlink" href="#spacy.en.English" title="Permalink to this definition">¶</a></dt>
+<p><strong>Process the string:</strong></p>
+<blockquote>
+<div><dl class="class">
+<dt id="spacy.spacy.en.English">
+<em class="property">class </em><tt class="descclassname">spacy.en.</tt><tt class="descname">English</tt><big>(</big><em>self</em>, <em>data_dir=join(dirname(__file__)</em>, <em>'data')</em><big>)</big><a class="headerlink" href="#spacy.spacy.en.English" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt>
 <tt class="descname">__call__(self, text: unicode, tag=True, parse=False) --&gt; Tokens</tt></dt>
 <dd></dd></dl>
 
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="31%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Attribute</th>
+<th class="head">Type</th>
+<th class="head">Its API</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>vocab</td>
+<td>Vocab</td>
+<td>__getitem__</td>
+</tr>
+<tr class="row-odd"><td>vocab.strings</td>
+<td>StingStore</td>
+<td>__getitem__</td>
+</tr>
+<tr class="row-even"><td>tokenizer</td>
+<td>Tokenizer</td>
+<td>__call__</td>
+</tr>
+<tr class="row-odd"><td>tagger</td>
+<td>EnPosTagger</td>
+<td>__call__</td>
+</tr>
+<tr class="row-even"><td>parser</td>
+<td>GreedyParser</td>
+<td>__call__</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="class">
+</div></blockquote>
+<p><strong>Get dict or numpy array:</strong></p>
+<blockquote>
+<div><dl class="method">
 <dt>
-<tt class="descname">spacy.tokens.Tokens via English.__call__</tt></dt>
-<dd><dl class="method">
-<dt>
-<tt class="descname">__getitem__(self, i) --&gt; Token</tt></dt>
+<tt class="descname">tokens.Tokens.to_array(self, attr_ids: List[int]) --&gt; numpy.ndarray[ndim=2, dtype=int32]</tt></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt>
-<tt class="descname">__iter__(self) --&gt; Iterator[Token]</tt></dt>
+<tt class="descname">tokens.Tokens.count_by(self, attr_id: int) --&gt; Dict[int, int]</tt></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+<p><strong>Get Token objects</strong></p>
+<blockquote>
+<div><dl class="method">
+<dt>
+<tt class="descname">tokens.Tokens.__getitem__(self, i) --&gt; Token</tt></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt>
-<tt class="descname">to_array(self, attr_ids: List[int]) --&gt; numpy.ndarray[ndim=2, dtype=int32]</tt></dt>
+<tt class="descname">tokens.Tokens.__iter__(self) --&gt; Iterator[Token]</tt></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<tt class="descname">count_by(self, attr_id: int) --&gt; Dict[int, int]</tt></dt>
+</div></blockquote>
+<p><strong>Embedded word representenations</strong></p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="spacy.tokens.Token.repvec">
+<tt class="descclassname">tokens.Token.</tt><tt class="descname">repvec</tt><a class="headerlink" href="#spacy.tokens.Token.repvec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="class">
-<dt>
-<tt class="descname">spacy.tokens.Token via Tokens.__iter__, Tokens.__getitem__</tt></dt>
-<dd><dl class="method">
-<dt>
-<tt class="descname">__unicode__(self) --&gt; unicode</tt></dt>
+<dl class="attribute">
+<dt id="spacy.lexeme.Lexeme.repvec">
+<tt class="descclassname">lexeme.Lexeme.</tt><tt class="descname">repvec</tt><a class="headerlink" href="#spacy.lexeme.Lexeme.repvec" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<tt class="descname">__len__(self) --&gt; int</tt></dt>
-<dd></dd></dl>
-
-<dl class="method">
+</div></blockquote>
+<p><strong>Navigate dependency parse</strong></p>
+<blockquote>
+<div><dl class="method">
 <dt>
 <tt class="descname">nbor(self, i=1) --&gt; Token</tt></dt>
 <dd></dd></dl>
@@ -242,130 +273,160 @@ a numpy.ndarray:</p>
 <tt class="descname">sibling(self, i=1) --&gt; Token</tt></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<tt class="descname">check_flag(self, attr_id: int) --&gt; bool</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">cluster: int</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">string: unicode</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">string: unicode</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">lemma: unicode</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">dep_tag: unicode</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">pos: unicode</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">fine_pos: unicode</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">sic: unicode</tt></dt>
-<dd></dd></dl>
-
 <dl class="attribute">
 <dt>
 <tt class="descname">head: Token</tt></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt>
+<tt class="descname">dep: int</tt></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+<p><strong>Align to original string</strong></p>
+<blockquote>
+<div><dl class="attribute">
+<dt>
+<tt class="descname">string: unicode</tt></dt>
+<dd><p>Padded with original whitespace.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt>
+<tt class="descname">length: int</tt></dt>
+<dd><p>Length, in unicode code-points. Equal to len(<a href="#id1"><span class="problematic" id="id2">self.orth_</span></a>).</p>
+<p>self.string[self.length:] gets whitespace.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">idx: int</tt></dt>
+<dd><p>Starting offset of word in the original string.</p>
+</dd></dl>
+
+</div></blockquote>
 </div>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p><strong>Boolean features</strong></p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;Apple&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">,</span> <span class="n">is_upper</span>
+<span class="go">True, False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Apple computers&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_upper</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spact.en.attrs</span> <span class="kn">import</span> <span class="n">IS_ALPHA</span><span class="p">,</span> <span class="n">IS_UPPER</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">((</span><span class="n">IS_ALPHA</span><span class="p">,</span> <span class="n">IS_UPPER</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">array([1, 0])</span>
+</pre></div>
+</div>
 <table border="1" class="docutils">
 <colgroup>
 <col width="14%" />
 <col width="86%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td colspan="2">Boolean Features</td>
-</tr>
-<tr class="row-even"><td>IS_ALPHA</td>
+<tr class="row-odd"><td>is_alpha</td>
 <td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isalpha" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isalpha()</span></tt></a></td>
 </tr>
-<tr class="row-odd"><td>IS_DIGIT</td>
+<tr class="row-even"><td>is_digit</td>
 <td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isdigit" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isdigit()</span></tt></a></td>
 </tr>
-<tr class="row-even"><td>IS_LOWER</td>
+<tr class="row-odd"><td>is_lower</td>
 <td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.islower" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.islower()</span></tt></a></td>
 </tr>
-<tr class="row-odd"><td>IS_SPACE</td>
-<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isspace" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isspace()</span></tt></a></td>
-</tr>
-<tr class="row-even"><td>IS_TITLE</td>
+<tr class="row-even"><td>is_title</td>
 <td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.istitle" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.istitle()</span></tt></a></td>
 </tr>
-<tr class="row-odd"><td>IS_UPPER</td>
+<tr class="row-odd"><td>is_upper</td>
 <td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isupper" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isupper()</span></tt></a></td>
 </tr>
-<tr class="row-even"><td>IS_ASCII</td>
+<tr class="row-even"><td>is_ascii</td>
 <td>all(ord(c) &lt; 128 for c in string)</td>
 </tr>
-<tr class="row-odd"><td>IS_PUNCT</td>
+<tr class="row-odd"><td>is_punct</td>
 <td>all(unicodedata.category(c).startswith(&#8216;P&#8217;) for c in string)</td>
 </tr>
-<tr class="row-even"><td>LIKE_URL</td>
+<tr class="row-even"><td>like_url</td>
 <td>Using various heuristics, does the string resemble a URL?</td>
 </tr>
-<tr class="row-odd"><td>LIKE_NUM</td>
+<tr class="row-odd"><td>like_num</td>
 <td>&#8220;Two&#8221;, &#8220;10&#8221;, &#8220;1,000&#8221;, &#8220;10.54&#8221;, &#8220;1/2&#8221; etc all match</td>
-</tr>
-<tr class="row-even"><td colspan="2">ID of string features</td>
-</tr>
-<tr class="row-odd"><td>SIC</td>
-<td>The original string, unmodified.</td>
-</tr>
-<tr class="row-even"><td>NORM1</td>
-<td>The string after level 1 normalization: case, spelling</td>
-</tr>
-<tr class="row-odd"><td>NORM2</td>
-<td>The string after level 2 normalization</td>
-</tr>
-<tr class="row-even"><td>SHAPE</td>
-<td>Word shape, e.g. 10 &#8211;&gt; dd, Garden &#8211;&gt; Xxxx, Hi!5 &#8211;&gt; Xx!d</td>
-</tr>
-<tr class="row-odd"><td>PREFIX</td>
-<td>A short slice from the start of the string.</td>
-</tr>
-<tr class="row-even"><td>SUFFIX</td>
-<td>A short slice from the end of the string.</td>
-</tr>
-<tr class="row-odd"><td>CLUSTER</td>
-<td>Brown cluster ID of the word</td>
-</tr>
-<tr class="row-even"><td>LEMMA</td>
-<td>The word&#8217;s lemma, i.e. morphological suffixes removed</td>
-</tr>
-<tr class="row-odd"><td>TAG</td>
-<td>The word&#8217;s part-of-speech tag</td>
 </tr>
 </tbody>
 </table>
+</div></blockquote>
+<p><strong>String-transform Features</strong></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>orth</td>
+<td>The original string, unmodified.</td>
+</tr>
+<tr class="row-even"><td>lower</td>
+<td>The original string, forced to lower-case</td>
+</tr>
+<tr class="row-odd"><td>norm</td>
+<td>The string after additional normalization</td>
+</tr>
+<tr class="row-even"><td>shape</td>
+<td>Word shape, e.g. 10 &#8211;&gt; dd, Garden &#8211;&gt; Xxxx, Hi!5 &#8211;&gt; Xx!d</td>
+</tr>
+<tr class="row-odd"><td>prefix</td>
+<td>A short slice from the start of the string.</td>
+</tr>
+<tr class="row-even"><td>suffix</td>
+<td>A short slice from the end of the string.</td>
+</tr>
+<tr class="row-odd"><td>lemma</td>
+<td>The word&#8217;s lemma, i.e. morphological suffixes removed</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Syntactic labels</strong></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>pos</td>
+<td>The word&#8217;s part-of-speech, from the Google Universal Tag Set</td>
+</tr>
+<tr class="row-even"><td>tag</td>
+<td>A fine-grained morphosyntactic tag, e.g. VBZ, NNS, etc</td>
+</tr>
+<tr class="row-odd"><td>dep</td>
+<td>Dependency type label between word and its head, e.g. subj</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Distributional</strong></p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>cluster</td>
+<td>Brown cluster ID of the word</td>
+</tr>
+<tr class="row-even"><td>prob</td>
+<td>Log probability of word, smoothed with Simple Good-Turing</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 </div>
 </div>
 

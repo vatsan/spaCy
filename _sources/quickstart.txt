@@ -5,6 +5,10 @@ Quick Start
 Install
 -------
 
+.. py:currentmodule:: spacy
+
+.. code:: bash
+
     $ pip install spacy
     $ python -m spacy.en.download
 
@@ -15,143 +19,180 @@ the spacy.en package directory.
 Usage
 -----
 
-The main entry-point is spacy.en.English.__call__, which you use to turn
-a unicode string into a Tokens object:
+The main entry-point is :meth:`en.English.__call__`, which accepts a unicode string
+as an argument, and returns a :py:class:`tokens.Tokens` object.  You can
+iterate over it to get :py:class:`tokens.Token` objects, which provide
+a convenient API:
 
     >>> from spacy.en import English
     >>> nlp = English()
-    >>> tokens = nlp(u'A fine, very fine, example sentence')
+    >>> tokens = nlp(u'I ate the pizza with anchovies.')
+    >>> pizza = tokens[3]
+    >>> (pizza.orth, pizza.orth_, pizza.head.lemma, pizza.head.lemma_)
+    ... (14702, u'pizza', 14702, u'ate')
 
-You shouldn't need to batch up your text or prepare it in any way.
-Processing times are linear in the length of the string, with minimal per-call
-overhead (apart from the first call, when the tagger and parser are lazy-loaded).
+spaCy maps all strings to sequential integer IDs --- a common idiom in NLP.
+If an attribute `Token.foo` is an integer ID, then `Token.foo_` is the string,
+e.g. `pizza.orth_` and `pizza.orth` provide the integer ID and the string of
+the original orthographic form of the word, with no string normalizations
+applied.
 
-Usually, you will only want to create one instance of the pipeline. You may
-wish to create a singleton wrapper.  Each instance maintains its own string-to-id
-mapping table, so if you process a new word, it is likely to be assigned different
-integer IDs by the two different instances.
+  .. note::
+  
+  en.English.__call__ is stateful --- it has an important **side-effect**:
+  spaCy maps strings to sequential integers, so when it processes a new
+  word, the mapping table is updated.
 
-The Tokens object has a sequence interface, which you can use to get
-individual tokens:
+  Future releases will feature a way to reconcile :py:class:`strings.StringStore`
+  mappings, but for now, you should only work with one instance of the pipeline
+  at a time.
 
-   >>> print tokens[0].lemma
-   'a'
-   >>> for token in tokens:
-   ...   print token.sic, token.pos
-
-The Token objects are created during iteration, so this isn't the fastest way
-to access the data. 
-For feature extraction, you can select a number of features to export to
-a numpy.ndarray:
-
-    >>> from spacy.en import enums
-    >>> tokens.to_array([enums.LEMMA, enums.SIC])
-
-Another common operation is to export the embeddings vector to a numpy array:
-
-    >>> tokens.to_vec()
-
-Create a bag-of-words representation:
-
-    >>> tokens.count_by(enums.LEMMA)
-
+  This issue only affects rare words.  spaCy's pre-compiled lexicon has 260,000
+  words; the string IDs for these words will always be consistent.
 
 
 (Most of the) API at a glance
 -----------------------------
 
-.. py:class:: spacy.en.English(self, data_dir=join(dirname(__file__), 'data'))
+**Process the string:**
 
-  .. py:method:: __call__(self, text: unicode, tag=True, parse=False) --> Tokens 
+  .. py:class:: spacy.en.English(self, data_dir=join(dirname(__file__), 'data'))
 
-.. py:class:: spacy.tokens.Tokens via English.__call__
+    .. py:method:: __call__(self, text: unicode, tag=True, parse=False) --> Tokens 
 
-  .. py:method:: __getitem__(self, i) --> Token
+    +-----------------+--------------+--------------+
+    | Attribute       | Type         | Its API      |
+    +=================+==============+==============+
+    | vocab           | Vocab        | __getitem__  |
+    +-----------------+--------------+--------------+
+    | vocab.strings   | StingStore   | __getitem__  |
+    +-----------------+--------------+--------------+
+    | tokenizer       | Tokenizer    | __call__     |
+    +-----------------+--------------+--------------+
+    | tagger          | EnPosTagger  | __call__     |
+    +-----------------+--------------+--------------+
+    | parser          | GreedyParser | __call__     |
+    +-----------------+--------------+--------------+
 
-  .. py:method:: __iter__(self) --> Iterator[Token]
+**Get dict or numpy array:**
 
-  .. py:method:: to_array(self, attr_ids: List[int]) --> numpy.ndarray[ndim=2, dtype=int32]
+    .. py:method:: tokens.Tokens.to_array(self, attr_ids: List[int]) --> numpy.ndarray[ndim=2, dtype=int32]
 
-  .. py:method:: count_by(self, attr_id: int) --> Dict[int, int]
+    .. py:method:: tokens.Tokens.count_by(self, attr_id: int) --> Dict[int, int]
 
-.. py:class:: spacy.tokens.Token via Tokens.__iter__, Tokens.__getitem__
+**Get Token objects**
 
-  .. py:method:: __unicode__(self) --> unicode
+  .. py:method:: tokens.Tokens.__getitem__(self, i) --> Token
 
-  .. py:method:: __len__(self) --> int
+  .. py:method:: tokens.Tokens.__iter__(self) --> Iterator[Token]
+
+**Embedded word representenations**
+
+  .. py:attribute:: tokens.Token.repvec
+  
+  .. py:attribute:: lexeme.Lexeme.repvec
+
+
+**Navigate dependency parse**
 
   .. py:method:: nbor(self, i=1) --> Token
-  
+
   .. py:method:: child(self, i=1) --> Token
-  
+
   .. py:method:: sibling(self, i=1) --> Token
 
-  .. py:method:: check_flag(self, attr_id: int) --> bool
-  
-  
-
-  .. py:attribute:: cluster: int
-
-  .. py:attribute:: string: unicode
-  
-  .. py:attribute:: string: unicode
-
-  .. py:attribute:: lemma: unicode
-  
-  .. py:attribute:: dep_tag: unicode
-  
-  .. py:attribute:: pos: unicode
-  
-  .. py:attribute:: fine_pos: unicode
-  
-  .. py:attribute:: sic: unicode
-  
   .. py:attribute:: head: Token
+
+  .. py:attribute:: dep: int
+
+**Align to original string**
+
+  .. py:attribute:: string: unicode
+    
+    Padded with original whitespace.
+
+  .. py:attribute:: length: int
+
+    Length, in unicode code-points. Equal to len(self.orth_).
+    
+    self.string[self.length:] gets whitespace.
+
+  .. py:attribute:: idx: int
+
+    Starting offset of word in the original string.
+
 
 
 Features
 --------
 
-+--------------------------------------------------------------------------+
-| Boolean Features                                                         |
-+----------+---------------------------------------------------------------+
-| IS_ALPHA | :py:meth:`str.isalpha`                                        |
-+----------+---------------------------------------------------------------+
-| IS_DIGIT | :py:meth:`str.isdigit`                                        |
-+----------+---------------------------------------------------------------+
-| IS_LOWER | :py:meth:`str.islower`                                        |
-+----------+---------------------------------------------------------------+
-| IS_SPACE | :py:meth:`str.isspace`                                        |
-+----------+---------------------------------------------------------------+
-| IS_TITLE | :py:meth:`str.istitle`                                        |
-+----------+---------------------------------------------------------------+
-| IS_UPPER | :py:meth:`str.isupper`                                        |
-+----------+---------------------------------------------------------------+
-| IS_ASCII | all(ord(c) < 128 for c in string)                             |
-+----------+---------------------------------------------------------------+
-| IS_PUNCT | all(unicodedata.category(c).startswith('P') for c in string)  |
-+----------+---------------------------------------------------------------+
-| LIKE_URL | Using various heuristics, does the string resemble a URL?     |
-+----------+---------------------------------------------------------------+
-| LIKE_NUM | "Two", "10", "1,000", "10.54", "1/2" etc all match            |
-+----------+---------------------------------------------------------------+
-| ID of string features                                                    |
-+----------+---------------------------------------------------------------+
-| SIC      | The original string, unmodified.                              |
-+----------+---------------------------------------------------------------+
-| NORM1    | The string after level 1 normalization: case, spelling        |
-+----------+---------------------------------------------------------------+
-| NORM2    | The string after level 2 normalization                        |
-+----------+---------------------------------------------------------------+
-| SHAPE    | Word shape, e.g. 10 --> dd, Garden --> Xxxx, Hi!5 --> Xx!d    |
-+----------+---------------------------------------------------------------+
-| PREFIX   | A short slice from the start of the string.                   |
-+----------+---------------------------------------------------------------+
-| SUFFIX   | A short slice from the end of the string.                     |
-+----------+---------------------------------------------------------------+
-| CLUSTER  | Brown cluster ID of the word                                  |
-+----------+---------------------------------------------------------------+
-| LEMMA    | The word's lemma, i.e. morphological suffixes removed         |
-+----------+---------------------------------------------------------------+
-| TAG      | The word's part-of-speech tag                                 |
-+----------+---------------------------------------------------------------+
+
+**Boolean features**
+
+    >>> lexeme = nlp.vocab[u'Apple']
+    >>> lexeme.is_alpha, is_upper
+    True, False
+    >>> tokens = nlp(u'Apple computers')
+    >>> tokens[0].is_alpha, tokens[0].is_upper
+    >>> True, False
+    >>> from spact.en.attrs import IS_ALPHA, IS_UPPER
+    >>> tokens.to_array((IS_ALPHA, IS_UPPER))[0]
+    array([1, 0])
+
+  +----------+---------------------------------------------------------------+
+  | is_alpha | :py:meth:`str.isalpha`                                        |
+  +----------+---------------------------------------------------------------+
+  | is_digit | :py:meth:`str.isdigit`                                        |
+  +----------+---------------------------------------------------------------+
+  | is_lower | :py:meth:`str.islower`                                        |
+  +----------+---------------------------------------------------------------+
+  | is_title | :py:meth:`str.istitle`                                        |
+  +----------+---------------------------------------------------------------+
+  | is_upper | :py:meth:`str.isupper`                                        |
+  +----------+---------------------------------------------------------------+
+  | is_ascii | all(ord(c) < 128 for c in string)                             |
+  +----------+---------------------------------------------------------------+
+  | is_punct | all(unicodedata.category(c).startswith('P') for c in string)  |
+  +----------+---------------------------------------------------------------+
+  | like_url | Using various heuristics, does the string resemble a URL?     |
+  +----------+---------------------------------------------------------------+
+  | like_num | "Two", "10", "1,000", "10.54", "1/2" etc all match            |
+  +----------+---------------------------------------------------------------+
+
+**String-transform Features**
+
+
+  +----------+---------------------------------------------------------------+
+  | orth     | The original string, unmodified.                              |
+  +----------+---------------------------------------------------------------+
+  | lower    | The original string, forced to lower-case                     |
+  +----------+---------------------------------------------------------------+
+  | norm     | The string after additional normalization                     |
+  +----------+---------------------------------------------------------------+
+  | shape    | Word shape, e.g. 10 --> dd, Garden --> Xxxx, Hi!5 --> Xx!d    |
+  +----------+---------------------------------------------------------------+
+  | prefix   | A short slice from the start of the string.                   |
+  +----------+---------------------------------------------------------------+
+  | suffix   | A short slice from the end of the string.                     |
+  +----------+---------------------------------------------------------------+
+  | lemma    | The word's lemma, i.e. morphological suffixes removed         |
+  +----------+---------------------------------------------------------------+
+
+**Syntactic labels**
+
+  +----------+---------------------------------------------------------------+
+  | pos      | The word's part-of-speech, from the Google Universal Tag Set  |
+  +----------+---------------------------------------------------------------+
+  | tag      | A fine-grained morphosyntactic tag, e.g. VBZ, NNS, etc        |
+  +----------+---------------------------------------------------------------+
+  | dep      | Dependency type label between word and its head, e.g. subj    |
+  +----------+---------------------------------------------------------------+
+
+**Distributional**
+
+  +---------+-----------------------------------------------------------+
+  | cluster | Brown cluster ID of the word                              |
+  +---------+-----------------------------------------------------------+
+  | prob    | Log probability of word, smoothed with Simple Good-Turing |
+  +---------+-----------------------------------------------------------+
+
