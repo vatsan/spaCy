@@ -71,16 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#quick-ref">Quick Ref</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.tokenizer">Tokenizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.syntax.parser">Parser</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
@@ -133,15 +124,14 @@
 $ python -m spacy.en.download
 </pre></div>
 </div>
-<p>The download command fetches and installs the parser model and word representations,
-which are too big to host on PyPi (about 100mb each).  The data is installed within
-the spacy.en package directory.</p>
+<p>The download command fetches and installs about 200mb of data, which it installs
+within the spacy.en package directory.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>The main entry-point is <a class="reference internal" href="api.html#spacy.en.English.__call__" title="spacy.en.English.__call__"><tt class="xref py py-meth docutils literal"><span class="pre">en.English.__call__()</span></tt></a>, which accepts a unicode string
-as an argument, and returns a <a class="reference internal" href="api.html#spacy.tokens.Tokens" title="spacy.tokens.Tokens"><tt class="xref py py-class docutils literal"><span class="pre">tokens.Tokens</span></tt></a> object.  You can
-iterate over it to get <a class="reference internal" href="api.html#spacy.tokens.Token" title="spacy.tokens.Token"><tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt></a> objects, which provide
+<p>The main entry-point is <tt class="xref py py-meth docutils literal"><span class="pre">en.English.__call__()</span></tt>, which accepts a unicode string
+as an argument, and returns a <tt class="xref py py-class docutils literal"><span class="pre">tokens.Tokens</span></tt> object.  You can
+iterate over it to get <tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt> objects, which provide
 a convenient API:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
@@ -157,14 +147,16 @@ e.g. <cite>pizza.orth_</cite> and <cite>pizza.orth</cite> provide the integer ID
 the original orthographic form of the word, with no string normalizations
 applied.</p>
 <blockquote>
-<div><p>en.English.__call__ is stateful &#8212; it has an important <strong>side-effect</strong>:
-spaCy maps strings to sequential integers, so when it processes a new
-word, the mapping table is updated.</p>
-<p>Future releases will feature a way to reconcile <a class="reference internal" href="api.html#spacy.strings.StringStore" title="spacy.strings.StringStore"><tt class="xref py py-class docutils literal"><span class="pre">strings.StringStore</span></tt></a>
-mappings, but for now, you should only work with one instance of the pipeline
-at a time.</p>
-<p>This issue only affects rare words.  spaCy&#8217;s pre-compiled lexicon has 260,000
-words; the string IDs for these words will always be consistent.</p>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>en.English.__call__ is stateful &#8212; it has an important <strong>side-effect</strong>.</p>
+<p class="last">When it processes a previously unseen word, it increments the ID counter,
+assigns the ID to the string, and writes the mapping in
+<tt class="xref py py-data docutils literal"><span class="pre">English.vocab.strings</span></tt> (instance of
+<tt class="xref py py-class docutils literal"><span class="pre">strings.StringStore</span></tt>).
+Future releases will feature a way to reconcile  mappings, but for now, you
+should only work with one instance of the pipeline at a time.</p>
+</div>
 </div></blockquote>
 </div>
 <div class="section" id="most-of-the-api-at-a-glance">
@@ -221,7 +213,7 @@ words; the string IDs for these words will always be consistent.</p>
 <blockquote>
 <div><dl class="method">
 <dt>
-<tt class="descname">tokens.Tokens.to_array(self, attr_ids: List[int]) --&gt; numpy.ndarray[ndim=2, dtype=int32]</tt></dt>
+<tt class="descname">tokens.Tokens.to_array(self, attr_ids: List[int]) --&gt; ndarray[ndim=2, dtype=long]</tt></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -256,7 +248,7 @@ words; the string IDs for these words will always be consistent.</p>
 <dd></dd></dl>
 
 </div></blockquote>
-<p><strong>Navigate dependency parse</strong></p>
+<p><strong>Navigate to tree- or string-neighbor tokens</strong></p>
 <blockquote>
 <div><dl class="method">
 <dt>
@@ -296,7 +288,6 @@ words; the string IDs for these words will always be consistent.</p>
 <dt>
 <tt class="descname">length: int</tt></dt>
 <dd><p>Length, in unicode code-points. Equal to len(<a href="#id1"><span class="problematic" id="id2">self.orth_</span></a>).</p>
-<p>self.string[self.length:] gets whitespace.</p>
 </dd></dl>
 
 <dl class="attribute">

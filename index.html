@@ -70,16 +70,7 @@
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#quick-ref">Quick Ref</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.tokenizer">Tokenizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.syntax.parser">Parser</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
@@ -126,18 +117,32 @@
             
   <div class="section" id="spacy-industrial-strength-nlp">
 <h1>spaCy: Industrial-strength NLP<a class="headerlink" href="#spacy-industrial-strength-nlp" title="Permalink to this headline">¶</a></h1>
-<p>spaCy is a new library for text processing in Python and Cython.</p>
-<p>Most commercial NLP development is based on obsolete
-technology.  Over the last 3-5 years, the field has advanced dramatically, but
-only the tech giants have really been able to capitalize.  The research is all
-public, but it&#8217;s been too hard for small companies to read and apply it.
-Many end up relying on <a class="reference external" href="https://www.nltk.org/">NLTK</a>, which is intended primarily as an educational
-resource.</p>
+<p>spaCy is a new library for text processing in Python and Cython.
+I wrote it because I think small companies are terrible at NLP.  Or rather:
+small companies are using terrible NLP technology.</p>
+<p>To do great NLP, you have to know a little about linguistics, a lot
+about machine learning, and almost everything about the latest research.
+The people who fit this description seldom join small companies, and almost
+never start them.  Most are broke &#8212; they&#8217;ve just finished grad school.
+If they don&#8217;t want to stay in academia, they join Google, IBM, etc.</p>
+<p>The net result is that outside of the tech giants, commercial NLP has changed
+little in the last ten years.  In academia, it&#8217;s changed entirely.  Amazing
+improvements in quality. Orders of magnitude faster.  But the
+academic code is always GPL, undocumented, unuseable, or all three.  You could
+implement the ideas yourself, but the papers are hard to read, and training
+data is exorbitantly expensive.  So what are you left with? NLTK?</p>
+<p>I used to think that the NLP community just needed to do more to communicate
+its findings to software engineers.  So I wrote two blog posts, explaining
+<a class="reference external" href="https://honnibal.wordpress.com/2013/09/11/a-good-part-of-speechpos-tagger-in-about-200-lines-of-python/">how to write a part-of-speech tagger</a> and <a class="reference external" href="https://honnibal.wordpress.com/2013/12/18/a-simple-fast-algorithm-for-natural-language-dependency-parsing/">parser</a>.  Both were very well received,
+and there&#8217;s been a bit of interest in <a class="reference external" href="https://github.com/syllog1sm/redshift/tree/develop">my research software</a> &#8212; even though
+it&#8217;s entirely undocumented, and mostly unuseable to anyone but me.</p>
+<p>So six months ago I quit my post-doc, and I&#8217;ve been working day and night on
+spaCy since.  I&#8217;m now pleased to announce an alpha release.</p>
 <p>If you&#8217;re a small company doing NLP, I think spaCy will seem like a minor miracle.
-It&#8217;s by far the fastest NLP software available.  The full processing pipeline
-completes in 7ms per document, including accurate tagging and parsing.  All strings
-are mapped to integer IDs, tokens are linked to embedded word representations,
-and a range of useful features are pre-calculated and cached.</p>
+The full processing pipeline completes in 7ms per document, including accurate
+tagging and parsing.  All strings are mapped to integer IDs, tokens are linked
+to embedded word representations, and a range of useful features are pre-calculated
+and cached.</p>
 <p>If none of that made any sense to you, here&#8217;s the gist of it.  Computers don&#8217;t
 understand text. This is unfortunate, because that&#8217;s what the web almost entirely
 consists of.  We want to recommend people text based on other text they liked.
@@ -398,16 +403,7 @@ previous fastest parser that I&#8217;m aware of.</p>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#quick-ref">Quick Ref</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#english-pipeline">English Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#tokens">Tokens</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.vocab">Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.tokenizer">Tokenizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.syntax.parser">Parser</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#module-spacy.orth">Utility Functions</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howworks.html#what-we-don-t-do">What we don&#8217;t do</a></li>
