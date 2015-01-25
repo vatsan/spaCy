@@ -35,7 +35,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -400,6 +399,40 @@ representations.</p>
 </div>
 <div class="section" id="accuracy-comparison">
 <h2>Accuracy Comparison<a class="headerlink" href="#accuracy-comparison" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<caption>Accuracy comparison, on the standard benchmark data from the Wall Street Journal.</caption>
+<colgroup>
+<col width="39%" />
+<col width="28%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>System</td>
+<td>POS acc.</td>
+<td>Parse acc.</td>
+</tr>
+<tr class="row-even"><td>spaCy</td>
+<td>97.2</td>
+<td>92.4</td>
+</tr>
+<tr class="row-odd"><td>CoreNLP</td>
+<td>96.9</td>
+<td>92.2</td>
+</tr>
+<tr class="row-even"><td>ZPar</td>
+<td>97.3</td>
+<td>92.9</td>
+</tr>
+<tr class="row-odd"><td>Redshift</td>
+<td>97.3</td>
+<td>93.5</td>
+</tr>
+<tr class="row-even"><td>NLTK</td>
+<td>94.3</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
 <p>The table above compares spaCy to some of the current state-of-the-art systems,
 on the standard evaluation from the Wall Street Journal, given gold-standard
 sentence boundaries and tokenization.  I&#8217;m in the process of completing a more
