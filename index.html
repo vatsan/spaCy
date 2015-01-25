@@ -59,8 +59,8 @@
             <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#efficiency">Efficiency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accuracy">Accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#speed-comparison">Speed Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accuracy-comparison">Accuracy Comparison</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
@@ -70,7 +70,7 @@
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
@@ -164,7 +164,7 @@ particularly egregious:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Load the pipeline, and call it with some text.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">&quot;‘Give it back,’ he pleaded abjectly, ‘it’s mine.’&quot;</span><span class="p">,</span>
-<span class="go">                 tag=True, parse=True)</span>
+<span class="go">                 tag=True, parse=False)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">output</span> <span class="o">+=</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADVERB</span> <span class="k">else</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span>
@@ -177,11 +177,11 @@ particularly egregious:</p>
 we only wanted to highlight &#8220;abjectly&#8221;. While &#8220;back&#8221; is undoubtedly an adverb,
 we probably don&#8217;t want to highlight it.</p>
 <p>There are lots of ways we might refine our logic, depending on just what words
-we want to flag.  The simplest way to filter out adverbs like &#8220;back&#8221; and &#8220;not&#8221;
+we want to flag.  The simplest way to exclude adverbs like &#8220;back&#8221; and &#8220;not&#8221;
 is by word frequency: these words are much more common than the prototypical
 manner adverbs that the style guides are worried about.</p>
-<p>The prob attribute of a Lexeme or Token object gives a log probability estimate
-of the word, based on smoothed counts from a 3bn word corpus:</p>
+<p>The <tt class="xref py py-attr docutils literal"><span class="pre">Lexeme.prob</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">Token.prob</span></tt> attribute gives a
+log probability estimate of the word:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;back&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">prob</span>
 <span class="go">-7.403977394104004</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;not&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">prob</span>
@@ -190,6 +190,8 @@ of the word, based on smoothed counts from a 3bn word corpus:</p>
 <span class="go">-11.07155704498291</span>
 </pre></div>
 </div>
+<p>(The probability estimate is based on counts from a 3 billion word corpus,
+smoothed using the Gale (2002) <a class="reference external" href="http://www.d.umn.edu/~tpederse/Courses/CS8761-FALL02/Code/sgt-gale.pdf">Simple Good-Turing</a> method.)</p>
 <p>So we can easily exclude the N most frequent words in English from our adverb
 marker.  Let&#8217;s try N=1000 for now:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">spacy.en</span>
@@ -204,8 +206,8 @@ marker.  Let&#8217;s try N=1000 for now:</p>
 <span class="go">‘Give it back,’ he pleaded ABJECTLY, ‘it’s mine.’</span>
 </pre></div>
 </div>
-<p>There are lots of ways we could refine the logic, depending on just what words we
-want to flag.  Let&#8217;s say we wanted to only flag adverbs that modified words
+<p>There are lots of other ways we could refine the logic, depending on just what
+words we want to flag.  Let&#8217;s say we wanted to only flag adverbs that modified words
 similar to &#8220;pleaded&#8221;.  This is easy to do, as spaCy loads a vector-space
 representation for every word (by default, the vectors produced by
 <a class="reference external" href="https://levyomer.wordpress.com/2014/04/25/dependency-based-word-embeddings/">Levy and Goldberg (2014)</a>.  Naturally, the vector is provided as a numpy
@@ -301,10 +303,17 @@ the message across: the state-of-the-art NLP technologies are very powerful.
 spaCy gives you easy and efficient access to them, which lets you build all
 sorts of use products and features that were previously impossible.</p>
 </div>
-<div class="section" id="efficiency">
-<h2>Efficiency<a class="headerlink" href="#efficiency" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="speed-comparison">
+<h2>Speed Comparison<a class="headerlink" href="#speed-comparison" title="Permalink to this headline">¶</a></h2>
+<p><strong>Set up</strong>: 100,000 plain-text documents were streamed from an SQLite3
+database, and processed with an NLP library, to one of three levels of detail
+&#8212; tokenization, tagging, or parsing.  The tasks are additive: to parse the
+text you have to tokenize and tag it.  The  pre-processing was not subtracted
+from the times &#8212; I report the time required for the pipeline to complete.
+I report mean times per document, in milliseconds.</p>
+<p><strong>Hardware</strong>: Intel i7-3770 (2012)</p>
 <table border="1" class="docutils">
-<caption>Efficiency comparison. See <a href="#id1"><span class="problematic" id="id2">`Benchmarks`_</span></a> for details.</caption>
+<caption>Efficiency comparison. Lower is better.</caption>
 <colgroup>
 <col width="20%" />
 <col width="14%" />
@@ -373,8 +382,8 @@ of strings.  A spaCy token is a pointer to a Lexeme struct, from which you can
 access a wide range of pre-computed features, including embedded word
 representations.</p>
 </div>
-<div class="section" id="accuracy">
-<h2>Accuracy<a class="headerlink" href="#accuracy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="accuracy-comparison">
+<h2>Accuracy Comparison<a class="headerlink" href="#accuracy-comparison" title="Permalink to this headline">¶</a></h2>
 <p>The table above compares spaCy to some of the current state-of-the-art systems,
 on the standard evaluation from the Wall Street Journal, given gold-standard
 sentence boundaries and tokenization.  I&#8217;m in the process of completing a more
@@ -387,10 +396,10 @@ previous fastest parser that I&#8217;m aware of.</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#efficiency">Efficiency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accuracy">Accuracy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#speed-comparison">Speed Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accuracy-comparison">Accuracy Comparison</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howworks.html">How spaCy Works</a></li>
 <li class="toctree-l3"><a class="reference internal" href="license.html">License</a></li>
 </ul>
@@ -404,7 +413,7 @@ previous fastest parser that I&#8217;m aware of.</p>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="howworks.html#what-we-don-t-do">What we don&#8217;t do</a></li>
