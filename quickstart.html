@@ -124,7 +124,15 @@
 $ python -m spacy.en.download
 </pre></div>
 </div>
-<p>The download command fetches and installs about 300mb of data, for the <cite>parser model_</cite>
+<p>To compile from source:</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ git clone https://github.com/honnibal/spaCy.git
+$ virtualenv .env &amp;&amp; source .env/bin/activate
+$ pip install -r requirements.txt
+$ python -m spacy.en.download
+$ fab make test
+</pre></div>
+</div>
+<p>The download command fetches and installs about 300mb of data, for the <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/en_deps-0.30.tgz">parser model</a>
 and <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/vec.bin">word vectors</a>, which it installs within the spacy.en package directory.</p>
 </div>
 <div class="section" id="usage">
@@ -133,19 +141,19 @@ and <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.
 as an argument, and returns a <tt class="xref py py-class docutils literal"><span class="pre">tokens.Tokens</span></tt> object.  You can
 iterate over it to get <tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt> objects, which provide
 a convenient API:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span> <span class="c"># If Python 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;I ate the pizza with anchovies.&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pizza</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">orth</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">orth_</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">(</span><span class="mi">14702</span><span class="p">,</span> <span class="s">u&#39;pizza&#39;</span><span class="p">,</span> <span class="mi">14702</span><span class="p">,</span> <span class="s">u&#39;ate&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">(</span><span class="mi">14702</span><span class="p">,</span> <span class="s">&#39;pizza&#39;</span><span class="p">,</span> <span class="mi">14702</span><span class="p">,</span> <span class="s">&#39;ate&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>spaCy maps all strings to sequential integer IDs &#8212; a common idiom in NLP.
+<p>spaCy maps all strings to sequential integer IDs &#8212; a common trick in NLP.
 If an attribute <cite>Token.foo</cite> is an integer ID, then <cite>Token.foo_</cite> is the string,
 e.g. <cite>pizza.orth_</cite> and <cite>pizza.orth</cite> provide the integer ID and the string of
-the original orthographic form of the word, with no string normalizations
-applied.</p>
+the original orthographic form of the word.</p>
 <blockquote>
 <div><div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -305,7 +313,7 @@ should only work with one instance of the pipeline at a time.</p>
 <div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span> <span class="o">=</span> <span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;Apple&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lexeme</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">,</span> <span class="n">is_upper</span>
 <span class="go">True, False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Apple computers&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">&#39;Apple computers&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_upper</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spact.en.attrs</span> <span class="kn">import</span> <span class="n">IS_ALPHA</span><span class="p">,</span> <span class="n">IS_UPPER</span>
