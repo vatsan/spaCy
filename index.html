@@ -35,6 +35,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -45,7 +46,6 @@
   ga('send', 'pageview');
 
 </script>
-
 
 <body class="wy-body-for-nav" role="document">
 
@@ -245,11 +245,11 @@ cosine metric:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;50-60&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">50</span><span class="p">:</span><span class="mi">60</span><span class="p">]))</span>
 <span class="go">50-60 counselled, bragged, backtracked, caucused, refiled, dueled, mused, dissented, yearned, confesses</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;100-110&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">110</span><span class="p">]))</span>
-<span class="go">cabled, ducked, sentenced, perjured, absconded, bargained, overstayed, clerked, confided, sympathizes</span>
+<span class="go">100-110 cabled, ducked, sentenced, perjured, absconded, bargained, overstayed, clerked, confided, sympathizes</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;1000-1010&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1010</span><span class="p">]))</span>
-<span class="go">scorned, baled, righted, requested, swindled, posited, firebombed, slimed, deferred, sagged</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">50000</span><span class="p">:</span><span class="mi">50010</span><span class="p">]))</span>
-<span class="go">fb, ford, systems, puck, anglers, ik, tabloid, dirty, rims, artists</span>
+<span class="go">1000-1010 scorned, baled, righted, requested, swindled, posited, firebombed, slimed, deferred, sagged</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;50000-50010&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">50000</span><span class="p">:</span><span class="mi">50010</span><span class="p">]))</span>
+<span class="go">50000-50010, fb, ford, systems, puck, anglers, ik, tabloid, dirty, rims, artists</span>
 </pre></div>
 </div>
 <p>As you can see, the similarity model that these vectors give us is excellent
@@ -259,11 +259,8 @@ words: one associated with the legal meaning of &#8220;pleaded&#8221;, and one f
 general sense.  Sorting out these clusters is an area of active research.</p>
 <p>A simple work-around is to average the vectors of several words, and use that
 as our target:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">say_verbs</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;pleaded&#39;</span><span class="p">,</span> <span class="s">u&#39;confessed&#39;</span><span class="p">,</span> <span class="s">u&#39;remonstrated&#39;</span><span class="p">,</span> <span class="s">u&#39;begged&#39;</span><span class="p">,</span>
-<span class="go">                 u&#39;bragged&#39;, u&#39;confided&#39;, u&#39;requested&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">say_vector</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">verb</span> <span class="ow">in</span> <span class="n">say_verbs</span><span class="p">:</span>
-<span class="gp">... </span>  <span class="n">say_vector</span> <span class="o">+=</span> <span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">verb</span><span class="p">]</span><span class="o">.</span><span class="n">repvec</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">say_verbs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;pleaded&#39;</span><span class="p">,</span> <span class="s">&#39;confessed&#39;</span><span class="p">,</span> <span class="s">&#39;remonstrated&#39;</span><span class="p">,</span> <span class="s">&#39;begged&#39;</span><span class="p">,</span> <span class="s">&#39;bragged&#39;</span><span class="p">,</span> <span class="s">&#39;confided&#39;</span><span class="p">,</span> <span class="s">&#39;requested&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">say_vector</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">verb</span><span class="p">]</span><span class="o">.</span><span class="n">repvec</span> <span class="k">for</span> <span class="n">verb</span> <span class="ow">in</span> <span class="n">say_verbs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">say_verbs</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">cosine</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">repvec</span><span class="p">,</span> <span class="n">say_vector</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">words</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;1-20&#39;</span><span class="p">,</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">]))</span>
@@ -274,19 +271,15 @@ as our target:</p>
 </pre></div>
 </div>
 <p>These definitely look like words that King might scold a writer for attaching
-adverbs to.  Recall that our previous adverb highlighting function looked like
+adverbs to.  Recall that our original adverb highlighting function looked like
 this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">spacy.en</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.parts_of_speech</span> <span class="kn">import</span> <span class="n">ADV</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Load the pipeline, and call it with some text.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">&quot;‘Give it back,’ he pleaded abjectly, ‘it’s mine.’&quot;</span><span class="p">,</span>
-<span class="go">                 tag=True, parse=True)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">output</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">output</span> <span class="o">+=</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADVERB</span> <span class="k">else</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span>
-<span class="gp">... </span>    <span class="n">output</span> <span class="o">+=</span> <span class="n">tok</span><span class="o">.</span><span class="n">whitespace</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="go">                 tag=True, parse=False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tok</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">tok</span><span class="o">.</span><span class="n">pos</span> <span class="o">==</span> <span class="n">ADV</span> <span class="k">else</span> <span class="n">tok</span><span class="o">.</span><span class="n">string</span> <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">))</span>
 <span class="go">‘Give it BACK,’ he pleaded ABJECTLY, ‘it’s mine.’</span>
 </pre></div>
 </div>
