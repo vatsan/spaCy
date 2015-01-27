@@ -7,14 +7,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>spacy.en &mdash; spaCy 1.0 documentation</title>
+  <title>spacy.en &mdash; spaCy 0.31 documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -28,11 +28,22 @@
   
 
   
-    <link rel="top" title="spaCy 1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="spaCy 0.31 documentation" href="../../index.html"/>
         <link rel="up" title="spacy" href="../spacy.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-58931649-1', 'gini.net');
+      ga('send', 'pageview');
+  </script>
+  
 
 </head>
 
@@ -43,9 +54,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
-        <a href="../../index.html" class="fa fa-home"> spaCy</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        
+          <a href="../../index.html" class="fa fa-home"> spaCy</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -55,8 +69,9 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
         
-        
-            <ul>
+          
+          
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">spaCy: Industrial-strength NLP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#example-functionality">Example functionality</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../index.html#speed-comparison">Speed Comparison</a></li>
@@ -83,6 +98,7 @@
 </li>
 </ul>
 
+          
         
       </div>
       &nbsp;
@@ -115,7 +131,7 @@
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document">
             
   <h1>Source code for spacy.en</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
@@ -153,6 +169,8 @@
 
 <span class="n">LOCAL_DATA_DIR</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;data&#39;</span><span class="p">)</span>
 
+<span class="n">parse_if_model_present</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
 
 <div class="viewcode-block" id="English"><a class="viewcode-back" href="../../api.html#spacy.en.English">[docs]</a><span class="k">class</span> <span class="nc">English</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The English NLP pipeline.</span>
@@ -163,25 +181,14 @@
 <span class="sd">        data_dir (unicode): A path to a directory, from which to load the pipeline.</span>
 <span class="sd">            If None, looks for a directory named &quot;data/&quot; in the same directory as</span>
 <span class="sd">            the present file, i.e. path.join(path.dirname(__file__, &#39;data&#39;)).</span>
-<span class="sd">            If path.join(data_dir, &#39;pos&#39;) exists, the tagger is loaded from it.</span>
-<span class="sd">            If path.join(data_dir, &#39;deps&#39;) exists, the parser is loaded from it.</span>
-<span class="sd">            See Pipeline Directory Structure for details.</span>
 
-<span class="sd">    Attributes:</span>
-<span class="sd">        vocab (spacy.vocab.Vocab): The lexicon.</span>
+<span class="sd">            If path.join(data_dir, &#39;pos&#39;) exists, the tagger is loaded from there.</span>
 
-<span class="sd">        strings (spacy.strings.StringStore): Encode/decode strings to/from integer IDs.</span>
-
-<span class="sd">        tokenizer (spacy.tokenizer.Tokenizer): The start of the pipeline.</span>
-
-<span class="sd">        tagger (spacy.en.pos.EnPosTagger):</span>
-<span class="sd">            The part-of-speech tagger, which also performs lemmatization and</span>
-<span class="sd">            morphological analysis.</span>
-
-<span class="sd">        parser (spacy.syntax.parser.GreedyParser):</span>
-<span class="sd">            A greedy shift-reduce dependency parser.</span>
+<span class="sd">            If path.join(data_dir, &#39;deps&#39;) exists, the parser is loaded from there.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">LOCAL_DATA_DIR</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s">&#39;local&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data_dir</span> <span class="o">==</span> <span class="s">&#39;local&#39;</span><span class="p">:</span>
+            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">LOCAL_DATA_DIR</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">Vocab</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;vocab&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_dir</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span>
                            <span class="n">get_lex_props</span><span class="o">=</span><span class="n">get_lex_props</span><span class="p">)</span>
@@ -204,6 +211,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="bp">None</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_parser_model</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_tagger_model</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">))</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">tagger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -216,32 +226,59 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">GreedyParser</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span>
 
-<div class="viewcode-block" id="English.__call__"><a class="viewcode-back" href="../../api.html#spacy.en.English.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Apply the pipeline to some text.</span>
+<div class="viewcode-block" id="English.__call__"><a class="viewcode-back" href="../../api.html#spacy.en.English.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="n">parse_if_model_present</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply the pipeline to some text.  The text can span multiple sentences,</span>
+<span class="sd">        and can contain arbtrary whitespace.  Alignment into the original string</span>
+<span class="sd">        </span>
+<span class="sd">        The tagger and parser are lazy-loaded the first time they are required.</span>
+<span class="sd">        Loading the parser model usually takes 5-10 seconds.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            text (unicode): The text to be processed.</span>
 
 <span class="sd">        Keyword args:</span>
-<span class="sd">            tag (bool): Whether to add part-of-speech tags to the text.  This</span>
-<span class="sd">                will also set morphological analysis and lemmas.</span>
-
-<span class="sd">            parse (bool): Whether to add dependency-heads and labels to the text.</span>
+<span class="sd">            tag (bool): Whether to add part-of-speech tags to the text.  Also</span>
+<span class="sd">                sets morphological analysis and lemmas.</span>
+<span class="sd">        </span>
+<span class="sd">            parse (True, False, -1): Whether to add labelled syntactic dependencies.</span>
+<span class="sd">            </span>
+<span class="sd">              -1 (default) is &quot;guess&quot;: It will guess True if tag=True and the</span>
+<span class="sd">                model has been installed.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            tokens (spacy.tokens.Tokens):</span>
+
+<span class="sd">        &gt;&gt;&gt; from spacy.en import English</span>
+<span class="sd">        &gt;&gt;&gt; nlp = English()</span>
+<span class="sd">        &gt;&gt;&gt; tokens = nlp(&#39;An example sentence. Another example sentence.&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; tokens[0].orth_, tokens[0].head.tag_</span>
+<span class="sd">        (&#39;An&#39;, &#39;NN&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parse</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;Incompatible arguments: tag=False, parse=True&quot;</span>
+                   <span class="s">&quot;Part-of-speech tags are required for parsing.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">parse</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">parse</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">elif</span> <span class="n">parse</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_parser_model</span><span class="p">:</span>
+            <span class="n">parse</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_tagger_model</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">parse</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">parse</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_parser_model</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;Receive parse=True, but parser model not found.</span><span class="se">\n\n</span><span class="s">&quot;</span>
+                  <span class="s">&quot;Run:</span><span class="se">\n</span><span class="s">&quot;</span>
+                  <span class="s">&quot;$ python -m spacy.en.download</span><span class="se">\n</span><span class="s">&quot;</span>
+                  <span class="s">&quot;To install the model.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parse</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_parser_model</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tokens</span>
 </div>
     <span class="nd">@property</span>
-<div class="viewcode-block" id="English.tags"><a class="viewcode-back" href="../../api.html#spacy.en.English.tags">[docs]</a>    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;List of part-of-speech tag names.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span><span class="o">.</span><span class="n">tag_names</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagger</span><span class="o">.</span><span class="n">tag_names</span></div>
 </pre></div>
 
           </div>
@@ -256,7 +293,8 @@
     </p>
   </div>
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
 </footer>
         </div>
       </div>
@@ -272,7 +310,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0',
+            VERSION:'0.31',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
@@ -298,5 +336,5 @@
   </script>
    
 
-</body>
+  </body>
 </html>
