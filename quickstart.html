@@ -140,16 +140,27 @@
 $ python -m spacy.en.download
 </pre></div>
 </div>
-<p>To compile from source:</p>
+<p>The download command fetches and installs about 300mb of data, for the <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/en_deps-0.30.tgz">parser model</a>
+and <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/vec.bin">word vectors</a>, which it installs within the spacy.en package directory.</p>
+<p>Compilation from source is currently complicated, because there&#8217;s binary data
+that&#8217;s provided in the PyPi package, but is not in the repository.  As
+a temporary workaround, you can download the PyPi package and extract it from
+there. I&#8217;ll have a better solution shortly, probably using Github Releases.</p>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ git clone https://github.com/honnibal/spaCy.git
+$ cd spaCy
 $ virtualenv .env &amp;&amp; source .env/bin/activate
+$ export PYTHONPATH=`pwd`
 $ pip install -r requirements.txt
+$ wget https://devpi.net/root/pypi/+f/4e8/d81919a7876fe/spacy-0.33.tar.gz
+$ tar -xzf spacy-0.33.tar.gz
+$ cp -r spacy-0.33/spacy/en/data spacy/en/data
 $ python -m spacy.en.download
 $ fab make test
 </pre></div>
 </div>
-<p>The download command fetches and installs about 300mb of data, for the <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/en_deps-0.30.tgz">parser model</a>
-and <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/vec.bin">word vectors</a>, which it installs within the spacy.en package directory.</p>
+<p>Python packaging is awkward at the best of times, and it&#8217;s particularly tricky
+with C extensions, built via Cython, requiring large data files. So, please
+bear with me :)</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
