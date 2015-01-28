@@ -186,9 +186,7 @@
 
 <span class="sd">            If path.join(data_dir, &#39;deps&#39;) exists, the parser is loaded from there.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s">&#39;local&#39;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">data_dir</span> <span class="o">==</span> <span class="s">&#39;local&#39;</span><span class="p">:</span>
-            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">LOCAL_DATA_DIR</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">LOCAL_DATA_DIR</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">Vocab</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;vocab&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_dir</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span>
                            <span class="n">get_lex_props</span><span class="o">=</span><span class="n">get_lex_props</span><span class="p">)</span>
