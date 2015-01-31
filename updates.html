@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Updates &mdash; spaCy 0.31 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.31 documentation" href="index.html"/>
+        <link rel="prev" title="License" href="license.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-58931649-1', 'gini.net');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="index.html" class="fa fa-home"> spaCy</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">spaCy: Industrial-strength NLP</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#example-functionality">Example functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#speed-comparison">Speed Comparison</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#accuracy-comparison">Accuracy Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2015-01-25</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Updates</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/updates.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="updates">
+<h1>Updates<a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="spacy-v0-4-still-alpha-improving-quickly">
+<h2>2015-01-30 spaCy v0.4: Still alpha, improving quickly<a class="headerlink" href="#spacy-v0-4-still-alpha-improving-quickly" title="Permalink to this headline">¶</a></h2>
+<p>Five days ago I presented the alpha release of spaCy, a natural language
+processing library that brings state-of-the-art technology to small companies.</p>
+<p>spaCy has been very well received, and there are now a lot of eyes on the project.
+Naturally, lots of issues have surfaced.  I&#8217;m very grateful to those who&#8217;ve reported
+them.  I&#8217;ve worked hard to address them as quickly as I could.</p>
+</div>
+<div class="section" id="bug-fixes">
+<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt>Lexemes.bin data file had a platform-specific encoding.</dt>
+<dd><p class="first">This was a silly error: instead of the string, or an index into the
+list of strings, I was storing the 64-bit hash of the string.  On
+wide-unicode builds, a unicode string hashes differently.  This meant that
+all look-ups into the vocabulary failed on wide unicode builds, which
+further meant that the part-of-speech tagger and parser features were not
+computed correctly.</p>
+<p class="last">The fix is simple: we already have to read in a list of all the strings, so
+just store an index into that list, instead of a hash.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Parse tree navigation API was rough, and buggy.</dt>
+<dd><p class="first">The parse-tree navigation API was the last thing I added before v0.3. I&#8217;ve
+now replaced it with something better.  The previous API design was flawed,
+and the implementation was buggy &#8212; Token.child() and Token.head were
+sometimes inconsistent.</p>
+<p>I&#8217;ve addressed the most immediate problems, but this part of the design is
+still a work in progress. It&#8217;s a difficult problem. The parse is a tree,
+and we want to freely navigate up and down it without creating reference
+cycles that inhibit garbage collection, and without doing a lot of copying,
+creating and deleting.</p>
+<p class="last">I think I&#8217;ve got a promising solution to this, but I suspect there&#8217;s
+currently a memory leak.  Please get in touch no the tracker if you want to
+know more, especially if you think you can help.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="known-issues">
+<h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<p>Some systems are still experiencing memory errors, which I&#8217;m having trouble
+pinning down or reproducing.  Please send details of your system to the
+<a class="reference external" href="https://github.com/honnibal/spaCy/issues">Issue Tracker</a> if this is happening to you.</p>
+</div>
+<div class="section" id="enhancements-train-and-evaluate-on-whole-paragraphs">
+<h2>Enhancements: Train and evaluate on whole paragraphs<a class="headerlink" href="#enhancements-train-and-evaluate-on-whole-paragraphs" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">tl;dr: I shipped the wrong parsing model with 0.3. That model expected input to be segmented into sentences.  0.4 ships the correct model, which uses some algorithmic tricks to minimize the impact of tokenization and sentence segmentation errors on the parser.</p>
+</div>
+<p>Most English parsing research is performed on text with perfect pre-processing:
+one newline between every sentence, one space between every token.
+It&#8217;s always been done this way, and it&#8217;s good.  It&#8217;s a useful idealisation,
+because the pre-processing has few algorithmic implications.</p>
+<p>But, for practical performance, this stuff can matter a lot.
+Dridan and Oepen (2013) did a simple but rare thing: they actually ran a few
+parsers on raw text.  Even on the standard Wall Street Journal corpus,
+where pre-processing tools are quite good, the quality of pre-processing
+made a big difference:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="23%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Preprocess</td>
+<td>BLLIP</td>
+<td>Berkeley</td>
+</tr>
+<tr class="row-even"><td>Gold</td>
+<td>90.9</td>
+<td>89.8</td>
+</tr>
+<tr class="row-odd"><td>Default</td>
+<td>86.4</td>
+<td>88.4</td>
+</tr>
+<tr class="row-even"><td>Corrected</td>
+<td>89.9</td>
+<td>88.8</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">spaCy is evaluated on unlabelled dependencies, where the above accuracy figures refer to phrase-structure trees. Accuracies are non-comparable.</p>
+</div>
+<p>In the standard experimental condition &#8212; gold pre-processing &#8212; the
+BLLIP parser is better.  But, it turns out it ships with lousy pre-processing
+tools: when you evaluate the parsers on raw text, the BLLIP parser falls way
+behind.  To verify that this was due to the quality of the pre-processing
+tools, and not some particular algorithmic sensitivity, Dridan and Oepen ran
+both parsers with their high-quality tokenizer and sentence segmenter.  This
+confirmed that with equal pre-processing, the BLLIP parser is better.</p>
+<p>The Dridan and Oepen paper really convinced me to take pre-processing seriously
+in spaCy.  In fact, spaCy started life as just a tokenizer &#8212; hence the name.</p>
+<p>The spaCy parser has a special trick up its sleeve.  Because both the tagger
+and parser run in linear time, it doesn&#8217;t require that the input be divided
+into sentences.  This is nice because it avoids error-cascades: if you segment
+first, then the parser just has to live with whatever decision the segmenter
+made.</p>
+<p>But, even though I designed the system with this consideration in mind,
+I decided to present the initial results using the standard methodology, using
+gold-standard inputs.  But...then I made a mistake.</p>
+<p>Unfortunately, with all the other things I was doing before launch, I forgot
+all about this problem. spaCy launched with a parsing model that expected the
+input to be segmented into sentences, but with no sentence segmenter.  This
+caused a drop in parse accuracy of 4%!</p>
+<p>Over the last five days, I&#8217;ve worked hard to correct this.  I implemented the
+modifications to the parsing algorithm I had planned, from Dongdong Zhang et al
+(2013), and trained and evaluated the parser on raw text, using the version of
+the WSJ distributed by Read et al (2012), and used in Dridan and Oepen&#8217;s
+experiments.</p>
+<p>I&#8217;m pleased to say that on the WSJ at least, spaCy 0.4 performs almost exactly
+as well on raw text as text with gold-standard tokenization and sentence
+boundary detection.</p>
+<p>I still need to evaluate this on web text, and I need to compare against the
+Stanford CoreNLP and other parsers.  I suspect that most other parsers will
+decline in accuracy by 1% &#8212; we&#8217;ll see.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Preprocess</td>
+<td>spaCy</td>
+</tr>
+<tr class="row-even"><td>Gold</td>
+<td>92.4%</td>
+</tr>
+<tr class="row-odd"><td>Default</td>
+<td>92.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h2>2015-01-25<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>spaCy v0.33 launched &#8212; first alpha build.</p>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="license.html" class="btn btn-neutral" title="License"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Matthew Honnibal.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.31',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>

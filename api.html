@@ -97,6 +97,14 @@
 <li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#id1">2015-01-25</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -139,252 +147,6 @@
 <p class="last">The documentation here is currently being rewritten.  If something
 doesn&#8217;t make sense, the docs might be simply wrong. If so, please report it.</p>
 </div>
-<dl class="class">
-<dt id="spacy.en.English">
-<em class="property">class </em><tt class="descclassname">spacy.en.</tt><tt class="descname">English</tt><big>(</big><em>data_dir=u'/Users/matt/repos/spaCy/spacy/en/data'</em><big>)</big><a class="reference internal" href="_modules/spacy/en.html#English"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.en.English" title="Permalink to this definition">¶</a></dt>
-<dd><p>The English NLP pipeline.</p>
-<p>Provides a tokenizer, lexicon, part-of-speech tagger and parser.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first"><strong>data_dir</strong> (<em>unicode</em>) &#8211;
-A path to a directory, from which to load the pipeline.
-If None, looks for a directory named &#8220;data/&#8221; in the same directory as
-the present file, i.e. path.join(path.dirname(__file__, &#8216;data&#8217;)).</p>
-<p>If path.join(data_dir, &#8216;pos&#8217;) exists, the tagger is loaded from there.</p>
-<p class="last">If path.join(data_dir, &#8216;deps&#8217;) exists, the parser is loaded from there.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils">
-<colgroup>
-<col width="12%" />
-<col width="44%" />
-<col width="14%" />
-<col width="29%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Attribute</th>
-<th class="head">Type</th>
-<th class="head">Attr API</th>
-<th class="head">NoteS</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>strings</td>
-<td><a class="reference internal" href="#strings.StringStore" title="strings.StringStore"><tt class="xref py py-class docutils literal"><span class="pre">strings.StringStore</span></tt></a></td>
-<td>__getitem__</td>
-<td>string &lt;-&gt; int  mapping</td>
-</tr>
-<tr class="row-odd"><td>vocab</td>
-<td><a class="reference internal" href="#vocab.Vocab" title="vocab.Vocab"><tt class="xref py py-class docutils literal"><span class="pre">vocab.Vocab</span></tt></a></td>
-<td>__getitem__</td>
-<td>Look up Lexeme object</td>
-</tr>
-<tr class="row-even"><td>tokenizer</td>
-<td><a class="reference internal" href="#tokenizer.Tokenizer" title="tokenizer.Tokenizer"><tt class="xref py py-class docutils literal"><span class="pre">tokenizer.Tokenizer</span></tt></a></td>
-<td>__call__</td>
-<td>Get Tokens given unicode</td>
-</tr>
-<tr class="row-odd"><td>tagger</td>
-<td><a class="reference internal" href="#en.pos.EnPosTagger" title="en.pos.EnPosTagger"><tt class="xref py py-class docutils literal"><span class="pre">en.pos.EnPosTagger</span></tt></a></td>
-<td>__call__</td>
-<td>Set POS tags on Tokens</td>
-</tr>
-<tr class="row-even"><td>parser</td>
-<td><a class="reference internal" href="#syntax.parser.GreedyParser" title="syntax.parser.GreedyParser"><tt class="xref py py-class docutils literal"><span class="pre">syntax.parser.GreedyParser</span></tt></a></td>
-<td>__call__</td>
-<td>Set parse on Tokens</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="spacy.en.English.__call__">
-<tt class="descname">__call__</tt><big>(</big><em>text</em>, <em>tag=True</em>, <em>parse=-1</em><big>)</big><a class="reference internal" href="_modules/spacy/en.html#English.__call__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.en.English.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply the pipeline to some text.  The text can span multiple sentences,
-and can contain arbtrary whitespace.  Alignment into the original string</p>
-<p>The tagger and parser are lazy-loaded the first time they are required.
-Loading the parser model usually takes 5-10 seconds.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>text</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; The text to be processed.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first">
-<li><p class="first"><strong>tag</strong> (<em>bool</em>) &#8211;
-Whether to add part-of-speech tags to the text.  Also
-sets morphological analysis and lemmas.</p>
-</li>
-<li><p class="first"><strong>parse</strong> (<em>True, False, -1</em>) &#8211;
-Whether to add labelled syntactic dependencies.</p>
-<dl class="docutils">
-<dt>-1 (default) is &#8220;guess&#8221;: It will guess True if tag=True and the</dt>
-<dd><p class="first last">model has been installed.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>tokens</strong></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">spacy.tokens.Tokens</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">&#39;An example sentence. Another example sentence.&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">orth_</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">tag_</span>
-<span class="go">(&#39;An&#39;, &#39;NN&#39;)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="spacy.tokens.Tokens">
-<em class="property">class </em><tt class="descclassname">spacy.tokens.</tt><tt class="descname">Tokens</tt><a class="headerlink" href="#spacy.tokens.Tokens" title="Permalink to this definition">¶</a></dt>
-<dd><p>Container class for annotated text.  Constructed via English.__call__ or
-Tokenizer.__call__.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="37%" />
-<col width="32%" />
-<col width="32%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Attribute</th>
-<th class="head">Type</th>
-<th class="head">Useful</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>vocab</td>
-<td>Vocab</td>
-<td>__getitem__</td>
-</tr>
-<tr class="row-odd"><td>vocab.strings</td>
-<td>StringStore</td>
-<td>__getitem__</td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
-<dt id="spacy.tokens.Tokens.__getitem__">
-<tt class="descname">__getitem__</tt><a class="headerlink" href="#spacy.tokens.Tokens.__getitem__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve a token.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>token</strong></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Token</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="spacy.tokens.Tokens.__iter__">
-<tt class="descname">__iter__</tt><a class="headerlink" href="#spacy.tokens.Tokens.__iter__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate over the tokens.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body"><strong>token</strong> (<em>Token</em>)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="spacy.tokens.Tokens.__len__">
-<tt class="descname">__len__</tt><a class="headerlink" href="#spacy.tokens.Tokens.__len__" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.__len__() &lt;==&gt; len(x)</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="spacy.tokens.Tokens.__str__">
-<tt class="descname">__str__</tt><a class="headerlink" href="#spacy.tokens.Tokens.__str__" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.__str__() &lt;==&gt; str(x)</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="spacy.tokens.Tokens.__unicode__">
-<tt class="descname">__unicode__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Tokens.__unicode__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="spacy.tokens.Tokens.count_by">
-<tt class="descname">count_by</tt><big>(</big><em>self</em>, <em>attr_id_t attr_id</em>, <em>exclude=None</em><big>)</big><a class="headerlink" href="#spacy.tokens.Tokens.count_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a dict of {attribute (int): count (ints)} frequencies, keyed
-by the values of the given attribute ID.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span><span class="p">,</span> <span class="n">attrs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;apple apple orange banana&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">ORTH</span><span class="p">)</span>
-<span class="go">{12800L: 1, 11880L: 2, 7561L: 1}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">([</span><span class="n">attrs</span><span class="o">.</span><span class="n">ORTH</span><span class="p">])</span>
-<span class="go">array([[11880],</span>
-<span class="go">       [11880],</span>
-<span class="go">       [ 7561],</span>
-<span class="go">       [12800]])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="spacy.tokens.Tokens.is_parsed">
-<tt class="descname">is_parsed</tt><a class="headerlink" href="#spacy.tokens.Tokens.is_parsed" title="Permalink to this definition">¶</a></dt>
-<dd><p>is_parsed: &#8216;bool&#8217;</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="spacy.tokens.Tokens.is_tagged">
-<tt class="descname">is_tagged</tt><a class="headerlink" href="#spacy.tokens.Tokens.is_tagged" title="Permalink to this definition">¶</a></dt>
-<dd><p>is_tagged: &#8216;bool&#8217;</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="spacy.tokens.Tokens.sentences">
-<tt class="descname">sentences</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Tokens.sentences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="spacy.tokens.Tokens.to_array">
-<tt class="descname">to_array</tt><big>(</big><em>self</em>, <em>py_attr_ids</em><big>)</big> &rarr; __Pyx_memviewslice<a class="headerlink" href="#spacy.tokens.Tokens.to_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given a list of M attribute IDs, export the tokens to a numpy ndarray
-of shape N*M, where N is the length of the sentence.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attr_ids</strong> (<em>list[int]</em>) &#8211; A list of attribute ID ints.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>feat_array</strong> &#8211;<p>A feature matrix, with one row per word, and one column per attribute
-indicated in the input attr_ids.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray[long, ndim=2]</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="docutils">
 <dt>Internals</dt>
 <dd><p class="first">A Tokens instance stores the annotations in a C-array of TokenC structs.
@@ -484,19 +246,163 @@ is both slower and has a worse API than Cython access.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="spacy.tokens.Token.child">
-<tt class="descname">child</tt><big>(</big><em>self</em>, <em>int i=1</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.child" title="Permalink to this definition">¶</a></dt>
+<dt id="spacy.tokens.Token.cluster">
+<tt class="descname">cluster</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.cluster" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
+<dt id="spacy.tokens.Token.dep">
+<tt class="descname">dep</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.dep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.dep_">
+<tt class="descname">dep_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.dep_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="spacy.tokens.Token.head">
-<tt class="descname">head</tt><a class="headerlink" href="#spacy.tokens.Token.head" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">head</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.head" title="Permalink to this definition">¶</a></dt>
 <dd><p>The token predicted by the parser to be the head of the current token.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="spacy.tokens.Token.idx">
+<tt class="descname">idx</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.lefts">
+<tt class="descname">lefts</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.lefts" title="Permalink to this definition">¶</a></dt>
+<dd><p>The leftward immediate children of the word, in the syntactic
+dependency parse.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.lemma">
+<tt class="descname">lemma</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.lemma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.lemma_">
+<tt class="descname">lemma_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.lemma_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.lower">
+<tt class="descname">lower</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.lower" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.lower_">
+<tt class="descname">lower_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.lower_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.n_lefts">
+<tt class="descname">n_lefts</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.n_lefts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.n_rights">
+<tt class="descname">n_rights</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.n_rights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="spacy.tokens.Token.nbor">
 <tt class="descname">nbor</tt><big>(</big><em>self</em>, <em>int i=1</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.nbor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.norm">
+<tt class="descname">norm</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.norm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.norm_">
+<tt class="descname">norm_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.norm_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.orth">
+<tt class="descname">orth</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.orth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.orth_">
+<tt class="descname">orth_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.orth_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.pos">
+<tt class="descname">pos</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.pos_">
+<tt class="descname">pos_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.pos_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.prefix">
+<tt class="descname">prefix</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.prefix_">
+<tt class="descname">prefix_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.prefix_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.repvec">
+<tt class="descname">repvec</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.repvec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.rights">
+<tt class="descname">rights</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.rights" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rightward immediate children of the word, in the syntactic
+dependency parse.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.shape">
+<tt class="descname">shape</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.shape_">
+<tt class="descname">shape_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.shape_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.string">
+<tt class="descname">string</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.suffix">
+<tt class="descname">suffix</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.suffix_">
+<tt class="descname">suffix_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.suffix_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.tag">
+<tt class="descname">tag</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.tag_">
+<tt class="descname">tag_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.tag_" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.Token.whitespace_">
+<tt class="descname">whitespace_</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.Token.whitespace_" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
