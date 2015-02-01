@@ -30,7 +30,7 @@
   
     <link rel="top" title="spaCy 0.31 documentation" href="index.html"/>
         <link rel="next" title="API" href="api.html"/>
-        <link rel="prev" title="License" href="license.html"/> 
+        <link rel="prev" title="Updates" href="updates.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -97,6 +97,14 @@
 <li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#id1">2015-01-25</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -140,34 +148,33 @@
 $ python -m spacy.en.download
 </pre></div>
 </div>
-<p>The download command fetches and installs about 300mb of data, for the <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/en_deps-0.30.tgz">parser model</a>
-and <a class="reference external" href="http://s3-us-west-1.amazonaws.com/media.spacynlp.com/vec.bin">word vectors</a>, which it installs within the spacy.en package directory.</p>
-<p>Compilation from source is currently complicated, because there&#8217;s binary data
-that&#8217;s provided in the PyPi package, but is not in the repository.  As
-a temporary workaround, you can download the PyPi package and extract it from
-there. I&#8217;ll have a better solution shortly, probably using Github Releases.</p>
+<p>The download command fetches and installs about <a href="#id1"><span class="problematic" id="id2">`300mb of data`_</span></a>, for the
+parser model and word vectors, which it installs within the spacy.en package directory.</p>
+<p>Compilation from source will install Cython to build the package.  If you&#8217;re
+using Python 2, I also recommend installing fabric and fabtools &#8212; this is how
+I build the project.</p>
+<p>I&#8217;ve included instructions for installing spaCy into a virtualenv for
+completeness, but you may have your own solution for this (e.g. using pyenv).</p>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ git clone https://github.com/honnibal/spaCy.git
 $ cd spaCy
 $ virtualenv .env &amp;&amp; source .env/bin/activate
 $ export PYTHONPATH=`pwd`
 $ pip install -r requirements.txt
-$ wget https://devpi.net/root/pypi/+f/4e8/d81919a7876fe/spacy-0.33.tar.gz
-$ tar -xzf spacy-0.33.tar.gz
-$ cp -r spacy-0.33/spacy/en/data spacy/en/data
-$ fab make
+$ python setup.py build_ext --inplace
 $ python -m spacy.en.download
-$ fab test
+$ pip install pytest
+$ py.test tests/
 </pre></div>
 </div>
 <p>Python packaging is awkward at the best of times, and it&#8217;s particularly tricky
 with C extensions, built via Cython, requiring large data files. So, please
-bear with me :)</p>
+report issues as you encounter them, and bear with me :)</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <p>The main entry-point is <tt class="xref py py-meth docutils literal"><span class="pre">en.English.__call__()</span></tt>, which accepts a unicode string
 as an argument, and returns a <tt class="xref py py-class docutils literal"><span class="pre">tokens.Tokens</span></tt> object.  You can
-iterate over it to get <a class="reference internal" href="api.html#spacy.tokens.Token" title="spacy.tokens.Token"><tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt></a> objects, which provide
+iterate over it to get <tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt> objects, which provide
 a convenient API:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span> <span class="c"># If Python 2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
@@ -175,7 +182,7 @@ a convenient API:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;I ate the pizza with anchovies.&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pizza</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">orth</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">orth_</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma</span><span class="p">,</span> <span class="n">pizza</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">lemma_</span><span class="p">)</span>
-<span class="gp">... </span><span class="p">(</span><span class="mi">14702</span><span class="p">,</span> <span class="s">&#39;pizza&#39;</span><span class="p">,</span> <span class="mi">14702</span><span class="p">,</span> <span class="s">&#39;ate&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">(</span><span class="mi">14702</span><span class="p">,</span> <span class="s">u&#39;pizza&#39;</span><span class="p">,</span> <span class="mi">14702</span><span class="p">,</span> <span class="s">u&#39;eat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>spaCy maps all strings to sequential integer IDs &#8212; a common trick in NLP.
@@ -323,7 +330,7 @@ should only work with one instance of the pipeline at a time.</p>
 <dl class="attribute">
 <dt>
 <tt class="descname">length: int</tt></dt>
-<dd><p>Length, in unicode code-points. Equal to len(<a href="#id1"><span class="problematic" id="id2">self.orth_</span></a>).</p>
+<dd><p>Length, in unicode code-points. Equal to len(<a href="#id3"><span class="problematic" id="id4">self.orth_</span></a>).</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -466,7 +473,7 @@ should only work with one instance of the pipeline at a time.</p>
         <a href="api.html" class="btn btn-neutral float-right" title="API">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="license.html" class="btn btn-neutral" title="License"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="updates.html" class="btn btn-neutral" title="Updates"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
