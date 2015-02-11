@@ -186,15 +186,23 @@
 <span class="sd">    Provides a tokenizer, lexicon, part-of-speech tagger and parser.</span>
 
 <span class="sd">    Keyword args:</span>
-<span class="sd">        data_dir (unicode): A path to a directory, from which to load the pipeline.</span>
-<span class="sd">            If None, looks for a directory named &quot;data/&quot; in the same directory as</span>
-<span class="sd">            the present file, i.e. path.join(path.dirname(__file__, &#39;data&#39;)).</span>
+<span class="sd">        data_dir (unicode):</span>
+<span class="sd">            A path to a directory, from which to load the pipeline.</span>
 
-<span class="sd">            If path.join(data_dir, &#39;pos&#39;) exists, the tagger is loaded from there.</span>
+<span class="sd">            By default, data is installed within the spaCy package directory. So</span>
+<span class="sd">            if no data_dir is specified, spaCy attempts to load from a</span>
+<span class="sd">            directory named &quot;data&quot; that is a sibling of the spacy/en/__init__.py</span>
+<span class="sd">            file.  You can find the location of this file by running:</span>
 
-<span class="sd">            If path.join(data_dir, &#39;deps&#39;) exists, the parser is loaded from there.</span>
+<span class="sd">                $ python -c &quot;import spacy.en; print spacy.en.__file__&quot;</span>
+
+<span class="sd">            To prevent any data files from being loaded, pass data_dir=None. This</span>
+<span class="sd">            is useful if you want to construct a lexicon, which you&#39;ll then save</span>
+<span class="sd">            for later loading.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">LOCAL_DATA_DIR</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data_dir</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">LOCAL_DATA_DIR</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">Vocab</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;vocab&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_dir</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span>
                            <span class="n">get_lex_props</span><span class="o">=</span><span class="n">get_lex_props</span><span class="p">)</span>
@@ -205,20 +213,24 @@
             <span class="n">prefix_re</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="n">suffix_re</span> <span class="o">=</span> <span class="bp">None</span>
             <span class="n">infix_re</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_parser_model</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_tagger_model</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">tok_data_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;tokenizer&#39;</span><span class="p">)</span>
             <span class="n">tok_rules</span><span class="p">,</span> <span class="n">prefix_re</span><span class="p">,</span> <span class="n">suffix_re</span><span class="p">,</span> <span class="n">infix_re</span> <span class="o">=</span> <span class="n">read_lang_data</span><span class="p">(</span><span class="n">tok_data_dir</span><span class="p">)</span>
             <span class="n">prefix_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix_re</span><span class="p">)</span>
             <span class="n">suffix_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">suffix_re</span><span class="p">)</span>
             <span class="n">infix_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">infix_re</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_parser_model</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_tagger_model</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">))</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="n">tok_rules</span><span class="p">,</span> <span class="n">prefix_re</span><span class="p">,</span>
                                    <span class="n">suffix_re</span><span class="p">,</span> <span class="n">infix_re</span><span class="p">,</span>
                                    <span class="n">POS_TAGS</span><span class="p">,</span> <span class="n">tag_names</span><span class="p">)</span>
+        <span class="c"># These are lazy-loaded</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tagger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="bp">None</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">has_parser_model</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">has_tagger_model</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;pos&#39;</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">tagger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
