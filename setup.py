@@ -28,7 +28,6 @@ def my_customize_compiler(compiler):
 if platform.python_implementation() == 'PyPy':
     sysconfig.customize_compiler = my_customize_compiler
 
-
 #def install_headers():
 #    dest_dir = path.join(sys.prefix, 'include', 'murmurhash')
 #    if not path.exists(dest_dir):
@@ -117,7 +116,7 @@ def run_setup(exts):
 def main(modules, is_pypy):
     language = "cpp"
     includes = ['.', path.join(sys.prefix, 'include')]
-    compile_args = ['-O3']
+    compile_args = ['-O3', '-Wno-strict-prototypes']
     link_args = []
     if sys.prefix == 'darwin':
         compile_args.append(['-mmacosx-version-min=10.8', '-stdlib=libc++'])
@@ -134,8 +133,9 @@ MOD_NAMES = ['spacy.parts_of_speech', 'spacy.strings',
              'spacy.lexeme', 'spacy.vocab', 'spacy.tokens', 'spacy.morphology',
              'spacy._ml', 'spacy.tokenizer', 'spacy.en.attrs',
              'spacy.en.pos', 'spacy.syntax.parser', 'spacy.syntax._state',
+             'spacy.syntax.transition_system', 
              'spacy.syntax.arc_eager', 'spacy.syntax._parse_features',
-             'spacy.orth']
+             'spacy.syntax.conll', 'spacy.orth']
 
 
 if __name__ == '__main__':
