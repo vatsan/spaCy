@@ -142,11 +142,6 @@
             
   <div class="section" id="api">
 <h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The documentation here is currently being rewritten.  If something
-doesn&#8217;t make sense, the docs might be simply wrong. If so, please report it.</p>
-</div>
 <dl class="class">
 <dt id="spacy.en.English">
 <em class="property">class </em><tt class="descclassname">spacy.en.</tt><tt class="descname">English</tt><big>(</big><em>data_dir=u''</em><big>)</big><a class="reference internal" href="_modules/spacy/en.html#English"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#spacy.en.English" title="Permalink to this definition">¶</a></dt>
@@ -414,18 +409,6 @@ indicated in the input attr_ids.</p>
 <em class="property">class </em><tt class="descclassname">spacy.tokens.</tt><tt class="descname">Token</tt><a class="headerlink" href="#spacy.tokens.Token" title="Permalink to this definition">¶</a></dt>
 <dd><p>An individual token &#8212; i.e. a word, a punctuation symbol, etc.  Created
 via Tokens.__getitem__ and Tokens.__iter__.</p>
-<p>Integer IDs are provided for all unicode-typed attributes. The unicode version
-ends with an underscore, e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;A parsed string.&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">token</span><span class="o">.</span><span class="n">orth</span>
-<span class="go">1578578</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">token</span><span class="o">.</span><span class="n">orth_</span>
-<span class="go">u&#39;parsed&#39;</span>
-</pre></div>
-</div>
 <p>Integer IDs are provided for all string features.  The (unicode) string is
 provided by an attribute of the same name followed by an underscore, e.g.
 token.orth is an integer ID, token.orth_ is the unicode value.</p>
@@ -585,6 +568,11 @@ the root of the dependency tree, the same word is returned.</dd>
 <dd>An iterator for the immediate leftward syntactic children of the word.</dd>
 <dt>rights</dt>
 <dd>An iterator for the immediate rightward syntactic children of the word.</dd>
+<dt>children</dt>
+<dd>An iterator that yields from lefts, and then yields from rights.</dd>
+<dt>subtree</dt>
+<dd>An iterator for the part of the sentence syntactically governed by the
+word, including the word itself.</dd>
 </dl>
 </dd></dl>
 
