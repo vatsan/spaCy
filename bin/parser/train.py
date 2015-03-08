@@ -95,24 +95,14 @@ def evaluate(Language, gold_sents, model_dir, gold_preproc=False):
             if gold_sent.heads[i] is None:
                 skipped += 1
                 continue
-<<<<<<< HEAD
             #print i, token.orth_, token.head.i, gold_sent.py_heads[i], gold_sent.labels[i],
             #print gold_sent.is_correct(i, token.head.i)
             if gold_sent.labels[i] != 'P':
                 n_corr += gold_sent.is_correct(i, token.head.i)
                 total += 1
-=======
-            if is_punct_label(labels[i]):
-                continue
-            uas_corr += token.head.i == heads[i]
-            las_corr += token.head.i == heads[i] and token.dep_ == labels[i]
-            #print token.orth_, token.head.orth_, token.dep_, labels[i]
-            total += 1
->>>>>>> master
     print loss, skipped, (loss+skipped + total)
     print pos_corr / n_tokens
-    print float(las_corr) / (total + loss)
-    return float(uas_corr) / (total + loss)
+    return float(n_corr) / (total + loss)
 
 
 def read_gold(loc, n=0):
