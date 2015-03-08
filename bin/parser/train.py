@@ -73,7 +73,8 @@ def train(Language, gold_sents, model_dir, n_iter=15, feat_set=u'basic', seed=0,
 def evaluate(Language, gold_sents, model_dir, gold_preproc=False):
     global loss
     nlp = Language()
-    n_corr = 0
+    uas_corr = 0
+    las_corr = 0
     pos_corr = 0
     n_tokens = 0
     total = 0
@@ -94,14 +95,24 @@ def evaluate(Language, gold_sents, model_dir, gold_preproc=False):
             if gold_sent.heads[i] is None:
                 skipped += 1
                 continue
+<<<<<<< HEAD
             #print i, token.orth_, token.head.i, gold_sent.py_heads[i], gold_sent.labels[i],
             #print gold_sent.is_correct(i, token.head.i)
             if gold_sent.labels[i] != 'P':
                 n_corr += gold_sent.is_correct(i, token.head.i)
                 total += 1
+=======
+            if is_punct_label(labels[i]):
+                continue
+            uas_corr += token.head.i == heads[i]
+            las_corr += token.head.i == heads[i] and token.dep_ == labels[i]
+            #print token.orth_, token.head.orth_, token.dep_, labels[i]
+            total += 1
+>>>>>>> master
     print loss, skipped, (loss+skipped + total)
     print pos_corr / n_tokens
-    return float(n_corr) / (total + loss)
+    print float(las_corr) / (total + loss)
+    return float(uas_corr) / (total + loss)
 
 
 def read_gold(loc, n=0):
