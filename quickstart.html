@@ -144,17 +144,21 @@
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install spacy
-$ python -m spacy.en.download
-</pre></div>
-</div>
-<p>The download command fetches and installs about <a href="#id1"><span class="problematic" id="id2">`300mb of data`_</span></a>, for the
+<p>With Python 2.7 or Python 3, using Linux or OSX, run:</p>
+<blockquote>
+<div>$ pip install spacy
+$ python -m spacy.en.download</div></blockquote>
+<p>The download command fetches and installs about 300mb of data, for the
 parser model and word vectors, which it installs within the spacy.en package directory.</p>
-<p>Compilation from source will install Cython to build the package.  If you&#8217;re
-using Python 2, I also recommend installing fabric and fabtools &#8212; this is how
-I build the project.</p>
-<p>I&#8217;ve included instructions for installing spaCy into a virtualenv for
-completeness, but you may have your own solution for this (e.g. using pyenv).</p>
+<p>If you&#8217;re stuck using a server with an old version of Python, and you don&#8217;t
+have root access, I&#8217;ve prepared a bootstrap script to help you compile a local
+Python install. Run:</p>
+<blockquote>
+<div>$ curl <a class="reference external" href="https://raw.githubusercontent.com/honnibal/spaCy/master/bootstrap_python_env.sh">https://raw.githubusercontent.com/honnibal/spaCy/master/bootstrap_python_env.sh</a> | bash &amp;&amp; source .env/bin/activate</div></blockquote>
+<p>The other way to install the package is to clone the github repository, and
+build it from source.  This installs an additional dependency, Cython.
+If you&#8217;re using Python 2, I also recommend installing fabric and fabtools &#8212;
+this is how I build the project.</p>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ git clone https://github.com/honnibal/spaCy.git
 $ cd spaCy
 $ virtualenv .env &amp;&amp; source .env/bin/activate
@@ -298,34 +302,14 @@ should only work with one instance of the pipeline at a time.</p>
 <tt class="descname">nbor(self, i=1) --&gt; Token</tt></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt>
-<tt class="descname">n_lefts --&gt; int</tt></dt>
+<tt class="descname">child(self, i=1) --&gt; Token</tt></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt>
-<tt class="descname">n_rights --&gt; int</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">lefts --&gt; Iterator[Token]</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">rights --&gt; Iterator[Token]</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">children --&gt; Iterator[Token]</tt></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt>
-<tt class="descname">subtree --&gt; Iterator[Token]</tt></dt>
+<tt class="descname">sibling(self, i=1) --&gt; Token</tt></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -350,7 +334,7 @@ should only work with one instance of the pipeline at a time.</p>
 <dl class="attribute">
 <dt>
 <tt class="descname">length: int</tt></dt>
-<dd><p>Length, in unicode code-points. Equal to len(<a href="#id3"><span class="problematic" id="id4">self.orth_</span></a>).</p>
+<dd><p>Length, in unicode code-points. Equal to len(<a href="#id1"><span class="problematic" id="id2">self.orth_</span></a>).</p>
 </dd></dl>
 
 <dl class="attribute">
