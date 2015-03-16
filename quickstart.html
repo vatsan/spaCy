@@ -145,16 +145,18 @@
 <div class="section" id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
 <p>With Python 2.7 or Python 3, using Linux or OSX, run:</p>
-<blockquote>
-<div>$ pip install spacy
-$ python -m spacy.en.download</div></blockquote>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install spacy
+$ python -m spacy.en.download
+</pre></div>
+</div>
 <p>The download command fetches and installs about 300mb of data, for the
 parser model and word vectors, which it installs within the spacy.en package directory.</p>
 <p>If you&#8217;re stuck using a server with an old version of Python, and you don&#8217;t
 have root access, I&#8217;ve prepared a bootstrap script to help you compile a local
 Python install. Run:</p>
-<blockquote>
-<div>$ curl <a class="reference external" href="https://raw.githubusercontent.com/honnibal/spaCy/master/bootstrap_python_env.sh">https://raw.githubusercontent.com/honnibal/spaCy/master/bootstrap_python_env.sh</a> | bash &amp;&amp; source .env/bin/activate</div></blockquote>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ curl https://raw.githubusercontent.com/honnibal/spaCy/master/bootstrap_python_env.sh | bash &amp;&amp; source .env/bin/activate
+</pre></div>
+</div>
 <p>The other way to install the package is to clone the github repository, and
 build it from source.  This installs an additional dependency, Cython.
 If you&#8217;re using Python 2, I also recommend installing fabric and fabtools &#8212;
