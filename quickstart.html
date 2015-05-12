@@ -98,6 +98,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-70">2015-03-05 v0.70</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#bug-fixes">Bug Fixes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#known-issues">Known Issues</a></li>
@@ -153,7 +156,7 @@ $ python -m spacy.en.download
 parser model and word vectors, which it installs within the spacy.en package directory.</p>
 <p>If you&#8217;re stuck using a server with an old version of Python, and you don&#8217;t
 have root access, I&#8217;ve prepared a bootstrap script to help you compile a local
-Python install. Run:</p>
+Python install.  Run:</p>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ curl https://raw.githubusercontent.com/honnibal/spaCy/master/bootstrap_python_env.sh | bash &amp;&amp; source .env/bin/activate
 </pre></div>
 </div>
@@ -173,14 +176,14 @@ $ py.test tests/
 </pre></div>
 </div>
 <p>Python packaging is awkward at the best of times, and it&#8217;s particularly tricky
-with C extensions, built via Cython, requiring large data files. So, please
+with C extensions, built via Cython, requiring large data files.  So, please
 report issues as you encounter them, and bear with me :)</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>The main entry-point is <a class="reference internal" href="api.html#spacy.en.English.__call__" title="spacy.en.English.__call__"><tt class="xref py py-meth docutils literal"><span class="pre">en.English.__call__()</span></tt></a>, which accepts a unicode string
-as an argument, and returns a <a class="reference internal" href="api.html#spacy.tokens.Tokens" title="spacy.tokens.Tokens"><tt class="xref py py-class docutils literal"><span class="pre">tokens.Tokens</span></tt></a> object.  You can
-iterate over it to get <a class="reference internal" href="api.html#spacy.tokens.Token" title="spacy.tokens.Token"><tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt></a> objects, which provide
+<p>The main entry-point is <tt class="xref py py-meth docutils literal"><span class="pre">en.English.__call__()</span></tt>, which accepts a unicode string
+as an argument, and returns a <tt class="xref py py-class docutils literal"><span class="pre">tokens.Tokens</span></tt> object.  You can
+iterate over it to get <tt class="xref py py-class docutils literal"><span class="pre">tokens.Token</span></tt> objects, which provide
 a convenient API:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span> <span class="c"># If Python 2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
@@ -388,19 +391,19 @@ start, end or label.</p>
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>is_alpha</td>
-<td><tt class="xref py py-meth docutils literal"><span class="pre">str.isalpha()</span></tt></td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isalpha" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isalpha()</span></tt></a></td>
 </tr>
 <tr class="row-even"><td>is_digit</td>
-<td><tt class="xref py py-meth docutils literal"><span class="pre">str.isdigit()</span></tt></td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isdigit" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isdigit()</span></tt></a></td>
 </tr>
 <tr class="row-odd"><td>is_lower</td>
-<td><tt class="xref py py-meth docutils literal"><span class="pre">str.islower()</span></tt></td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.islower" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.islower()</span></tt></a></td>
 </tr>
 <tr class="row-even"><td>is_title</td>
-<td><tt class="xref py py-meth docutils literal"><span class="pre">str.istitle()</span></tt></td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.istitle" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.istitle()</span></tt></a></td>
 </tr>
 <tr class="row-odd"><td>is_upper</td>
-<td><tt class="xref py py-meth docutils literal"><span class="pre">str.isupper()</span></tt></td>
+<td><a class="reference external" href="http://docs.python.org/library/stdtypes.html#str.isupper" title="(in Python v2.7)"><tt class="xref py py-meth docutils literal"><span class="pre">str.isupper()</span></tt></a></td>
 </tr>
 <tr class="row-even"><td>is_ascii</td>
 <td>all(ord(c) &lt; 128 for c in string)</td>

@@ -97,6 +97,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-70">2015-03-05 v0.70</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#bug-fixes">Bug Fixes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#known-issues">Known Issues</a></li>
@@ -141,7 +144,7 @@
             
   <div class="section" id="spacy-industrial-strength-nlp">
 <h1>spaCy: Industrial-strength NLP<a class="headerlink" href="#spacy-industrial-strength-nlp" title="Permalink to this headline">¶</a></h1>
-<p><strong>13/04</strong>: <em>Version 0.80 released. Includes named entity recognition, better sentence
+<p><strong>13/04</strong>: <em>Version 0.80 released.  Includes named entity recognition, better sentence
 boundary detection, and many bug fixes.</em></p>
 <p><a class="reference external" href="https://github.com/honnibal/spaCy/">spaCy</a> is a new library for text processing in Python and Cython.
 I wrote it because I think small companies are terrible at
@@ -154,7 +157,7 @@ Most are broke &#8212; they&#8217;ve just finished grad school.
 If they don&#8217;t want to stay in academia, they join Google, IBM, etc.</p>
 <p>The net result is that outside of the tech giants, commercial NLP has changed
 little in the last ten years.  In academia, it&#8217;s changed entirely.  Amazing
-improvements in quality. Orders of magnitude faster.  But the
+improvements in quality.  Orders of magnitude faster.  But the
 academic code is always GPL, undocumented, unuseable, or all three.  You could
 implement the ideas yourself, but the papers are hard to read, and training
 data is exorbitantly expensive.  So what are you left with?  A common answer is
@@ -162,7 +165,7 @@ NLTK, which was written primarily as an educational resource.  Nothing past the
 tokenizer is suitable for production use.</p>
 <p>I used to think that the NLP community just needed to do more to communicate
 its findings to software engineers.  So I wrote two blog posts, explaining
-<a class="reference external" href="https://honnibal.wordpress.com/2013/09/11/a-good-part-of-speechpos-tagger-in-about-200-lines-of-python/">how to write a part-of-speech tagger</a> and <a class="reference external" href="https://honnibal.wordpress.com/2013/12/18/a-simple-fast-algorithm-for-natural-language-dependency-parsing/">parser</a>.  Both were very well received,
+<a class="reference external" href="https://honnibal.wordpress.com/2013/09/11/a-good-part-of-speechpos-tagger-in-about-200-lines-of-python/">how to write a part-of-speech tagger</a> and <a class="reference external" href="https://honnibal.wordpress.com/2013/12/18/a-simple-fast-algorithm-for-natural-language-dependency-parsing/">parser</a>.  Both were well received,
 and there&#8217;s been a bit of interest in <a class="reference external" href="https://github.com/syllog1sm/redshift/tree/develop">my research software</a> &#8212; even though
 it&#8217;s entirely undocumented, and mostly unuseable to anyone but me.</p>
 <p>So six months ago I quit my post-doc, and I&#8217;ve been working day and night on
@@ -174,7 +177,7 @@ tagging and parsing.  All strings are mapped to integer IDs, tokens are linked
 to embedded word representations, and a range of useful features are pre-calculated
 and cached.</p>
 <p>If none of that made any sense to you, here&#8217;s the gist of it.  Computers don&#8217;t
-understand text. This is unfortunate, because that&#8217;s what the web almost entirely
+understand text.  This is unfortunate, because that&#8217;s what the web almost entirely
 consists of.  We want to recommend people text based on other text they liked.
 We want to shorten text to display it on a mobile screen.  We want to aggregate
 it, link it, filter it, categorise it, generate it and correct it.</p>
@@ -302,7 +305,7 @@ this:</p>
 </div>
 <p>We wanted to refine the logic so that only adverbs modifying evocative verbs
 of communication, like &#8220;pleaded&#8221;, were highlighted.  We&#8217;ve now built a vector that
-represents that type of word, so now we can highlight adverbs based on very
+represents that type of word, so now we can highlight adverbs based on
 subtle logic, honing in on adverbs that seem the most stylistically
 problematic, given our starting assumptions:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
@@ -338,7 +341,7 @@ from the times &#8212; I report the time required for the pipeline to complete.
 I report mean times per document, in milliseconds.</p>
 <p><strong>Hardware</strong>: Intel i7-3770 (2012)</p>
 <table border="1" class="docutils">
-<caption>Efficiency comparison. Lower is better.</caption>
+<caption>Efficiency comparison.  Lower is better.</caption>
 <colgroup>
 <col width="20%" />
 <col width="14%" />
@@ -498,6 +501,9 @@ previous fastest parser that I&#8217;m aware of.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-70">2015-03-05 v0.70</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#bug-fixes">Bug Fixes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#known-issues">Known Issues</a></li>

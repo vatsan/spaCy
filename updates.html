@@ -97,6 +97,9 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-70">2015-03-05 v0.70</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bug-fixes">Bug Fixes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a></li>
@@ -141,12 +144,34 @@
             
   <div class="section" id="updates">
 <h1>Updates<a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-84">
+<h2>2015-05-12 v0.84<a class="headerlink" href="#v0-84" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Bug fixes for parsing</li>
+<li>Bug fixes for named entity recognition</li>
+</ul>
+</div>
+<div class="section" id="v0-80">
+<h2>2015-04-13 v0.80<a class="headerlink" href="#v0-80" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Preliminary support for named-entity recognition. Its accuracy is substantially behind the state-of-the-art. I&#8217;m working on improvements.</li>
+<li>Better sentence boundary detection, drawn from the syntactic structure.</li>
+<li>Lots of bug fixes.</li>
+</ul>
+</div>
+<div class="section" id="v0-70">
+<h2>2015-03-05 v0.70<a class="headerlink" href="#v0-70" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Improved parse navigation API</li>
+<li>Bug fixes to labelled parsing</li>
+</ul>
+</div>
 <div class="section" id="spacy-v0-4-still-alpha-improving-quickly">
 <h2>2015-01-30 spaCy v0.4: Still alpha, improving quickly<a class="headerlink" href="#spacy-v0-4-still-alpha-improving-quickly" title="Permalink to this headline">¶</a></h2>
 <p>Five days ago I presented the alpha release of spaCy, a natural language
 processing library that brings state-of-the-art technology to small companies.</p>
-<p>spaCy has been very well received, and there are now a lot of eyes on the project.
-Naturally, lots of issues have surfaced.  I&#8217;m very grateful to those who&#8217;ve reported
+<p>spaCy has been well received, and there are now a lot of eyes on the project.
+Naturally, lots of issues have surfaced.  I&#8217;m grateful to those who&#8217;ve reported
 them.  I&#8217;ve worked hard to address them as quickly as I could.</p>
 </div>
 <div class="section" id="bug-fixes">
@@ -167,12 +192,12 @@ just store an index into that list, instead of a hash.</p>
 </li>
 <li><dl class="first docutils">
 <dt>Parse tree navigation API was rough, and buggy.</dt>
-<dd><p class="first">The parse-tree navigation API was the last thing I added before v0.3. I&#8217;ve
+<dd><p class="first">The parse-tree navigation API was the last thing I added before v0.3.  I&#8217;ve
 now replaced it with something better.  The previous API design was flawed,
 and the implementation was buggy &#8212; Token.child() and Token.head were
 sometimes inconsistent.</p>
 <p>I&#8217;ve addressed the most immediate problems, but this part of the design is
-still a work in progress. It&#8217;s a difficult problem. The parse is a tree,
+still a work in progress.  It&#8217;s a difficult problem.  The parse is a tree,
 and we want to freely navigate up and down it without creating reference
 cycles that inhibit garbage collection, and without doing a lot of copying,
 creating and deleting.</p>
@@ -194,7 +219,7 @@ pinning down or reproducing.  Please send details of your system to the
 <h2>Enhancements: Train and evaluate on whole paragraphs<a class="headerlink" href="#enhancements-train-and-evaluate-on-whole-paragraphs" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">tl;dr: I shipped the wrong parsing model with 0.3. That model expected input to be segmented into sentences.  0.4 ships the correct model, which uses some algorithmic tricks to minimize the impact of tokenization and sentence segmentation errors on the parser.</p>
+<p class="last">tl;dr: I shipped the wrong parsing model with 0.3.  That model expected input to be segmented into sentences.  0.4 ships the correct model, which uses some algorithmic tricks to minimize the impact of tokenization and sentence segmentation errors on the parser.</p>
 </div>
 <p>Most English parsing research is performed on text with perfect pre-processing:
 one newline between every sentence, one space between every token.
@@ -234,7 +259,7 @@ made a big difference:</p>
 </div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">spaCy is evaluated on unlabelled dependencies, where the above accuracy figures refer to phrase-structure trees. Accuracies are non-comparable.</p>
+<p class="last">spaCy is evaluated on unlabelled dependencies, where the above accuracy figures refer to phrase-structure trees.  Accuracies are non-comparable.</p>
 </div>
 <p>In the standard experimental condition &#8212; gold pre-processing &#8212; the
 BLLIP parser is better.  But, it turns out it ships with lousy pre-processing
@@ -258,9 +283,9 @@ all about this problem. spaCy launched with a parsing model that expected the
 input to be segmented into sentences, but with no sentence segmenter.  This
 caused a drop in parse accuracy of 4%!</p>
 <p>Over the last five days, I&#8217;ve worked hard to correct this.  I implemented the
-modifications to the parsing algorithm I had planned, from Dongdong Zhang et al
+modifications to the parsing algorithm I had planned, from Dongdong Zhang et al.
 (2013), and trained and evaluated the parser on raw text, using the version of
-the WSJ distributed by Read et al (2012), and used in Dridan and Oepen&#8217;s
+the WSJ distributed by Read et al. (2012), and used in Dridan and Oepen&#8217;s
 experiments.</p>
 <p>I&#8217;m pleased to say that on the WSJ at least, spaCy 0.4 performs almost exactly
 as well on raw text as text with gold-standard tokenization and sentence
