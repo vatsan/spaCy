@@ -273,22 +273,22 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span>
 
 <div class="viewcode-block" id="English.__call__"><a class="viewcode-back" href="../../api.html#spacy.en.English.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="n">parse_if_model_present</span><span class="p">,</span>
-                 <span class="n">entity</span><span class="o">=</span><span class="n">parse_if_model_present</span><span class="p">,</span> <span class="n">merge_mwes</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+                 <span class="n">entity</span><span class="o">=</span><span class="n">parse_if_model_present</span><span class="p">,</span> <span class="n">merge_mwes</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply the pipeline to some text.  The text can span multiple sentences,</span>
 <span class="sd">        and can contain arbtrary whitespace.  Alignment into the original string</span>
-<span class="sd">        </span>
+
 <span class="sd">        The tagger and parser are lazy-loaded the first time they are required.</span>
 <span class="sd">        Loading the parser model usually takes 5-10 seconds.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            text (unicode): The text to be processed.</span>
 
 <span class="sd">        Keyword args:</span>
 <span class="sd">            tag (bool): Whether to add part-of-speech tags to the text.  Also</span>
 <span class="sd">                sets morphological analysis and lemmas.</span>
-<span class="sd">        </span>
+
 <span class="sd">            parse (True, False, -1): Whether to add labelled syntactic dependencies.</span>
-<span class="sd">            </span>
+
 <span class="sd">              -1 (default) is &quot;guess&quot;: It will guess True if tag=True and the</span>
 <span class="sd">                model has been installed.</span>
 
