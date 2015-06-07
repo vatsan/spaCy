@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>spacy.en &mdash; spaCy 0.31 documentation</title>
+  <title>spacy.en &mdash; spaCy 0.85 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="spaCy 0.31 documentation" href="../../index.html"/>
+    <link rel="top" title="spaCy 0.85 documentation" href="../../index.html"/>
         <link rel="up" title="spacy" href="../spacy.html"/> 
 
   
@@ -97,6 +97,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-85">2015-05-12 v0.85</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-84">2015-05-12 v0.84</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-80">2015-04-13 v0.80</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-70">2015-03-05 v0.70</a></li>
@@ -152,7 +153,7 @@
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">orth</span>
 <span class="kn">from</span> <span class="nn">..vocab</span> <span class="kn">import</span> <span class="n">Vocab</span>
 <span class="kn">from</span> <span class="nn">..tokenizer</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
-<span class="kn">from</span> <span class="nn">..syntax.parser</span> <span class="kn">import</span> <span class="n">GreedyParser</span>
+<span class="kn">from</span> <span class="nn">..syntax.parser</span> <span class="kn">import</span> <span class="n">Parser</span>
 <span class="kn">from</span> <span class="nn">..syntax.arc_eager</span> <span class="kn">import</span> <span class="n">ArcEager</span>
 <span class="kn">from</span> <span class="nn">..syntax.ner</span> <span class="kn">import</span> <span class="n">BiluoPushDown</span>
 <span class="kn">from</span> <span class="nn">..tokens</span> <span class="kn">import</span> <span class="n">Tokens</span>
@@ -211,12 +212,12 @@
     <span class="n">ParserTransitionSystem</span> <span class="o">=</span> <span class="n">ArcEager</span>
     <span class="n">EntityTransitionSystem</span> <span class="o">=</span> <span class="n">BiluoPushDown</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">load_vectors</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">data_dir</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
             <span class="n">data_dir</span> <span class="o">=</span> <span class="n">LOCAL_DATA_DIR</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">Vocab</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s">&#39;vocab&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_dir</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span>
-                           <span class="n">get_lex_props</span><span class="o">=</span><span class="n">get_lex_props</span><span class="p">)</span>
+                           <span class="n">get_lex_props</span><span class="o">=</span><span class="n">get_lex_props</span><span class="p">,</span> <span class="n">load_vectors</span><span class="o">=</span><span class="n">load_vectors</span><span class="p">)</span>
         <span class="n">tag_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">POS_TAGS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">tag_names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -259,17 +260,17 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">GreedyParser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span>
-                                        <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">),</span>
-                                        <span class="bp">self</span><span class="o">.</span><span class="n">ParserTransitionSystem</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span>
+                                  <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;deps&#39;</span><span class="p">),</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">ParserTransitionSystem</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">entity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span> <span class="o">=</span> <span class="n">GreedyParser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span>
-                                        <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;ner&#39;</span><span class="p">),</span>
-                                        <span class="bp">self</span><span class="o">.</span><span class="n">EntityTransitionSystem</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span><span class="p">,</span>
+                                  <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_dir</span><span class="p">,</span> <span class="s">&#39;ner&#39;</span><span class="p">),</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">EntityTransitionSystem</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_entity</span>
 
 <div class="viewcode-block" id="English.__call__"><a class="viewcode-back" href="../../api.html#spacy.en.English.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parse</span><span class="o">=</span><span class="n">parse_if_model_present</span><span class="p">,</span>
@@ -356,7 +357,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Matthew Honnibal.
+        &copy; Copyright 2015, Matthew Honnibal.
     </p>
   </div>
 
@@ -377,7 +378,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.31',
+            VERSION:'0.85',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
