@@ -74,8 +74,8 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#speed-comparison">Speed Comparison</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accuracy-comparison">Accuracy Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#independent-evaluation">Independent Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detailed-speed-comparison">Detailed Speed Comparison</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
@@ -332,8 +332,72 @@ the message across: the state-of-the-art NLP technologies are very powerful.
 spaCy gives you easy and efficient access to them, which lets you build all
 sorts of use products and features that were previously impossible.</p>
 </div>
-<div class="section" id="speed-comparison">
-<h2>Speed Comparison<a class="headerlink" href="#speed-comparison" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="independent-evaluation">
+<h2>Independent Evaluation<a class="headerlink" href="#independent-evaluation" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<caption>Independent evaluation by Yahoo! Labs and Emory
+University, to appear at ACL 2015. Higher is better.</caption>
+<colgroup>
+<col width="31%" />
+<col width="23%" />
+<col width="23%" />
+<col width="23%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>System</td>
+<td>Language</td>
+<td>Accuracy</td>
+<td>Speed</td>
+</tr>
+<tr class="row-even"><td>spaCy v0.86</td>
+<td>Cython</td>
+<td>91.9</td>
+<td><strong>13,963</strong></td>
+</tr>
+<tr class="row-odd"><td>ClearNLP</td>
+<td>Java</td>
+<td>91.7</td>
+<td>10,271</td>
+</tr>
+<tr class="row-even"><td>spaCy v0.84</td>
+<td>Cython</td>
+<td>90.9</td>
+<td>13,963</td>
+</tr>
+<tr class="row-odd"><td>CoreNLP</td>
+<td>Java</td>
+<td>89.6</td>
+<td>8,602</td>
+</tr>
+<tr class="row-even"><td>MATE</td>
+<td>Java</td>
+<td><strong>92.5</strong></td>
+<td>550</td>
+</tr>
+<tr class="row-odd"><td>Turbo</td>
+<td>C++</td>
+<td>92.4</td>
+<td>349</td>
+</tr>
+<tr class="row-even"><td>Yara</td>
+<td>Java</td>
+<td>92.3</td>
+<td>340</td>
+</tr>
+</tbody>
+</table>
+<p>Accuracy is % unlabelled arcs correct, speed is tokens per second. Higher is
+better.</p>
+<p>Joel Tetreault and Amanda Stent (Yahoo! Labs) and Jin-ho Choi (Emory) performed
+a detailed comparison of the best parsers available.  All numbers above
+are taken from the pre-print they kindly made available to me,
+except for spaCy v0.86.</p>
+<p>I&#8217;m particularly grateful to the authors for discussion of their results, which
+led to the improvement in accuracy between v0.84 and v0.86.  A tip from Jin-ho
+(developer of ClearNLP) was particularly useful.</p>
+</div>
+<div class="section" id="detailed-speed-comparison">
+<h2>Detailed Speed Comparison<a class="headerlink" href="#detailed-speed-comparison" title="Permalink to this headline">¶</a></h2>
 <p><strong>Set up</strong>: 100,000 plain-text documents were streamed from an SQLite3
 database, and processed with an NLP library, to one of three levels of detail
 &#8212; tokenization, tagging, or parsing.  The tasks are additive: to parse the
@@ -368,7 +432,7 @@ I report mean times per document, in milliseconds.</p>
 <tr class="row-odd"><td>spaCy</td>
 <td>0.2ms</td>
 <td>1ms</td>
-<td>7ms</td>
+<td>19ms</td>
 <td>1x</td>
 <td>1x</td>
 <td>1x</td>
@@ -379,7 +443,7 @@ I report mean times per document, in milliseconds.</p>
 <td>49ms</td>
 <td>10x</td>
 <td>10x</td>
-<td>7x</td>
+<td>2.6x</td>
 </tr>
 <tr class="row-odd"><td>ZPar</td>
 <td>1ms</td>
@@ -387,7 +451,7 @@ I report mean times per document, in milliseconds.</p>
 <td>850ms</td>
 <td>5x</td>
 <td>8x</td>
-<td>121x</td>
+<td>44.7x</td>
 </tr>
 <tr class="row-even"><td>NLTK</td>
 <td>4ms</td>
@@ -410,45 +474,16 @@ for any workload.  And the tokenizer doesn&#8217;t just give you a list
 of strings.  A spaCy token is a pointer to a Lexeme struct, from which you can
 access a wide range of pre-computed features, including embedded word
 representations.</p>
-</div>
-<div class="section" id="accuracy-comparison">
-<h2>Accuracy Comparison<a class="headerlink" href="#accuracy-comparison" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
-<caption>Accuracy comparison, on the standard benchmark data from the Wall Street Journal.</caption>
-<colgroup>
-<col width="39%" />
-<col width="28%" />
-<col width="33%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>System</td>
-<td>POS acc.</td>
-<td>Parse acc.</td>
-</tr>
-<tr class="row-even"><td>spaCy</td>
-<td>97.2</td>
-<td>92.4</td>
-</tr>
-<tr class="row-odd"><td>CoreNLP</td>
-<td>96.9</td>
-<td>92.2</td>
-</tr>
-<tr class="row-even"><td>ZPar</td>
-<td>97.3</td>
-<td>92.9</td>
-</tr>
-<tr class="row-odd"><td>Redshift</td>
-<td>97.3</td>
-<td>93.5</td>
-</tr>
-<tr class="row-even"><td>NLTK</td>
-<td>94.3</td>
-<td>n/a</td>
-</tr>
-</tbody>
-</table>
-<p>The table above compares spaCy to some of the current state-of-the-art systems,
-on the standard evaluation from the Wall Street Journal, given gold-standard
+<p>Tetreault et al. (forthcoming) performed a pain-staking comparison of the best
+parsers currently available. Discussions with Joel Tetreault, Jin-ho Choi and
+Mahommed Rasooli led to the improvement from spaCy 0.84 to 0.86</p>
+<p>The accuracy improvement between spaCy 0.84 and
+0.86 comes from discussions with Jin-ho Choi (developer of ClearNLP, and one of
+the authors of the Tetreault et al paper), and</p>
+<p>evaluated spaCy 0.84. The accuracy
+improvement</p>
+<p>compares spaCy to some of the current state-of-the-art systems,
+using the evaluation
 sentence boundaries and tokenization.  I&#8217;m in the process of completing a more
 realistic evaluation on web text.</p>
 <p>spaCy&#8217;s parser offers a better speed/accuracy trade-off than any published
@@ -459,8 +494,8 @@ previous fastest parser that I&#8217;m aware of.</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#speed-comparison">Speed Comparison</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accuracy-comparison">Accuracy Comparison</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#independent-evaluation">Independent Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detailed-speed-comparison">Detailed Speed Comparison</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="howworks.html">How spaCy Works</a></li>

@@ -231,8 +231,48 @@ spaCy gives you easy and efficient access to them, which lets you build all
 sorts of use products and features that were previously impossible.
 
 
-Speed Comparison
-----------------
+Independent Evaluation
+----------------------
+
+.. table:: Independent evaluation by Yahoo! Labs and Emory
+  University, to appear at ACL 2015. Higher is better.
+  
+  +----------------+------------+------------+------------+
+  | System         | Language   | Accuracy   | Speed      |        
+  +----------------+------------+------------+------------+
+  | spaCy v0.86    | Cython     | 91.9       | **13,963** |
+  +----------------+------------+------------+------------+
+  | ClearNLP       | Java       | 91.7       | 10,271     |
+  +----------------+------------+------------+------------+
+  | spaCy v0.84    | Cython     | 90.9       | 13,963     |
+  +----------------+------------+------------+------------+
+  | CoreNLP        | Java       | 89.6       | 8,602      |
+  +----------------+------------+------------+------------+
+  | MATE           | Java       | **92.5**   | 550        |
+  +----------------+------------+------------+------------+
+  | Turbo          | C++        | 92.4       | 349        |
+  +----------------+------------+------------+------------+
+  | Yara           | Java       | 92.3       | 340        |
+  +----------------+------------+------------+------------+
+
+ 
+Accuracy is % unlabelled arcs correct, speed is tokens per second. Higher is
+better.
+
+
+
+Joel Tetreault and Amanda Stent (Yahoo! Labs) and Jin-ho Choi (Emory) performed
+a detailed comparison of the best parsers available.  All numbers above
+are taken from the pre-print they kindly made available to me,
+except for spaCy v0.86. 
+
+I'm particularly grateful to the authors for discussion of their results, which
+led to the improvement in accuracy between v0.84 and v0.86.  A tip from Jin-ho
+(developer of ClearNLP) was particularly useful.
+
+
+Detailed Speed Comparison
+-------------------------
 
 **Set up**: 100,000 plain-text documents were streamed from an SQLite3
 database, and processed with an NLP library, to one of three levels of detail
@@ -250,11 +290,11 @@ I report mean times per document, in milliseconds.
   +--------------+----------+--------+-------+----------+---------+-----------+
   | System       | Tokenize | Tag    | Parse | Tokenize | Tag     | Parse     |
   +--------------+----------+--------+-------+----------+---------+-----------+
-  | spaCy        | 0.2ms    | 1ms    | 7ms   | 1x       | 1x      | 1x        |
+  | spaCy        | 0.2ms    | 1ms    | 19ms  | 1x       | 1x      | 1x        |
   +--------------+----------+--------+-------+----------+---------+-----------+
-  | CoreNLP      | 2ms      | 10ms   | 49ms  | 10x      | 10x     | 7x        |
+  | CoreNLP      | 2ms      | 10ms   | 49ms  | 10x      | 10x     | 2.6x      |
   +--------------+----------+--------+-------+----------+---------+-----------+
-  | ZPar         | 1ms      | 8ms    | 850ms | 5x       | 8x      | 121x      |
+  | ZPar         | 1ms      | 8ms    | 850ms | 5x       | 8x      | 44.7x     |
   +--------------+----------+--------+-------+----------+---------+-----------+
   | NLTK         | 4ms      | 443ms  | n/a   | 20x      | 443x    |  n/a      |
   +--------------+----------+--------+-------+----------+---------+-----------+
@@ -289,30 +329,21 @@ representations.
   clarify any detail of the algorithms I've implemented.
   It's evaluated against the current best published systems, following the standard
   methodologies.  These evaluations show that it performs extremely well.
-
-Accuracy Comparison
--------------------
-
-.. table:: Accuracy comparison, on the standard benchmark data from the Wall Street Journal.
-
-  +--------------+----------+------------+
-  | System       | POS acc. | Parse acc. |
-  +--------------+----------+------------+
-  | spaCy        | 97.2     | 92.4       |
-  +--------------+----------+------------+
-  | CoreNLP      | 96.9     | 92.2       |
-  +--------------+----------+------------+
-  | ZPar         | 97.3     | 92.9       |
-  +--------------+----------+------------+
-  | Redshift     | 97.3     | 93.5       |
-  +--------------+----------+------------+
-  | NLTK         | 94.3     | n/a        |
-  +--------------+----------+------------+
-
 .. See `Benchmarks`_ for details.
 
-The table above compares spaCy to some of the current state-of-the-art systems,
-on the standard evaluation from the Wall Street Journal, given gold-standard
+Tetreault et al. (forthcoming) performed a pain-staking comparison of the best
+parsers currently available. Discussions with Joel Tetreault, Jin-ho Choi and
+Mahommed Rasooli led to the improvement from spaCy 0.84 to 0.86
+
+The accuracy improvement between spaCy 0.84 and
+0.86 comes from discussions with Jin-ho Choi (developer of ClearNLP, and one of
+the authors of the Tetreault et al paper), and 
+
+evaluated spaCy 0.84. The accuracy
+improvement
+
+compares spaCy to some of the current state-of-the-art systems,
+using the evaluation 
 sentence boundaries and tokenization.  I'm in the process of completing a more
 realistic evaluation on web text.
 
