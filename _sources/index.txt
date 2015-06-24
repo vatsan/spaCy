@@ -329,28 +329,6 @@ representations.
   methodologies.  These evaluations show that it performs extremely well.
 .. See `Benchmarks`_ for details.
 
-Tetreault et al. (forthcoming) performed a pain-staking comparison of the best
-parsers currently available. Discussions with Joel Tetreault, Jin-ho Choi and
-Mahommed Rasooli led to the improvement from spaCy 0.84 to 0.86
-
-The accuracy improvement between spaCy 0.84 and
-0.86 comes from discussions with Jin-ho Choi (developer of ClearNLP, and one of
-the authors of the Tetreault et al paper), and 
-
-evaluated spaCy 0.84. The accuracy
-improvement
-
-compares spaCy to some of the current state-of-the-art systems,
-using the evaluation 
-sentence boundaries and tokenization.  I'm in the process of completing a more
-realistic evaluation on web text.
-
-
-spaCy's parser offers a better speed/accuracy trade-off than any published
-system: its accuracy is within 1% of the current state-of-the-art, and it's
-seven times faster than the 2014 CoreNLP neural network parser, which is the
-previous fastest parser that I'm aware of.
-
 
 .. toctree::
     :maxdepth: 3
