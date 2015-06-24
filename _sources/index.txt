@@ -12,7 +12,7 @@ spaCy: Industrial-strength NLP
 
 **2015-06-24**: `Version 0.86 released`_
 
-.. _Version 0.85 released: updates.html
+.. _Version 0.86 released: updates.html
 
 `spaCy`_ is a new library for text processing in Python and Cython.
 I wrote it because I think small companies are terrible at
