@@ -256,9 +256,7 @@ Independent Evaluation
   +----------------+------------+------------+------------+
 
  
-Accuracy is % unlabelled arcs correct, speed is tokens per second. Higher is
-better.
-
+Accuracy is % unlabelled arcs correct, speed is tokens per second.
 
 
 Joel Tetreault and Amanda Stent (Yahoo! Labs) and Jin-ho Choi (Emory) performed
@@ -283,7 +281,7 @@ I report mean times per document, in milliseconds.
 
 **Hardware**: Intel i7-3770 (2012)
 
-.. table:: Efficiency comparison.  Lower is better.
+.. table:: Per-document processing times.  Lower is better.
 
   +--------------+---------------------------+--------------------------------+
   |              | Absolute (ms per doc)     | Relative (to spaCy)            |
