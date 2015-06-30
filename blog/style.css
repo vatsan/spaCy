@@ -1,0 +1,436 @@
+/*
+/*                       ___          _      
+/*      ___ _ __  __ _  / __|_  _    (_) ___ 
+/*     (_-<| '_ \/ _` || (__| || | _ | |/ _ \
+/*     /__/| .__/\__,_| \___|\_, |(_)|_|\___/
+/*        |_|               |__/            
+/* 
+/* -------------------------------------------- */
+/* -------------- GENERAL TEMPLATE ------------ */
+/* -------------------------------------------- */
+
+/* ----- FONTS ----- */
+
+@import url(http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic);
+
+
+/* ----- BASICS ----- */
+
+* { 
+	padding: 0;
+	margin: 0;
+	outline: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+}
+
+html, body {
+	height: 100%;
+}
+
+header, main, section, article, footer, nav, aside {
+	display: block;
+}
+
+body {
+	font: normal 22px/1.6 Georgia, "Times New Roman", serif;
+}
+
+/* ----- HEADER ----- */
+
+body > header {
+	width: 100%;
+	height: 200px;
+	padding: 65px 0 0 0;
+}
+
+h1 {
+	display: block;
+	height: 70px;
+	background-color: transparent;
+	background-position: top left;
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	
+	/* hide text */
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+/* ----- MAIN ----- */
+
+main {
+	width: 950px;
+	margin: 75px auto;
+}
+
+article {
+
+}
+
+article > header {
+	margin: 0 0 40px 0;
+}
+
+p {
+	margin: 0 0 1.25em 0;
+	padding: 0;
+}
+
+
+/* ----- HEADLINES ----- */
+
+h2 {
+	font: bold 2.09em/1 "Karla", Arial, sans-serif;
+	letter-spacing: -1px;
+	margin: 0 0 0.35em 0;
+}
+
+h3 {
+	font: bold 1.36em/1 "Karla", Arial, sans-serif;
+	letter-spacing: -1px;
+	margin: 0 0 1.1em 0;
+	padding: 0.8em 0 0 0;
+}
+
+h4 {
+	font: bold 1.18em/1 "Karla", Arial, sans-serif;
+	letter-spacing: -1px;
+	margin: 0 0 1.3em 0;
+	padding: 0.9em 0 0 0;
+}
+
+
+/* ----- LINKS ----- */
+
+article p a {
+	color: #000;
+	text-decoration: none;
+	border-bottom: 2px solid #000;
+}
+
+article p a:hover {
+	border-bottom: 2px solid #000 !important;	
+}
+
+
+/* ----- NAVIGATION ----- */
+
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	font: normal .68em/1 "Karla", Arial, sans-serif;
+	text-align: right;
+	padding: 1em 2em 1em 0;
+}
+
+nav li {
+	display: inline;
+	padding: 0 .3em;
+}
+
+nav a {
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #fff;
+}
+
+
+/* ----- CONTENT ELEMENTS ----- */
+
+/* subhead / byline */
+	
+	.subhead {
+		font: normal .825em/1 "Karla", Arial, sans-serif;
+		text-transform: uppercase;
+	}
+	
+	.subhead a {
+		color: #000;
+		font-weight: bold;
+		text-decoration: none;
+	}
+
+/* images */
+	
+	article img {
+		width: 100%;
+		height: auto;
+		border: 2px solid #f5f5f5;
+	}
+
+/* code */
+	
+	article code {
+		font-size: .8em;
+	}
+	
+	article p code {
+		padding: 0 2px;
+	}
+	
+	article pre {
+		margin: 0 0 2em 0;
+	}
+	
+	article pre code {
+		font-size: .7em;
+		word-wrap: break-word;
+		padding: 2em !important;
+	}
+
+/* numbered list */
+	
+	article ol {
+		counter-reset: counter;
+		list-style-type: none;
+		margin: 0 0 10px 15px;
+		padding: 15px 0 10px 0;
+	}
+	
+	article ol li {
+		margin: 0 0 25px 0;
+		padding: 0;
+	}
+	
+	article ol li:before {
+		content: counter(counter) ".";
+		counter-increment: counter;
+		font: bold 25px/1 "Karla", Arial, sans-serif;
+		color: #000;
+		padding: 0 20px 0 0;
+	}
+	
+/* unnumbered list */
+	
+	article ul {
+		list-style-type: none;
+		margin: 0 0 35px 15px;
+	}
+	
+	article ul li {
+		margin: 0 0 10px 0;
+		padding: 0;
+	}
+	
+	article ul li:before {
+		vertical-align: middle;
+		font-size: 2.2em;
+		line-height: 0;
+		content: "\25aa";
+		color: #000;
+		padding: 0 15px 0 0;
+	}
+	
+/* table */
+	
+	article table {
+		width: 100%;
+		background: #f5f5f5;
+		border-spacing: 0;
+		margin: 0 0 35px 0;
+		padding: 25px;		
+	}
+	
+	article table thead {
+		font: normal 0.9em/1 "Karla", Arial, sans-serif;
+		text-align: left;
+		text-transform: uppercase;
+	}
+
+	article table th {
+		border-bottom: 2px solid #ccc;
+		padding: 0 0 15px 0;
+	}
+	
+	article table td {
+		font-size: 0.85em;
+		margin: 0;
+		padding: 5px 0;
+	}
+	
+	article table.center th, article table.center td {
+		text-align: center;
+	}
+	
+/* example sentence */
+
+	.example {
+		font-style: italic;
+		text-indent: 75px;
+	}
+	
+/* notes / superscript */
+	
+	sup a {
+		font-size: 0.8em;
+		color: #000;
+		text-decoration: none;
+		border: 0 !important;
+	}
+	
+/* bibliography */
+	
+	.bib-item {
+		display: block;
+		font: normal 0.9em/1.25 "Karla", Arial, sans-serif;
+		text-indent: 20px;
+		padding: 10px 0 10px 1.75em;
+		text-indent: -1.75em;
+	}
+	
+/* meta */
+
+	.meta {
+		padding: 35px 0;
+	}
+	
+	.discuss {
+		float: right;
+		text-align: right;
+	}
+
+/* boxwa */
+
+	.box {
+		padding: 25px;
+	}
+
+	
+/* ----- BUTTONS ----- */
+
+.button {
+	display: inline-block;
+	font: normal .77em/1 "Karla", Arial, sans-serif;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #fff;
+	background: #000;
+	padding: .89em;
+	margin: 0 0 1.5em 0;
+}
+
+.button-twitter {
+	background: #5ea9dd !important;
+}
+
+.button-hn {
+	background: #ff6600 !important;
+}
+
+.button-reddit {
+	background: #ff4500 !important;
+	
+}
+
+.button:hover {
+	opacity: 0.9;
+	transition: all 0.2s;
+}
+
+
+/* -------------------------------------------- */
+/* -------------- PAGE SPECIFICS -------------- */
+/* -------------------------------------------- */
+
+/* ----- HOMEPAGE ----- */
+
+#home > header {
+	background: #009acc;
+}
+
+#home .logo {
+	position: relative;
+	width: 220px;
+	background-image: url(images/logo.png);
+	z-index: 2;
+}
+
+#home nav, #home .button {
+	background: #009acc;
+
+}
+
+#home article p a {
+	border-bottom: 2px solid #009acc;
+}
+
+#home .subhead a, #home article ol li:before, #home article ul li:before {
+	color: #009acc;
+}
+
+#home .box {
+	border: 10px solid #009acc;
+}
+
+
+/* ----- BLOG ----- */
+	
+#blog > header {
+	background: #ffc000;
+}
+
+#blog .logo {
+	width: 275px;
+	background-image: url(images/logo-blog.png);
+}
+
+#blog article p a {
+	border-bottom: 2px solid #ffc000;
+}
+
+#blog .subhead a, #blog article ol li:before, #blog article ul li:before {
+	color: #ffc000;
+}
+
+#blog .button {
+	background: #ffc000;
+}
+
+
+/* ----- LICENSE FORM ----- */
+
+
+
+/* -------------------------------------------- */
+/* -------------- RESPONSIVENESS -------------- */
+/* -------------------------------------------- */
+
+/* ----- BREAKPOINT: default content width ----- */
+
+@media screen and (max-width: 950px) {
+	
+	main { 
+		width: 95%;
+	}
+}
+
+/* ----- BREAKPOINT: adjust overflow ----- */	
+
+@media screen and (max-width: 650px) {
+	
+	article { 
+		font-size: 1.2em;
+	}
+	
+	article table td, article table th { 
+		font-size: 0.6em;
+	}
+	
+	.discuss { 
+		display: block; 
+		float: none; 
+		text-align: left !important;
+	}
+	
+	.button { 
+		font-size: 0.7em;
+		padding: 10px;
+	}
+}	
