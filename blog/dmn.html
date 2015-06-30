@@ -50,13 +50,13 @@
 
 <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/honnibal">@honnibal</a> <a href="https://twitter.com/RichardSocher">@RichardSocher</a> <a href="https://twitter.com/egrefen">@egrefen</a> <a href="https://twitter.com/StephenPiment">@StephenPiment</a> I don&#39;t understand the question.</p>&mdash; yoav goldberg (@yoavgo) <a href="https://twitter.com/yoavgo/status/615777573801320448">June 30, 2015</a></blockquote>
 
-<p>What I'm saying is this: let's say you train the system on the inputs Richard suggests. If the next query asks "Part-of-speech tags?", the system should be helpless --- it won't magically know that POS maps to "part-of-speech".</p>
+<p>What I'm saying is this: let's say you train the system on the inputs Richard suggests. If the next query asks "Part-of-speech tags?", the system should at first be helpless --- it won't magically know that POS maps to "part-of-speech".</p>
 
-<p>The question is, how much does it need to learn to answer this type of query?</p>
+<p>The question is, how much does it need to learn to answer this type of query? How well can it transfer the previous training data?</p>
 
 <ol>
 <li>Is it as easy as learning the mapping "part-of-speech" means "POS"?</li>
-<li>Or will it be more like learning <code>part-of-speech:NN :: POS:NN</code>, <code>part-of-speech:VBZ :: POS:VBZ</code>, etc?</li>
+<li>Or will it be more like learning a mapping of the output labels, <code>part-of-speech:NN :: POS:NN</code>, and separately <code>part-of-speech:VBZ :: POS:VBZ</code>, and etc?</li>
 <li>Or will it be like starting from scratch all over again?</li>
 </ol>
 
