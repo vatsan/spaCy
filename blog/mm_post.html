@@ -1,0 +1,114 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>spaCy Blog</title>
+	<meta name="description" content="">
+	<meta name="author" content="Matthew Honnibal">
+
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="highlight.css" />
+	<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="highlight.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+	<meta name="twitter:widgets:theme" content="light">
+    <meta name="twitter:widgets:link-color" content="#55acee">
+    <meta name="twitter:widgets:border-color" content="#55acee">
+</head>
+
+<body id="blog">
+
+<header role="banner">
+	<h1 class="logo">spaCy Blog</h1>
+</header>
+
+
+<main id="content" role="main">
+	
+	<article class="post">
+		
+		<header>
+			<h2>A quick word about Metamind, Watson, and Deep-learning Hype</h2>
+			<div class="subhead">by <a href="#" rel="author">Matthew Honnibal</a> on <time datetime="2015-06-30">June 30, 2015</time></div>
+		</header>
+
+
+<p>This is a quick note to follow up a thread Yoav Goldberg started on Twitter, discussing the <a href="http://arxiv.org/pdf/1506.07285.pdf">recent research teaser</a> from Metamind, and the question of hype around multi-task deep-learning more generally. The subject's a bit too complicated to be discussed 160 characters at a time.</p>
+
+<p>Here's what was said on Twitter. My thoughts below.</p>
+		
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">This new wave of &quot;we solved all of language with neural-nets&quot; papers is not a step forward but back to naive 1960s-style Eliza-like work.</p>&mdash; yoav goldberg (@yoavgo) <a href="https://twitter.com/yoavgo/status/615570210259496960">June 29, 2015</a></blockquote>
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/yoavgo">@yoavgo</a> the current trigger was this one: <a href="https://t.co/ACVK0fslh8">https://t.co/ACVK0fslh8</a> (figure 1/right is obviously a lie or a hack, btw). But it is not alone.</p>&mdash; yoav goldberg (@yoavgo) <a href="https://twitter.com/yoavgo/status/615570434478620673">June 29, 2015</a></blockquote>
+
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/egrefen">@egrefen</a> <a href="https://twitter.com/yoavgo">@yoavgo</a> <a href="https://twitter.com/StephenPiment">@StephenPiment</a> Hey guys, Fig.1&#39;s outputs are indeed all coming from DMN. Happy to show you live demo next time we meet :)</p>&mdash; Richard (@RichardSocher) <a href="https://twitter.com/RichardSocher/status/615602654106902528">June 29, 2015</a></blockquote>
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/RichardSocher">@RichardSocher</a> <a href="https://twitter.com/egrefen">@egrefen</a> <a href="https://twitter.com/StephenPiment">@StephenPiment</a> how does the training data look like?</p>&mdash; yoav goldberg (@yoavgo) <a href="https://twitter.com/yoavgo/status/615605702208282624">June 29, 2015</a></blockquote>
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/yoavgo">@yoavgo</a> <a href="https://twitter.com/egrefen">@egrefen</a> <a href="https://twitter.com/StephenPiment">@StephenPiment</a> e.g. &#10;1 Pierre Vinken , 61 years old , will join the board&#10;2 POS tags ? NNP NNP , CD NNS JJ , MD VB DT NN</p>&mdash; Richard (@RichardSocher) <a href="https://twitter.com/RichardSocher/status/615685494647619584">June 30, 2015</a></blockquote>
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/RichardSocher">@RichardSocher</a> <a href="https://twitter.com/egrefen">@egrefen</a> <a href="https://twitter.com/StephenPiment">@StephenPiment</a> for me, this falls under the &quot;or a hack&quot; category.</p>&mdash; yoav goldberg (@yoavgo) <a href="https://twitter.com/yoavgo/status/615766443670372352">June 30, 2015</a></blockquote>
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/yoavgo">@yoavgo</a> <a href="https://twitter.com/RichardSocher">@RichardSocher</a> <a href="https://twitter.com/egrefen">@egrefen</a> <a href="https://twitter.com/StephenPiment">@StephenPiment</a> &#10;Hm. But if examples start asking &quot;part-of-speech tags?&quot;, it can reuse the knowledge, right?</p>&mdash; honnibal (@honnibal) <a href="https://twitter.com/honnibal/status/615777253809491968">June 30, 2015</a></blockquote>
+
+<blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/honnibal">@honnibal</a> <a href="https://twitter.com/RichardSocher">@RichardSocher</a> <a href="https://twitter.com/egrefen">@egrefen</a> <a href="https://twitter.com/StephenPiment">@StephenPiment</a> I don&#39;t understand the question.</p>&mdash; yoav goldberg (@yoavgo) <a href="https://twitter.com/yoavgo/status/615777573801320448">June 30, 2015</a></blockquote>
+
+<p>What I'm saying is this: let's say you train the system on the inputs Richard suggests. If the next query asks "Part-of-speech tags?", the system should be helpless --- it won't magically know that POS maps to "part-of-speech".</p>
+
+<p>The question is, how much does it need to learn to answer this type of query?</p>
+
+<ol>
+<li>Is it as easy as learning the mapping "part-of-speech" means "POS"?</li>
+<li>Or will it be more like learning "part-of-speech:NN :: POS:NN, part-of-speech:VBZ :: POS:VBZ"?</li>
+<li>Or will it be like starting from scratch all over again?</li>
+</ol>
+
+
+<p>Until about 2011 or 2012, we were really bad at multi-task learning, so the answer was surely 3, unless the developer explicitly coded up a mapping.</p>
+
+<p>We're now pretty used to shared representations, so 2) hasn't felt like such a big deal since e.g. <a href="http://arxiv.org/pdf/1103.0398.pdf">Collobert and Weston (2011)</a>. But it's still worth stepping back and thinking about how different this really is from where we were at before.</p>
+
+<p>My understanding is that the DMN line of work is pushing towards reuse of Type 1, although I wouldn't say I'm at all clear about the specifics, or whether there are important limitations in practice.</p>
+
+<p>I'd like to see a benchmark where the system was given a "warm start" from fully unsupervised training, and then had to learn POS tags from the inputs Richard suggests. Then give it inputs where you replace "POS" with "part-of-speech", and see how quickly the system learns the relationship between the two tasks.</p>
+
+<p>This mapping is pretty easy, though. Even a phrase-based MT system would do well at it. Here's a sterner test.</p>
+
+<p>From a <em>cold</em> start, load a part-of-speech dictionary from inputs like "dog: can be a noun". Then begin training the system to do POS tagging. The first task should have pushed the system to learn word representations that can be readily applied to the tagging task.</p>
+
+<p>A tougher test still: Load in a syntactic lexicon, like "give is a ditransitive verb". Does it exploit this for chunking?</p>
+
+<p>And here's a test that should probably fail: Rotate the characters of the input 13 letters, and try again.</p>
+
+<p>Even if the system doesn't meet these tests yet, I think it's clear that there's a movement in that direction. And I think that's really pretty important.</p>
+
+<p>The "old way" is much more of a hack than this. You know what was a hack? Watson. The Jeopardy! challenge was in 2011, and IBM probably worked on it for 2-3 years previously. They adopted the state-of-the-art design at the time: train a bunch of linear models to compute intermediate representations, and arrange them into a pipeline. Application specific glue, routing logic and heuristics abounded. And, crucially, no representations were reused between the models. Each model output a simple representation. The closest we got to back-prop along the whole network was something like <a href="http://anthology.aclweb.org/P/P07/P07-1.pdf#page=990">Hollingshead and Roar (2007)</a>.</p>
+
+<p>I think Watson demonstrates how poorly this strategy generalises. It's four years later, and we still haven't really seen any convincing applications from them.</p>
+
+<p>The promise from Metamind, Deepmind, FAIR etc is that if you won the Jeopardy challenge with their new breed of system, you <em>couldn't help</em> but learn a representation which was generally useful.  There's a lot of work left to be done, but I basically buy their argument.</p>
+
+<p>I actually feel sort of sorry for IBM, really. I was genuinely excited about their investment into NLP. I agreed that it was time to do a final bit of hill-climbing and take the current state-of-the-art to market. I would've considered buying stock, if buying stock was a thing that I was doing.</p>
+
+<p>But four years later and the technology they're holding looks more like a liability than an asset. Surely they'll make sales and deliver a lot of genuine value. Their position in the market means they can deliver things no start-up can. But from a purely technological perspective, soon you'd rather have a system wired together by a grad student for a class project. That's a very tough reality for management to face, especially while they're selling the system. So what they really have is a massive sunk-cost they cannot/will not ditch. Ouch.</p>
+
+<p>Anyway. I don't understand Metamind's work in detail, and I've been skeptical of this line of work in the past. When I read Collobert and Weston (2011) it didn't really make an impact on me. I've since changed my mind. I do think there's much more to this than a 0.3% improvement here, or a 0.3% improvement there.</p>
+
+
+	<footer role="contentinfo" class="meta">
+	<a href="https://twitter.com/honnibal" class="twitter-follow-button" data-show-count="false">Follow @honnibal</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	</footer>
+</article>
+	
+</main>
+
+
+<footer role="contentinfo">
+	
+</footer>
+</body>
+</html>
