@@ -79,7 +79,7 @@
 
 <p>Even if the system doesn't meet these tests yet, I think it's clear that there's a movement in that direction. And I think that's really pretty important.</p>
 
-<p>The "old way" is much more of a hack than this. You know what was a hack? Watson. The Jeopardy! challenge was in 2011, and IBM probably worked on it for 2-3 years previously. They adopted the state-of-the-art design at the time: train a bunch of linear models to compute intermediate representations, and arrange them into a pipeline. Application specific glue, routing logic and heuristics abounded. And, crucially, no representations were reused between the models. Each model output a simple representation. The closest we got to back-prop along the whole network was something like <a href="http://anthology.aclweb.org/P/P07/P07-1.pdf#page=990">Hollingshead and Roar (2007)</a>.</p>
+<p>The "old way" is much more of a hack than this. You know what was a hack? Watson. The Jeopardy! challenge was in 2011, and IBM probably worked on it for 2-3 years previously. They adopted the state-of-the-art design at the time: train a bunch of linear models to compute intermediate representations, and arrange them into a pipeline. Application specific glue, routing logic and heuristics abounded. And, crucially, no internal representations were reused between the models. Each model output a simple representation. The closest we got to back-prop along the whole network was something like <a href="http://anthology.aclweb.org/P/P07/P07-1.pdf#page=990">Hollingshead and Roar (2007)</a>.</p>
 
 <p>I think Watson demonstrates how poorly this strategy generalises. It's four years later, and we still haven't really seen any convincing applications from them.</p>
 
