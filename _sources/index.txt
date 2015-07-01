@@ -10,9 +10,9 @@ spaCy: Industrial-strength NLP
 
 .. _Issue Tracker: https://github.com/honnibal/spaCy/issues
 
-**2015-06-24**: `Version 0.86 released`_
+**2015-07-01**: `Version 0.87 released`_
 
-.. _Version 0.86 released: updates.html
+.. _Version 0.87 released: updates.html
 
 `spaCy`_ is a new library for text processing in Python and Cython.
 I wrote it because I think small companies are terrible at
@@ -53,7 +53,7 @@ spaCy since.  I'm now pleased to announce an alpha release.
 
 If you're a small company doing NLP, I think spaCy will seem like a minor miracle.
 It's by far the fastest NLP software ever released.
-The full processing pipeline completes in 7ms per document, including accurate
+The full processing pipeline completes in 20ms per document, including accurate
 tagging and parsing.  All strings are mapped to integer IDs, tokens are linked
 to embedded word representations, and a range of useful features are pre-calculated
 and cached.
@@ -257,7 +257,6 @@ Independent Evaluation
 
  
 Accuracy is % unlabelled arcs correct, speed is tokens per second.
-
 
 Joel Tetreault and Amanda Stent (Yahoo! Labs) and Jin-ho Choi (Emory) performed
 a detailed comparison of the best parsers available.  All numbers above
