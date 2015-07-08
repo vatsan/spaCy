@@ -29,7 +29,7 @@
 
   
     <link rel="top" title="spaCy 0.85 documentation" href="#"/>
-        <link rel="next" title="spaCy: Industrial-strength NLP" href=""/> 
+        <link rel="next" title="Quick Start" href="quickstart.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -71,13 +71,7 @@
         
           
           
-              <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#independent-evaluation">Independent Evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#detailed-speed-comparison">Detailed Speed Comparison</a></li>
-</ul>
-</li>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
@@ -85,11 +79,12 @@
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/token.html">The Token Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
@@ -97,6 +92,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-86">2015-06-24 v0.86</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-85">2015-05-12 v0.85</a></li>
@@ -147,7 +143,7 @@
             
   <div class="section" id="spacy-industrial-strength-nlp">
 <h1>spaCy: Industrial-strength NLP<a class="headerlink" href="#spacy-industrial-strength-nlp" title="Permalink to this headline">¶</a></h1>
-<p><strong>2015-07-01</strong>: <a class="reference external" href="updates.html">Version 0.87 released</a></p>
+<p><strong>2015-07-08</strong>: <a href="#id1"><span class="problematic" id="id2">`Version 0.88 released`_</span></a></p>
 <p><a class="reference external" href="https://github.com/honnibal/spaCy/">spaCy</a> is a new library for text processing in Python and Cython.
 I wrote it because I think small companies are terrible at
 natural language processing (NLP).  Or rather:
@@ -475,66 +471,6 @@ of strings.  A spaCy token is a pointer to a Lexeme struct, from which you can
 access a wide range of pre-computed features, including embedded word
 representations.</p>
 <div class="toctree-wrapper compound">
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">spaCy: Industrial-strength NLP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#independent-evaluation">Independent Evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#detailed-speed-comparison">Detailed Speed Comparison</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html">API</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howworks.html">How spaCy Works</a></li>
-<li class="toctree-l3"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l3"><a class="reference internal" href="updates.html">Updates</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="howworks.html#what-we-don-t-do">What we don&#8217;t do</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howworks.html#tokenizer-algorithm">Tokenizer Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="howworks.html#coupling-the-tokenizer-and-lexicon">Coupling the Tokenizer and Lexicon</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="howworks.html#implementation">Implementation</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="license.html#examples">Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="license.html#ashley-and-casey-seed-stage-start-up">Ashley and Casey: Seed stage start-up</a></li>
-<li class="toctree-l3"><a class="reference internal" href="license.html#alex-and-sasha-university-academics">Alex and Sasha: University Academics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="license.html#phuong-and-jessie-open-source-developers">Phuong and Jessie: Open Source developers</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-87">2015-07-01 v0.87</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-86">2015-06-24 v0.86</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-85">2015-05-12 v0.85</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-84">2015-05-12 v0.84</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-80">2015-04-13 v0.80</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-70">2015-03-05 v0.70</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#bug-fixes">Bug Fixes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#known-issues">Known Issues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#id1">2015-01-25</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -545,7 +481,7 @@ representations.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="" class="btn btn-neutral float-right" title="spaCy: Industrial-strength NLP">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Quick Start">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

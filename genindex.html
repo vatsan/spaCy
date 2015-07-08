@@ -72,12 +72,6 @@
           
           
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">spaCy: Industrial-strength NLP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="index.html#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#independent-evaluation">Independent Evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#detailed-speed-comparison">Detailed Speed Comparison</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
@@ -85,11 +79,12 @@
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/token.html">The Token Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
@@ -97,6 +92,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-86">2015-06-24 v0.86</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-85">2015-05-12 v0.85</a></li>
@@ -148,11 +144,9 @@
 
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
- | <a href="#C"><strong>C</strong></a>
  | <a href="#E"><strong>E</strong></a>
- | <a href="#I"><strong>I</strong></a>
- | <a href="#L"><strong>L</strong></a>
- | <a href="#M"><strong>M</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
@@ -163,47 +157,19 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#en.pos.EnPosTagger.__call__">__call__() (en.pos.EnPosTagger method)</a>
+  <dt><a href="reference/processing.html#spacy.en.pos.EnPosTagger.__call__">__call__ (spacy.en.pos.EnPosTagger attribute)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="api.html#spacy.en.English.__call__">(spacy.en.English method)</a>
+  <dt><a href="reference/processing.html#spacy.syntax.parser.Parser.__call__">(spacy.syntax.parser.Parser attribute)</a>
   </dt>
 
         
-  <dt><a href="api.html#tokenizer.Tokenizer.__call__">(tokenizer.Tokenizer method)</a>
+  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.__call__">(spacy.tokenizer.Tokenizer attribute)</a>
   </dt>
 
       </dl></dd>
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.__getitem__">__getitem__ (spacy.tokens.Tokens attribute)</a>
-  </dt>
-
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.__iter__">__iter__ (spacy.tokens.Tokens attribute)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.__len__">__len__ (spacy.tokens.Tokens attribute)</a>
-  </dt>
-
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.__unicode__">__unicode__() (spacy.tokens.Tokens method)</a>
-  </dt>
-
-  </dl></td>
-</tr></table>
-
-<h2 id="C">C</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.count_by">count_by() (spacy.tokens.Tokens method)</a>
-  </dt>
-
   </dl></td>
 </tr></table>
 
@@ -211,53 +177,27 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#en.pos.EnPosTagger">en.pos.EnPosTagger (built-in class)</a>
-  </dt>
-
-      
-  <dt><a href="api.html#spacy.en.English">English (class in spacy.en)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.ents">ents (spacy.tokens.Tokens attribute)</a>
+  <dt><a href="reference/processing.html#spacy.en.pos.EnPosTagger">EnPosTagger (class in spacy.en.pos)</a>
   </dt>
 
   </dl></td>
 </tr></table>
 
-<h2 id="I">I</h2>
+<h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#spacy.tokens.Tokens.is_parsed">is_parsed (spacy.tokens.Tokens attribute)</a>
-  </dt>
-
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.is_tagged">is_tagged (spacy.tokens.Tokens attribute)</a>
+  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.from_dir">from_dir() (spacy.tokenizer.Tokenizer static method)</a>
   </dt>
 
   </dl></td>
 </tr></table>
 
-<h2 id="L">L</h2>
+<h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#en.pos.EnPosTagger.load_morph_exceptions">load_morph_exceptions() (en.pos.EnPosTagger method)</a>
-  </dt>
-
-  </dl></td>
-</tr></table>
-
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%" valign="top"><dl>
-      
-  <dt><a href="api.html#spacy.tokens.Tokens.merge">merge() (spacy.tokens.Tokens method)</a>
+  <dt><a href="reference/processing.html#spacy.syntax.parser.Parser">Parser (class in spacy.syntax.parser)</a>
   </dt>
 
   </dl></td>
@@ -283,25 +223,17 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#spacy.tokens.Tokens.sents">sents (spacy.tokens.Tokens attribute)</a>
-  </dt>
-
-      
   <dt><a href="quickstart.html#spacy.spacy.en.English">spacy.en.English (class in spacy)</a>
   </dt>
 
       
-  <dt><a href="api.html#spacy.tokens.Tokens.string">string (spacy.tokens.Tokens attribute)</a>
+  <dt><a href="depr/accessing.html#spacy.spans.Span">Span (class in spacy.spans)</a>, <a href="reference/using/span.html#spacy.spans.Span">[1]</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#strings.StringStore">strings.StringStore (built-in class)</a>
-  </dt>
-
-      
-  <dt><a href="api.html#syntax.parser.GreedyParser">syntax.parser.GreedyParser (built-in class)</a>
+  <dt><a href="reference/lookup.html#strings.StringStore">strings.StringStore (built-in class)</a>
   </dt>
 
   </dl></td>
@@ -311,21 +243,17 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#spacy.tokens.Tokens.to_array">to_array() (spacy.tokens.Tokens method)</a>
+  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer">Tokenizer (class in spacy.tokenizer)</a>
   </dt>
 
       
-  <dt><a href="api.html#spacy.tokens.Token">Token (class in spacy.tokens)</a>
+  <dt><a href="depr/accessing.html#spacy.tokens.Tokens">Tokens (in module spacy.tokens)</a>, <a href="reference/using/document.html#spacy.tokens.Tokens">[1]</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#tokenizer.Tokenizer">tokenizer.Tokenizer (built-in class)</a>
-  </dt>
-
-      
-  <dt><a href="api.html#spacy.tokens.Tokens">Tokens (class in spacy.tokens)</a>
+  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.tokens_from_list">tokens_from_list() (spacy.tokenizer.Tokenizer method)</a>
   </dt>
 
   </dl></td>
@@ -335,7 +263,7 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api.html#vocab.Vocab">vocab.Vocab (built-in class)</a>
+  <dt><a href="reference/lookup.html#vocab.Vocab">vocab.Vocab (built-in class)</a>
   </dt>
 
   </dl></td>

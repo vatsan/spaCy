@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Accessing Annotations &mdash; spaCy 0.85 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-58931649-1', 'gini.net');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> spaCy</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/token.html">The Token Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-85">2015-05-12 v0.85</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-70">2015-03-05 v0.70</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#id1">2015-01-25</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Accessing Annotations</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/depr/accessing.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="accessing-annotations">
+<h1>Accessing Annotations<a class="headerlink" href="#accessing-annotations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="document">
+<h2>Document<a class="headerlink" href="#document" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="spacy.tokens.Tokens">
+<tt class="descclassname">spacy.tokens.</tt><tt class="descname">Tokens</tt><a class="headerlink" href="#spacy.tokens.Tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">Doc</span></tt></p>
+</dd></dl>
+
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">__getitem__</span></tt>, <tt class="code docutils literal"><span class="pre">__iter__</span></tt>, <tt class="code docutils literal"><span class="pre">__len__</span></tt></dt>
+<dd><p class="first">The Tokens class behaves as a Python sequence, supporting the usual operators,
+len(), etc.  Negative indexing is supported. Slices are not yet.</p>
+<div class="code last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Zero one two three four five six&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">orth_</span>
+<span class="go">u&#39;Zero&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">orth_</span>
+<span class="go">u&#39;six&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="go">Error</span>
+</pre></div>
+</div>
+</dd>
+<dt><tt class="code docutils literal"><span class="pre">sents</span></tt></dt>
+<dd>Iterate over sentences in the document.</dd>
+<dt><tt class="code docutils literal"><span class="pre">ents</span></tt></dt>
+<dd>Iterate over entities in the document.</dd>
+<dt><tt class="code docutils literal"><span class="pre">to_array</span></tt></dt>
+<dd><p class="first">Given a list of M attribute IDs, export the tokens to a numpy ndarray
+of shape N*M, where N is the length of the sentence.</p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>Arguments:</dt>
+<dd>attr_ids (list[int]): A list of attribute ID ints.</dd>
+<dt>Returns:</dt>
+<dd>feat_array (numpy.ndarray[long, ndim=2]):
+A feature matrix, with one row per word, and one column per attribute
+indicated in the input attr_ids.</dd>
+</dl>
+</div></blockquote>
+</dd>
+<dt><tt class="code docutils literal"><span class="pre">count_by</span></tt></dt>
+<dd><p class="first">Produce a dict of {attribute (int): count (ints)} frequencies, keyed
+by the values of the given attribute ID.</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span><span class="p">,</span> <span class="n">attrs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;apple apple orange banana&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">ORTH</span><span class="p">)</span>
+<span class="go">{12800L: 1, 11880L: 2, 7561L: 1}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">to_array</span><span class="p">([</span><span class="n">attrs</span><span class="o">.</span><span class="n">ORTH</span><span class="p">])</span>
+<span class="go">array([[11880],</span>
+<span class="go">      [11880],</span>
+<span class="go">      [ 7561],</span>
+<span class="go">      [12800]])</span>
+</pre></div>
+</div>
+</dd>
+<dt><tt class="code docutils literal"><span class="pre">merge</span></tt></dt>
+<dd>Merge a multi-word expression into a single token.  Currently
+experimental; API is likely to change.</dd>
+<dt>Internals</dt>
+<dd><p class="first">A Tokens instance stores the annotations in a C-array of <cite>TokenC</cite> structs.
+Each TokenC struct holds a const pointer to a LexemeC struct, which describes
+a vocabulary item.</p>
+<p>The Token objects are built lazily, from this underlying C-data.</p>
+<p class="last">For faster access, the underlying C data can be accessed from Cython.  You
+can also export the data to a numpy array, via <cite>Tokens.to_array</cite>, if pure Python
+access is required, and you need slightly better performance.  However, this
+is both slower and has a worse API than Cython access.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="span">
+<h2>Span<a class="headerlink" href="#span" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="spacy.spans.Span">
+<em class="property">class </em><tt class="descclassname">spacy.spans.</tt><tt class="descname">Span</tt><a class="headerlink" href="#spacy.spans.Span" title="Permalink to this definition">¶</a></dt>
+<dd><p>A slice from a Doc object.</p>
+</dd></dl>
+
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">__getitem__</span></tt>, <tt class="code docutils literal"><span class="pre">__iter__</span></tt>, <tt class="code docutils literal"><span class="pre">__len__</span></tt></dt>
+<dd>Sequence API</dd>
+<dt><tt class="code docutils literal"><span class="pre">head</span></tt></dt>
+<dd>Syntactic head, or None</dd>
+<dt><tt class="code docutils literal"><span class="pre">left</span></tt></dt>
+<dd>Tokens to the left of the span</dd>
+<dt><tt class="code docutils literal"><span class="pre">rights</span></tt></dt>
+<dd>Tokens to the left of the span</dd>
+<dt><tt class="code docutils literal"><span class="pre">orth</span></tt> / <tt class="code docutils literal"><span class="pre">orth_</span></tt></dt>
+<dd>Orth string</dd>
+<dt><tt class="code docutils literal"><span class="pre">lemma</span></tt> / <tt class="code docutils literal"><span class="pre">lemma_</span></tt></dt>
+<dd>Lemma string</dd>
+<dt><tt class="code docutils literal"><span class="pre">string</span></tt></dt>
+<dd>String</dd>
+<dt><tt class="code docutils literal"><span class="pre">label</span></tt> / <tt class="code docutils literal"><span class="pre">label_</span></tt></dt>
+<dd>Label</dd>
+<dt><tt class="code docutils literal"><span class="pre">subtree</span></tt></dt>
+<dd>Lefts + [self] + Rights</dd>
+</dl>
+</div>
+<div class="section" id="spacy-tokens-tokens">
+<h2>spacy.tokens.Tokens<a class="headerlink" href="#spacy-tokens-tokens" title="Permalink to this headline">¶</a></h2>
+<p>A Token represents a single word, punctuation or significant whitespace symbol.</p>
+<p>Integer IDs are provided for all string features.  The (unicode) string is
+provided by an attribute of the same name followed by an underscore, e.g.
+token.orth is an integer ID, token.orth_ is the unicode value.</p>
+<p>The only exception is the Token.string attribute, which is (unicode)
+string-typed.</p>
+<p><strong>String Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">string</span></tt></dt>
+<dd>The form of the word as it appears in the string, include trailing
+whitespace.  This is useful when you need to use linguistic features to
+add inline mark-up to the string.</dd>
+<dt><tt class="code docutils literal"><span class="pre">orth</span></tt> / <tt class="code docutils literal"><span class="pre">orth_</span></tt></dt>
+<dd>The form of the word with no string normalization or processing, as it
+appears in the string, without trailing whitespace.</dd>
+<dt><tt class="code docutils literal"><span class="pre">lemma</span></tt> / <tt class="code docutils literal"><span class="pre">lemma_</span></tt></dt>
+<dd>The &#8220;base&#8221; of the word, with no inflectional suffixes, e.g. the lemma of
+&#8220;developing&#8221; is &#8220;develop&#8221;, the lemma of &#8220;geese&#8221; is &#8220;goose&#8221;, etc.  Note that
+<em>derivational</em> suffixes are not stripped, e.g. the lemma of &#8220;instutitions&#8221;
+is &#8220;institution&#8221;, not &#8220;institute&#8221;.  Lemmatization is performed using the
+WordNet data, but extended to also cover closed-class words such as
+pronouns.  By default, the WN lemmatizer returns &#8220;hi&#8221; as the lemma of &#8220;his&#8221;.
+We assign pronouns the lemma -PRON-.</dd>
+<dt><tt class="code docutils literal"><span class="pre">lower</span></tt> / <tt class="code docutils literal"><span class="pre">lower_</span></tt></dt>
+<dd>The form of the word, but forced to lower-case, i.e. lower = word.orth_.lower()</dd>
+<dt><tt class="code docutils literal"><span class="pre">norm</span></tt> / <tt class="code docutils literal"><span class="pre">norm_</span></tt></dt>
+<dd>The form of the word, after language-specific normalizations have been
+applied.</dd>
+<dt><tt class="code docutils literal"><span class="pre">shape</span></tt> / <tt class="code docutils literal"><span class="pre">shape_</span></tt></dt>
+<dd>A transform of the word&#8217;s string, to show orthographic features.  The
+characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.
+After these mappings, sequences of 4 or more of the same character are
+truncated to length 4.  Examples: C3Po &#8211;&gt; XdXx, favorite &#8211;&gt; xxxx,
+:) &#8211;&gt; :)</dd>
+<dt><tt class="code docutils literal"><span class="pre">prefix</span></tt> / <tt class="code docutils literal"><span class="pre">prefix_</span></tt></dt>
+<dd>A length-N substring from the start of the word.  Length may vary by
+language; currently for English n=1, i.e. prefix = word.orth_[:1]</dd>
+<dt><tt class="code docutils literal"><span class="pre">suffix</span></tt> / <tt class="code docutils literal"><span class="pre">suffix_</span></tt></dt>
+<dd>A length-N substring from the end of the word.  Length may vary by
+language; currently for English n=3, i.e. suffix = word.orth_[-3:]</dd>
+</dl>
+<p><strong>Distributional Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">prob</span></tt></dt>
+<dd>The unigram log-probability of the word, estimated from counts from a
+large corpus, smoothed using Simple Good Turing estimation.</dd>
+<dt><tt class="code docutils literal"><span class="pre">cluster</span></tt></dt>
+<dd>The Brown cluster ID of the word.  These are often useful features for
+linear models.  If you&#8217;re using a non-linear model, particularly
+a neural net or random forest, consider using the real-valued word
+representation vector, in Token.repvec, instead.</dd>
+<dt><tt class="code docutils literal"><span class="pre">repvec</span></tt></dt>
+<dd>A &#8220;word embedding&#8221; representation: a dense real-valued vector that supports
+similarity queries between words.  By default, spaCy currently loads
+vectors produced by the Levy and Goldberg (2014) dependency-based word2vec
+model.</dd>
+</dl>
+<p><strong>Syntactic Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">tag</span></tt></dt>
+<dd>A morphosyntactic tag, e.g. NN, VBZ, DT, etc.  These tags are
+language/corpus specific, and typically describe part-of-speech and some
+amount of morphological information.  For instance, in the Penn Treebank
+tag set, VBZ is assigned to a present-tense singular verb.</dd>
+<dt><tt class="code docutils literal"><span class="pre">pos</span></tt></dt>
+<dd>A part-of-speech tag, from the Google Universal Tag Set, e.g. NOUN, VERB,
+ADV.  Constants for the 17 tag values are provided in spacy.parts_of_speech.</dd>
+<dt><tt class="code docutils literal"><span class="pre">dep</span></tt></dt>
+<dd>The type of syntactic dependency relation between the word and its
+syntactic head.</dd>
+<dt><tt class="code docutils literal"><span class="pre">n_lefts</span></tt></dt>
+<dd>The number of immediate syntactic children preceding the word in the
+string.</dd>
+<dt><tt class="code docutils literal"><span class="pre">n_rights</span></tt></dt>
+<dd>The number of immediate syntactic children following the word in the
+string.</dd>
+</dl>
+<p><strong>Navigating the Dependency Tree</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">head</span></tt></dt>
+<dd>The Token that is the immediate syntactic head of the word.  If the word is
+the root of the dependency tree, the same word is returned.</dd>
+<dt><tt class="code docutils literal"><span class="pre">lefts</span></tt></dt>
+<dd>An iterator for the immediate leftward syntactic children of the word.</dd>
+<dt><tt class="code docutils literal"><span class="pre">rights</span></tt></dt>
+<dd>An iterator for the immediate rightward syntactic children of the word.</dd>
+<dt><tt class="code docutils literal"><span class="pre">children</span></tt></dt>
+<dd>An iterator that yields from lefts, and then yields from rights.</dd>
+<dt><tt class="code docutils literal"><span class="pre">subtree</span></tt></dt>
+<dd>An iterator for the part of the sentence syntactically governed by the
+word, including the word itself.</dd>
+</dl>
+<p><strong>Named Entities</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">ent_type</span></tt></dt>
+<dd>If the token is part of an entity, its entity type</dd>
+<dt><tt class="code docutils literal"><span class="pre">ent_iob</span></tt></dt>
+<dd>The IOB (inside, outside, begin) entity recognition tag for the token</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Matthew Honnibal.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.85',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>

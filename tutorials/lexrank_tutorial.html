@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial: Extractive Summarization &mdash; spaCy 0.85 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-58931649-1', 'gini.net');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> spaCy</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/token.html">The Token Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-85">2015-05-12 v0.85</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-70">2015-03-05 v0.70</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#id1">2015-01-25</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Tutorial: Extractive Summarization</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/tutorials/lexrank_tutorial.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="tutorial-extractive-summarization">
+<h1>Tutorial: Extractive Summarization<a class="headerlink" href="#tutorial-extractive-summarization" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial will go through the implementation of several extractive
+summarization models with spaCy.</p>
+<p>An <em>extractive</em> summarization system is a filter over the original document/s:
+most of the text is removed, and the remaining text is formatted as a summary.
+In contrast, an <em>abstractive</em> summarization system generates new text.</p>
+<div class="section" id="application-context">
+<h2>Application Context<a class="headerlink" href="#application-context" title="Permalink to this headline">¶</a></h2>
+<p>Extractive summarization systems need an application context.  We can&#8217;t ask how
+to design the system without some concept of what sort of summary will be
+useful for a given application.  (Contrast with speech recognition, where
+a notion of &#8220;correct&#8221; is much less application-sensitive.)</p>
+<p>For this, I&#8217;ve adopted the application context that <a class="reference external" href="http://engineering.flipboard.com/2014/10/summarization/">Flipboard</a> discuss in a
+recent blog post: they want to display lead-text to readers on mobile devices,
+so that readers can easily choose interesting links.</p>
+<p>I&#8217;ve chosen this application context for two reasons.  First, <a class="reference external" href="http://engineering.flipboard.com/2014/10/summarization/">Flipboard</a> say
+they&#8217;re putting something like this into production.  Second, there&#8217;s a ready
+source of evaluation data.  We can look at the lead-text that human editors
+have chosen, and evaluate whether our automatic system chooses similar text.</p>
+</div>
+<div class="section" id="experimental-setup">
+<h2>Experimental Setup<a class="headerlink" href="#experimental-setup" title="Permalink to this headline">¶</a></h2>
+<p>Instead of scraping data, I&#8217;m using articles from the New York Times Annotated
+Corpus, which is a handy dump of XML-annotated articles distributed by the LDC.
+The annotations come with a field named &#8220;online lead paragraph&#8221;.  Our
+summarization systems will be evaluated on their Rouge-1 overlap with this
+field.</p>
+<p>Further details of the experimental setup can be found in the appendices.</p>
+</div>
+<div class="section" id="summarizer-api">
+<h2>Summarizer API<a class="headerlink" href="#summarizer-api" title="Permalink to this headline">¶</a></h2>
+<p>Each summarization model will have the following API:</p>
+<p>We receive the headline and a list of paragraphs, and a target length.  We have
+to produce a block of text where len(text) &lt; target_length.  We want summaries
+that users will click-on, and not bounce back out of.  Long-term, we want
+summaries that would keep people using the app.</p>
+</div>
+<div class="section" id="baselines-truncate">
+<h2>Baselines: Truncate<a class="headerlink" href="#baselines-truncate" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">truncate_chars</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">headline</span><span class="p">,</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="n">target_length</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span><span class="p">[:</span><span class="n">target_length</span> <span class="o">-</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;...&#39;</span>
+
+<span class="k">def</span> <span class="nf">truncate_words</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">headline</span><span class="p">,</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="n">target_length</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">n_words</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">n_chars</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n_chars</span> <span class="o">&lt;</span> <span class="n">target_length</span> <span class="o">-</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">n_chars</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">n_words</span><span class="p">])</span>
+        <span class="n">n_chars</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c"># Space</span>
+        <span class="n">n_words</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">[:</span><span class="n">n_words</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;...&#39;</span>
+
+<span class="k">def</span> <span class="nf">truncate_sentences</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">headline</span><span class="p">,</span> <span class="n">paragraphs</span><span class="p">,</span> <span class="n">target_length</span><span class="p">):</span>
+    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">para</span> <span class="ow">in</span> <span class="n">paragraphs</span><span class="p">:</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">para</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tokens</span><span class="o">.</span><span class="n">sentences</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">target_length</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">summary</span>
+            <span class="n">summary</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">summary</span>
+</pre></div>
+</div>
+<p>I&#8217;d be surprised if Flipboard never had something like this in production.  Details
+like lead-text take a while to float up the priority list.  This strategy also has
+the advantage of transparency: it&#8217;s obvious to users how the decision is being
+made, so nobody is likely to complain about the feature if it works this way.</p>
+<p>Instead of cutting off the text mid-word, we can tokenize the text, and</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>System</td>
+<td>Rouge-1 R</td>
+</tr>
+<tr class="row-even"><td>Truncate chars</td>
+<td>69.3</td>
+</tr>
+<tr class="row-odd"><td>Truncate words</td>
+<td>69.8</td>
+</tr>
+<tr class="row-even"><td>Truncate sents</td>
+<td>48.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sentence-vectors">
+<h2>Sentence Vectors<a class="headerlink" href="#sentence-vectors" title="Permalink to this headline">¶</a></h2>
+<p>A simple bag-of-words model can be created using the <cite>count_by</cite> method, which
+produces a dictionary of frequencies, keyed by string IDs:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en.attrs</span> <span class="kn">import</span> <span class="n">SIC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;a a a. b b b b.&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="n">SIC</span><span class="p">)</span>
+<span class="go">{41L: 4, 11L: 3, 5L: 2}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="n">SIC</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">tokens</span><span class="o">.</span><span class="n">sentences</span><span class="p">()]</span>
+<span class="go">[{11L: 3, 5L: 1}, {41L: 4, 5L: 1}]</span>
+</pre></div>
+</div>
+<p>Similar functionality is provided by <a class="reference external" href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.feature_extraction.text">scikit-learn</a>, but with a different
+style of API design.  With spaCy, functions generally have more limited
+responsibility.  The advantage of this is that spaCy&#8217;s APIs are much simpler,
+and it&#8217;s often easier to compose functions in a more flexible way.</p>
+<p>One particularly powerful feature of spaCy is its support for
+<a class="reference external" href="https://colah.github.io/posts/2014-07-NLP-RNNs-Representations/">word embeddings</a> &#8212; the dense vectors introduced by deep learning models, and
+now commonly produced by <a class="reference external" href="https://code.google.com/p/word2vec/">word2vec</a> and related systems.</p>
+<p>Once a set of word embeddings has been installed, the vectors are available
+from any token:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en.attrs</span> <span class="kn">import</span> <span class="n">SIC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">cosine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Apple banana Batman hero&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cosine</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vec</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">vec</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">db_loc</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">feat_type</span><span class="o">=</span><span class="s">&quot;tfidf&quot;</span><span class="p">):</span>
+    <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
+
+    <span class="c"># Read stop list and make TF-IDF weights --- data needed for the</span>
+    <span class="c"># feature extraction.</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">stops_loc</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+        <span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">strings</span><span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">file_</span><span class="p">)</span>
+    <span class="n">idf_weights</span> <span class="o">=</span> <span class="n">get_idf_weights</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">iter_docs</span><span class="p">(</span><span class="n">db_loc</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">feat_type</span> <span class="o">==</span> <span class="s">&#39;tfidf&#39;</span><span class="p">:</span>
+        <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">tfidf_extractor</span><span class="p">(</span><span class="n">stop_words</span><span class="p">,</span> <span class="n">idf_weights</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">feat_type</span> <span class="o">==</span> <span class="s">&#39;vec&#39;</span><span class="p">:</span>
+        <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">vec_extractor</span><span class="p">(</span><span class="n">stop_words</span><span class="p">,</span> <span class="n">idf_weights</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iter_docs</span><span class="p">(</span><span class="n">db_loc</span><span class="p">)):</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">sentences</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">sentences</span><span class="p">()</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">summarize</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">feature_extractor</span><span class="p">)</span>
+        <span class="n">write_output</span><span class="p">(</span><span class="n">summary</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-lexrank-algorithm">
+<h2>The LexRank Algorithm<a class="headerlink" href="#the-lexrank-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>LexRank is described as a graph-based algorithm, derived from <a href="#id2"><span class="problematic" id="id3">`Google&#8217;s PageRank`_</span></a>.
+The nodes are sentences, and the edges are the similarities between one
+sentence and another.  The &#8220;graph&#8221; is fully-connected, and its edges are
+undirected &#8212; so, it&#8217;s natural to represent this as a matrix:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">cosine</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+
+<span class="k">def</span> <span class="nf">lexrank</span><span class="p">(</span><span class="n">sent_vectors</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sent_vectors</span><span class="p">)</span>
+    <span class="c"># Build the cosine similarity matrix</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cosine</span><span class="p">(</span><span class="n">sent_vectors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sent_vectors</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+    <span class="c"># Normalize</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">_pagerank</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The rows are normalized (i.e. rows sum to 1), allowing the PageRank algorithm
+to be applied.  Unfortunately the PageRank implementation is rather opaque &#8212;
+it&#8217;s easier to just read the Wikipedia page:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">_pagerank</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mf">0.85</span><span class="p">):</span>
+    <span class="c"># This is admittedly opaque --- just read the Wikipedia page.</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+    <span class="n">rank</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,))</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">new_rank</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,))</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">_has_converged</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">new_rank</span><span class="p">):</span>
+        <span class="n">rank</span><span class="p">,</span> <span class="n">new_rank</span> <span class="o">=</span> <span class="n">new_rank</span><span class="p">,</span> <span class="n">rank</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">new_rank</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">rank</span> <span class="o">*</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">rank</span>
+
+<span class="k">def</span> <span class="nf">_has_converged</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">epsilon</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initial-processing">
+<h2>Initial Processing<a class="headerlink" href="#initial-processing" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="feature-extraction">
+<h2>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div></div></blockquote>
+<p>The LexRank paper models each sentence as a bag-of-words</p>
+<p>This is simple and fairly standard, but often gives
+underwhelming results.  My idea is to instead calculate vectors from
+<a href="#id4"><span class="problematic" id="id5">`word-embeddings`_</span></a>, which have been one of the exciting outcomes of the recent
+work on deep-learning.  I had a quick look at the literature, and found
+a <a class="reference external" href="https://www.aclweb.org/anthology/W/W14/W14-1504.pdf">recent workshop paper</a> that suggested the idea was plausible.</p>
+<p>Taking the feature representation and similarity function as parameters, the
+LexRank function looks like this:</p>
+<p>Given a list of N sentences, a function that maps a sentence to a feature
+vector, and a function that computes a similarity measure of two feature
+vectors, this produces a vector of N floats, which indicate how well each
+sentence represents the document as a whole.</p>
+</div>
+<div class="section" id="document-model">
+<h2>Document Model<a class="headerlink" href="#document-model" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Matthew Honnibal.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.85',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>

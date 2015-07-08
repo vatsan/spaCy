@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Annotation Standards &mdash; spaCy 0.85 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-58931649-1', 'gini.net');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> spaCy</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/using/token.html">The Token Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-85">2015-05-12 v0.85</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-70">2015-03-05 v0.70</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#id1">2015-01-25</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Annotation Standards</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/depr/annotation.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="annotation-standards">
+<h1>Annotation Standards<a class="headerlink" href="#annotation-standards" title="Permalink to this headline">¶</a></h1>
+<p>This document describes the target annotations spaCy is trained to predict.</p>
+<p>This is currently a work in progress. Please ask questions on the issue tracker,
+so that the answers can be integrated here to improve the documentation.</p>
+<p><a class="reference external" href="https://github.com/honnibal/spaCy/issues">https://github.com/honnibal/spaCy/issues</a></p>
+<div class="section" id="english">
+<h2>English<a class="headerlink" href="#english" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tokenization">
+<h3>Tokenization<a class="headerlink" href="#tokenization" title="Permalink to this headline">¶</a></h3>
+<p>Tokenization standards are based on the OntoNotes 5 corpus.</p>
+<p>The tokenizer differs from most by including tokens for significant whitespace.
+Any sequence of whitespace characters beyond a single space (&#8216; &#8216;) is included
+as a token. For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">(</span><span class="n">parse</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Some</span><span class="se">\n</span><span class="s">spaces  and</span><span class="se">\t</span><span class="s">tab characters&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+<span class="go">[u&#39;Some&#39;, u&#39;\n&#39;, u&#39;spaces&#39;, u&#39; &#39;, u&#39;and&#39;, u&#39;\t&#39;, u&#39;tab&#39;, u&#39;characters&#39;]</span>
+</pre></div>
+</div>
+<p>The whitespace tokens are useful for much the same reason punctuation is &#8212; it&#8217;s
+often an important delimiter in the text.  By preserving it in the token output,
+we are able to maintain a simple alignment between the tokens and the original
+string, and we ensure that the token stream does not lose information.</p>
+</div>
+<div class="section" id="sentence-boundary-detection">
+<h3>Sentence boundary detection<a class="headerlink" href="#sentence-boundary-detection" title="Permalink to this headline">¶</a></h3>
+<p>Sentence boundaries are calculated from the syntactic parse tree, so features
+such as punctuation and capitalisation play an important but non-decisive role
+in determining the sentence boundaries.  Usually this means that the sentence
+boundaries will at least coincide with clause boundaries, even given poorly
+punctuated text.</p>
+</div>
+<div class="section" id="part-of-speech-tagging">
+<h3>Part-of-speech Tagging<a class="headerlink" href="#part-of-speech-tagging" title="Permalink to this headline">¶</a></h3>
+<p>The part-of-speech tagger uses the OntoNotes 5 version of the Penn Treebank
+tag set.  We also map the tags to the simpler Google Universal POS Tag set.</p>
+<p>Details here: <a class="reference external" href="https://github.com/honnibal/spaCy/blob/master/spacy/en/pos.pyx#L124">https://github.com/honnibal/spaCy/blob/master/spacy/en/pos.pyx#L124</a></p>
+</div>
+<div class="section" id="lemmatization">
+<h3>Lemmatization<a class="headerlink" href="#lemmatization" title="Permalink to this headline">¶</a></h3>
+<p>A &#8220;lemma&#8221; is the uninflected form of a word. In English, this means:</p>
+<ul class="simple">
+<li>Adjectives: The form like &#8220;happy&#8221;, not &#8220;happier&#8221; or &#8220;happiest&#8221;</li>
+<li>Adverbs: The form like &#8220;badly&#8221;, not &#8220;worse&#8221; or &#8220;worst&#8221;</li>
+<li>Nouns: The form like &#8220;dog&#8221;, not &#8220;dogs&#8221;; like &#8220;child&#8221;, not &#8220;children&#8221;</li>
+<li>Verbs: The form like &#8220;write&#8221;, not &#8220;writes&#8221;, &#8220;writing&#8221;, &#8220;wrote&#8221; or &#8220;written&#8221;</li>
+</ul>
+<p>The lemmatization data is taken from WordNet. However, we also add a special
+case for pronouns: all pronouns are lemmatized to the special token -PRON-.</p>
+</div>
+<div class="section" id="syntactic-dependency-parsing">
+<h3>Syntactic Dependency Parsing<a class="headerlink" href="#syntactic-dependency-parsing" title="Permalink to this headline">¶</a></h3>
+<p>The parser is trained on data produced by the ClearNLP converter. Details of
+the annotation scheme can be found here:</p>
+<p><a class="reference external" href="http://www.mathcs.emory.edu/~choi/doc/clear-dependency-2012.pdf">http://www.mathcs.emory.edu/~choi/doc/clear-dependency-2012.pdf</a></p>
+</div>
+<div class="section" id="named-entity-recognition">
+<h3>Named Entity Recognition<a class="headerlink" href="#named-entity-recognition" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>PERSON</td>
+<td>People, including fictional</td>
+</tr>
+<tr class="row-even"><td>NORP</td>
+<td>Nationalities or religious or political groups</td>
+</tr>
+<tr class="row-odd"><td>FACILITY</td>
+<td>Buildings, airports, highways, bridges, etc.</td>
+</tr>
+<tr class="row-even"><td>ORGANIZATION</td>
+<td>Companies, agencies, institutions, etc.</td>
+</tr>
+<tr class="row-odd"><td>GPE</td>
+<td>Countries, cities, states</td>
+</tr>
+<tr class="row-even"><td>LOCATION</td>
+<td>Non-GPE locations, mountain ranges, bodies of water</td>
+</tr>
+<tr class="row-odd"><td>PRODUCT</td>
+<td>Vehicles, weapons, foods, etc. (Not services)</td>
+</tr>
+<tr class="row-even"><td>EVENT</td>
+<td>Named hurricanes, battles, wars, sports events, etc.</td>
+</tr>
+<tr class="row-odd"><td>WORK OF ART</td>
+<td>Titles of books, songs, etc.</td>
+</tr>
+<tr class="row-even"><td>LAW</td>
+<td>Named documents made into laws</td>
+</tr>
+<tr class="row-odd"><td>LANGUAGE</td>
+<td>Any named language</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>The following values are also annotated in a style similar to names:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>DATE</td>
+<td>Absolute or relative dates or periods</td>
+</tr>
+<tr class="row-even"><td>TIME</td>
+<td>Times smaller than a day</td>
+</tr>
+<tr class="row-odd"><td>PERCENT</td>
+<td>Percentage (including “%”)</td>
+</tr>
+<tr class="row-even"><td>MONEY</td>
+<td>Monetary values, including unit</td>
+</tr>
+<tr class="row-odd"><td>QUANTITY</td>
+<td>Measurements, as of weight or distance</td>
+</tr>
+<tr class="row-even"><td>ORDINAL</td>
+<td>&#8220;first&#8221;, &#8220;second&#8221;</td>
+</tr>
+<tr class="row-odd"><td>CARDINAL</td>
+<td>Numerals that do not fall under another type</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Matthew Honnibal.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.85',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>

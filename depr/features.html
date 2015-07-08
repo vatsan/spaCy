@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; spaCy 0.85 documentation</title>
+  <title>Lexeme Features &mdash; spaCy 0.85 documentation</title>
   
 
   
@@ -129,8 +129,10 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Overview: module code</li>
+    <li>Lexeme Features</li>
       <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/depr/features.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -138,14 +140,120 @@
 </div>
           <div role="main" class="document">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="spacy.html">spacy</a></li>
-<ul><li><a href="spacy/en/pos.html">spacy.en.pos</a></li>
-<li><a href="spacy/spans.html">spacy.spans</a></li>
-<li><a href="spacy/syntax/parser.html">spacy.syntax.parser</a></li>
-<li><a href="spacy/tokenizer.html">spacy.tokenizer</a></li>
-<li><a href="spacy/tokens.html">spacy.tokens</a></li>
-</ul></ul>
+  <div class="section" id="lexeme-features">
+<h1>Lexeme Features<a class="headerlink" href="#lexeme-features" title="Permalink to this headline">¶</a></h1>
+<p>A lexeme is an entry in the lexicon &#8212; the vocabulary &#8212; for a word, punctuation
+symbol, whitespace unit, etc.  Lexemes come with lots of pre-computed information,
+that help you write good feature functions.  Features are integer-valued where
+possible &#8212; instead of strings, spaCy refers to strings by consecutive ID numbers,
+which you can use to look up the string values if necessary.</p>
+<div class="section" id="string-features">
+<h2>String features<a class="headerlink" href="#string-features" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>SIC</td>
+<td>The word as it appeared in the sentence, unaltered.</td>
+</tr>
+<tr class="row-even"><td>NORM</td>
+<td>For frequent words, case normalization is applied.
+Otherwise, back-off to SHAPE.</td>
+</tr>
+<tr class="row-odd"><td>SHAPE</td>
+<td><p class="first">Remap the characters of the word as follows:</p>
+<p>a-z &#8211;&gt; x, A-Z &#8211;&gt; X, 0-9 &#8211;&gt; d, ,.;:&#8221;&#8217;?!$- &#8211;&gt; self, other &#8211;&gt; *</p>
+<p>Trim sequences of length 3+ to 3, e.g</p>
+<p class="last">apples &#8211;&gt; xxx, Apples &#8211;&gt; Xxxx, app9LES&#64; &#8211;&gt; xxx9XXX*</p>
+</td>
+</tr>
+<tr class="row-even"><td>ASCIIED</td>
+<td>Use unidecode.unidecode(sic) to approximate the word using the
+ascii characters.</td>
+</tr>
+<tr class="row-odd"><td>PREFIX</td>
+<td>sic_unicode_string[:1]</td>
+</tr>
+<tr class="row-even"><td>SUFFIX</td>
+<td>sic_unicode_string[-3:]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="integer-features">
+<h2>Integer features<a class="headerlink" href="#integer-features" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>LENGTH</td>
+<td>Length of the string, in unicode</td>
+</tr>
+<tr class="row-even"><td>CLUSTER</td>
+<td>Brown cluster</td>
+</tr>
+<tr class="row-odd"><td>POS_TYPE</td>
+<td>K-means cluster of word&#8217;s tag affinities</td>
+</tr>
+<tr class="row-even"><td>SENSE_TYPE</td>
+<td>K-means cluster of word&#8217;s sense affinities</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="boolean-features">
+<h2>Boolean features<a class="headerlink" href="#boolean-features" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>IS_ALPHA</td>
+<td>The result of sic.isalpha()</td>
+</tr>
+<tr class="row-even"><td>IS_ASCII</td>
+<td>Check whether all the word&#8217;s characters are ascii characters</td>
+</tr>
+<tr class="row-odd"><td>IS_DIGIT</td>
+<td>The result of sic.isdigit()</td>
+</tr>
+<tr class="row-even"><td>IS_LOWER</td>
+<td>The result of sic.islower()</td>
+</tr>
+<tr class="row-odd"><td>IS_PUNCT</td>
+<td>Check whether all characters are in the class TODO</td>
+</tr>
+<tr class="row-even"><td>IS_SPACE</td>
+<td>The result of sic.isspace()</td>
+</tr>
+<tr class="row-odd"><td>IS_TITLE</td>
+<td>The result of sic.istitle()</td>
+</tr>
+<tr class="row-even"><td>IS_UPPER</td>
+<td>The result of sic.isupper()</td>
+</tr>
+<tr class="row-odd"><td>LIKE_URL</td>
+<td>Check whether the string looks like it could be a URL.  Aims
+for low false negative rate.</td>
+</tr>
+<tr class="row-even"><td>LIKE_NUMBER</td>
+<td>Check whether the string looks like it could be a numeric
+entity, e.g. 10,000 10th .10 . Skews for low false negative
+rate.</td>
+</tr>
+<tr class="row-odd"><td>IN_LIST</td>
+<td>Facility for loading arbitrary run-time word lists?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
 
           </div>
           <footer>

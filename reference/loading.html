@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; spaCy 0.85 documentation</title>
+  <title>Loading Resources &mdash; spaCy 0.85 documentation</title>
   
 
   
@@ -28,7 +28,10 @@
   
 
   
-    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/> 
+    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/>
+        <link rel="up" title="Documentation" href="index.html"/>
+        <link rel="next" title="Processing Text" href="processing.html"/>
+        <link rel="prev" title="Documentation" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -70,7 +73,7 @@
         
           
           
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#usage">Usage</a></li>
@@ -78,12 +81,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../reference/loading.html">Loading Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/processing.html">Processing Text</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/using/document.html">The Doc Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/using/span.html">The Span Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/using/token.html">The Token Object</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/token.html">The Token Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
@@ -129,8 +132,12 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Overview: module code</li>
+          <li><a href="index.html">Documentation</a> &raquo;</li>
+      
+    <li>Loading Resources</li>
       <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/reference/loading.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -138,17 +145,73 @@
 </div>
           <div role="main" class="document">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="spacy.html">spacy</a></li>
-<ul><li><a href="spacy/en/pos.html">spacy.en.pos</a></li>
-<li><a href="spacy/spans.html">spacy.spans</a></li>
-<li><a href="spacy/syntax/parser.html">spacy.syntax.parser</a></li>
-<li><a href="spacy/tokenizer.html">spacy.tokenizer</a></li>
-<li><a href="spacy/tokens.html">spacy.tokens</a></li>
-</ul></ul>
+  <div class="section" id="loading-resources">
+<h1>Loading Resources<a class="headerlink" href="#loading-resources" title="Permalink to this headline">¶</a></h1>
+<p>99% of the time, you will load spaCy&#8217;s resources using a language pipeline class,
+e.g. <cite>spacy.en.English</cite>. The pipeline class reads the data from disk, from a
+specified directory.  By default, spaCy installs data into each language&#8217;s
+package directory, and loads it from there.</p>
+<p>Usually, this is all you will need:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you need to replace some of the components, you may want to just make your
+own pipeline class &#8212; the English class itself does almost no work; it just
+applies the modules in order. You can also provide a function or class that
+produces a tokenizer, tagger, parser or entity recognizer to <tt class="code docutils literal"><span class="pre">English.__init__</span></tt>,
+to customize the pipeline:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">my_module</span> <span class="kn">import</span> <span class="n">MyTagger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">(</span><span class="n">Tagger</span><span class="o">=</span><span class="n">MyTagger</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In more detail:</p>
+<div class="code highlight-python"><div class="highlight"><pre>class English(object):
+    def __init__(self,
+      data_dir=path.join(path.dirname(__file__), &#39;data&#39;),
+      Tokenizer=Tokenizer.from_dir,
+      Tagger=EnPosTagger,
+      Parser=Createarser(ArcEager),
+      Entity=CreateParser(BiluoNER),
+      load_vectors=True
+    ):
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">data_dir</span></tt></dt>
+<dd><p class="first"><tt class="code docutils literal"><span class="pre">unicode</span> <span class="pre">path</span></tt></p>
+<p class="last">The data directory.  May be None, to disable any data loading (including
+the vocabulary).</p>
+</dd>
+<dt><tt class="code docutils literal"><span class="pre">Tokenizer</span></tt></dt>
+<dd><p class="first"><tt class="code docutils literal"><span class="pre">(Vocab</span> <span class="pre">vocab,</span> <span class="pre">unicode</span> <span class="pre">data_dir)(unicode)</span> <span class="pre">--&gt;</span> <span class="pre">Doc</span></tt></p>
+<p class="last">A class/function that creates the tokenizer.</p>
+</dd>
+<dt><tt class="code docutils literal"><span class="pre">Tagger</span></tt> / <tt class="code docutils literal"><span class="pre">Parser</span></tt> / <tt class="code docutils literal"><span class="pre">Entity</span></tt></dt>
+<dd><p class="first"><tt class="code docutils literal"><span class="pre">(Vocab</span> <span class="pre">vocab,</span> <span class="pre">unicode</span> <span class="pre">data_dir)(Doc)</span> <span class="pre">--&gt;</span> <span class="pre">None</span></tt></p>
+<p class="last">A class/function that creates the part-of-speech tagger /
+syntactic dependency parser / named entity recogniser.
+May be None or False, to disable tagging.</p>
+</dd>
+<dt><tt class="code docutils literal"><span class="pre">load_vectors</span></tt></dt>
+<dd><tt class="code docutils literal"><span class="pre">bool</span></tt>
+A boolean value to control whether the word vectors are loaded.</dd>
+</dl>
+</div>
+
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="processing.html" class="btn btn-neutral float-right" title="Processing Text">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Documentation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

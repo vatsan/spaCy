@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation &mdash; spaCy 0.85 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/>
+        <link rel="next" title="Loading Resources" href="loading.html"/>
+        <link rel="prev" title="Quick Start" href="../quickstart.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-58931649-1', 'gini.net');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> spaCy</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/token.html">The Token Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../license.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-85">2015-05-12 v0.85</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-70">2015-03-05 v0.70</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#id1">2015-01-25</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/reference/index.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p>The table below shows every class in spaCy: a link to its documentation, implementation,
+and a small usage snippet.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="35%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Class name</th>
+<th class="head">Usage</th>
+<th class="head">Implemention</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="processing.html">English</a></td>
+<td>doc = English()</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/en/__init__.py">spacy/en/__init__.py</a></td>
+</tr>
+<tr class="row-odd"><td colspan="3">Data objects</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="using/doc.html">Doc</a></td>
+<td>doc = nlp(text)</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/tokens.pyx">spacy/doc.pyx</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="using/token.html">Token</a></td>
+<td>token = doc[10]</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/tokens.pyx">spacy/token.pyx</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="using/span.html">Span</a></td>
+<td>sent = doc.sents.next()</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/spans.pyx">spacy/span.pyx</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="lookup.html">Lexeme</a></td>
+<td>lex = nlp.vocab[u&#8217;word&#8217;]</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/lexeme.pyx">spacy/lexeme.pyx</a></td>
+</tr>
+<tr class="row-even"><td colspan="3">Lookup tables</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="lookup.html">Vocab</a></td>
+<td>nlp.vocab</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/vocab.pyx">spacy/vocab.pyx</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="lookup.html">StringStore</a></td>
+<td>nlp.vocab.strings</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/strings.pyx">spacy/strings.pyx</a></td>
+</tr>
+<tr class="row-odd"><td colspan="3">Processing modules</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="processing.html">Tokenizer</a></td>
+<td>nlp.tokenizer</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/tokenizer.pyx">spacy/tokenizer.pyx</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="processing.html">EnPosTagger</a></td>
+<td>nlp.tagger</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/en/pos.pyx">spacy/en/pos.pyx</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="processing.html">Parser</a></td>
+<td>nlp.parser</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/syntax/parser.pyx">spacy/syntax/parser.pyx</a></td>
+</tr>
+<tr class="row-odd"><td colspan="3">Parser internals</td>
+</tr>
+<tr class="row-even"><td>ArcEager</td>
+<td>&nbsp;</td>
+<td>spacy/syntax/arc_eager.pyx</td>
+</tr>
+<tr class="row-odd"><td>BiluoPushDown</td>
+<td>&nbsp;</td>
+<td>spacy/syntax/ner.pyx</td>
+</tr>
+<tr class="row-even"><td>StateClass</td>
+<td>&nbsp;</td>
+<td>spacy/syntax/stateclass.pyx</td>
+</tr>
+<tr class="row-odd"><td colspan="3">Research Utilities</td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="misc.html">GoldParse</a></td>
+<td>&nbsp;</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/gold.pyx">spacy/gold.pyx</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="misc.html">Scorer</a></td>
+<td>&nbsp;</td>
+<td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/scorer.py">spacy/scorer.py</a></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processing.html">Processing Text</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processing.html#applying-a-pipeline">Applying a pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html#tokenizer">Tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html#tagger">Tagger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html#parser-and-entity-recognizer">Parser and Entity Recognizer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using/span.html">The Span Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using/token.html">The Token Object</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="loading.html" class="btn btn-neutral float-right" title="Loading Resources">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../quickstart.html" class="btn btn-neutral" title="Quick Start"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Matthew Honnibal.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.85',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>

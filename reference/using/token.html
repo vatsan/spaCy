@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Token Object &mdash; spaCy 0.85 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="spaCy 0.85 documentation" href="../../index.html"/>
+        <link rel="up" title="Documentation" href="../index.html"/>
+        <link rel="next" title="License" href="../../license.html"/>
+        <link rel="prev" title="The Span Object" href="span.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-58931649-1', 'gini.net');
+      ga('send', 'pageview');
+  </script>
+  
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        
+          <a href="../../index.html" class="fa fa-home"> spaCy</a>
+        
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#most-of-the-api-at-a-glance">(Most of the) API at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="span.html">The Span Object</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">The Token Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-88">2015-07-08 v0.88</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-87">2015-07-01 v0.87</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-86">2015-06-24 v0.86</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-85">2015-05-12 v0.85</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-84">2015-05-12 v0.84</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-80">2015-04-13 v0.80</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-70">2015-03-05 v0.70</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#spacy-v0-4-still-alpha-improving-quickly">2015-01-30 spaCy v0.4: Still alpha, improving quickly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#bug-fixes">Bug Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#enhancements-train-and-evaluate-on-whole-paragraphs">Enhancements: Train and evaluate on whole paragraphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#id1">2015-01-25</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">spaCy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Documentation</a> &raquo;</li>
+      
+    <li>The Token Object</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../../_sources/reference/using/token.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="the-token-object">
+<h1>The Token Object<a class="headerlink" href="#the-token-object" title="Permalink to this headline">¶</a></h1>
+<p>A Token represents a single word, punctuation or significant whitespace symbol.</p>
+<p>Integer IDs are provided for all string features.  The (unicode) string is
+provided by an attribute of the same name followed by an underscore, e.g.
+token.orth is an integer ID, token.orth_ is the unicode value.</p>
+<p>The only exception is the Token.string attribute, which is (unicode)
+string-typed.</p>
+<p><strong>String Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">string</span></tt></dt>
+<dd>The form of the word as it appears in the string, include trailing
+whitespace.  This is useful when you need to use linguistic features to
+add inline mark-up to the string.</dd>
+<dt><tt class="code docutils literal"><span class="pre">orth</span></tt> / <tt class="code docutils literal"><span class="pre">orth_</span></tt></dt>
+<dd>The form of the word with no string normalization or processing, as it
+appears in the string, without trailing whitespace.</dd>
+<dt><tt class="code docutils literal"><span class="pre">lemma</span></tt> / <tt class="code docutils literal"><span class="pre">lemma_</span></tt></dt>
+<dd>The &#8220;base&#8221; of the word, with no inflectional suffixes, e.g. the lemma of
+&#8220;developing&#8221; is &#8220;develop&#8221;, the lemma of &#8220;geese&#8221; is &#8220;goose&#8221;, etc.  Note that
+<em>derivational</em> suffixes are not stripped, e.g. the lemma of &#8220;instutitions&#8221;
+is &#8220;institution&#8221;, not &#8220;institute&#8221;.  Lemmatization is performed using the
+WordNet data, but extended to also cover closed-class words such as
+pronouns.  By default, the WN lemmatizer returns &#8220;hi&#8221; as the lemma of &#8220;his&#8221;.
+We assign pronouns the lemma -PRON-.</dd>
+<dt><tt class="code docutils literal"><span class="pre">lower</span></tt> / <tt class="code docutils literal"><span class="pre">lower_</span></tt></dt>
+<dd>The form of the word, but forced to lower-case, i.e. lower = word.orth_.lower()</dd>
+<dt><tt class="code docutils literal"><span class="pre">norm</span></tt> / <tt class="code docutils literal"><span class="pre">norm_</span></tt></dt>
+<dd>The form of the word, after language-specific normalizations have been
+applied.</dd>
+<dt><tt class="code docutils literal"><span class="pre">shape</span></tt> / <tt class="code docutils literal"><span class="pre">shape_</span></tt></dt>
+<dd>A transform of the word&#8217;s string, to show orthographic features.  The
+characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.
+After these mappings, sequences of 4 or more of the same character are
+truncated to length 4.  Examples: C3Po &#8211;&gt; XdXx, favorite &#8211;&gt; xxxx,
+:) &#8211;&gt; :)</dd>
+<dt><tt class="code docutils literal"><span class="pre">prefix</span></tt> / <tt class="code docutils literal"><span class="pre">prefix_</span></tt></dt>
+<dd>A length-N substring from the start of the word.  Length may vary by
+language; currently for English n=1, i.e. prefix = word.orth_[:1]</dd>
+<dt><tt class="code docutils literal"><span class="pre">suffix</span></tt> / <tt class="code docutils literal"><span class="pre">suffix_</span></tt></dt>
+<dd>A length-N substring from the end of the word.  Length may vary by
+language; currently for English n=3, i.e. suffix = word.orth_[-3:]</dd>
+</dl>
+<p><strong>Distributional Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">prob</span></tt></dt>
+<dd>The unigram log-probability of the word, estimated from counts from a
+large corpus, smoothed using Simple Good Turing estimation.</dd>
+<dt><tt class="code docutils literal"><span class="pre">cluster</span></tt></dt>
+<dd>The Brown cluster ID of the word.  These are often useful features for
+linear models.  If you&#8217;re using a non-linear model, particularly
+a neural net or random forest, consider using the real-valued word
+representation vector, in Token.repvec, instead.</dd>
+<dt><tt class="code docutils literal"><span class="pre">repvec</span></tt></dt>
+<dd>A &#8220;word embedding&#8221; representation: a dense real-valued vector that supports
+similarity queries between words.  By default, spaCy currently loads
+vectors produced by the Levy and Goldberg (2014) dependency-based word2vec
+model.</dd>
+</dl>
+<p><strong>Syntactic Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">tag</span></tt></dt>
+<dd>A morphosyntactic tag, e.g. NN, VBZ, DT, etc.  These tags are
+language/corpus specific, and typically describe part-of-speech and some
+amount of morphological information.  For instance, in the Penn Treebank
+tag set, VBZ is assigned to a present-tense singular verb.</dd>
+<dt><tt class="code docutils literal"><span class="pre">pos</span></tt></dt>
+<dd>A part-of-speech tag, from the Google Universal Tag Set, e.g. NOUN, VERB,
+ADV.  Constants for the 17 tag values are provided in spacy.parts_of_speech.</dd>
+<dt><tt class="code docutils literal"><span class="pre">dep</span></tt></dt>
+<dd>The type of syntactic dependency relation between the word and its
+syntactic head.</dd>
+<dt><tt class="code docutils literal"><span class="pre">n_lefts</span></tt></dt>
+<dd>The number of immediate syntactic children preceding the word in the
+string.</dd>
+<dt><tt class="code docutils literal"><span class="pre">n_rights</span></tt></dt>
+<dd>The number of immediate syntactic children following the word in the
+string.</dd>
+</dl>
+<p><strong>Navigating the Dependency Tree</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">head</span></tt></dt>
+<dd>The Token that is the immediate syntactic head of the word.  If the word is
+the root of the dependency tree, the same word is returned.</dd>
+<dt><tt class="code docutils literal"><span class="pre">lefts</span></tt></dt>
+<dd>An iterator for the immediate leftward syntactic children of the word.</dd>
+<dt><tt class="code docutils literal"><span class="pre">rights</span></tt></dt>
+<dd>An iterator for the immediate rightward syntactic children of the word.</dd>
+<dt><tt class="code docutils literal"><span class="pre">children</span></tt></dt>
+<dd>An iterator that yields from lefts, and then yields from rights.</dd>
+<dt><tt class="code docutils literal"><span class="pre">subtree</span></tt></dt>
+<dd>An iterator for the part of the sentence syntactically governed by the
+word, including the word itself.</dd>
+</dl>
+<p><strong>Named Entities</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">ent_type</span></tt></dt>
+<dd>If the token is part of an entity, its entity type</dd>
+<dt><tt class="code docutils literal"><span class="pre">ent_iob</span></tt></dt>
+<dd>The IOB (inside, outside, begin) entity recognition tag for the token</dd>
+</dl>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../license.html" class="btn btn-neutral float-right" title="License">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="span.html" class="btn btn-neutral" title="The Span Object"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, Matthew Honnibal.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.85',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>
