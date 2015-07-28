@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; spaCy 0.85 documentation</title>
+  <title>Serialization &mdash; spaCy 0.85 documentation</title>
   
 
   
@@ -78,13 +78,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../reference/loading.html">Loading Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/processing.html">Processing Text</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/using/document.html">The Doc Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/using/span.html">The Span Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/using/token.html">The Token Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/using/lexeme.html">The Lexeme Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/token.html">The Token Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/lexeme.html">The Lexeme Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
@@ -131,8 +131,10 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Overview: module code</li>
+    <li>Serialization</li>
       <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/reference/serialization.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -140,12 +142,58 @@
 </div>
           <div role="main" class="document">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="spacy.html">spacy</a></li>
-<ul><li><a href="spacy/en/pos.html">spacy.en.pos</a></li>
-<li><a href="spacy/syntax/parser.html">spacy.syntax.parser</a></li>
-<li><a href="spacy/tokenizer.html">spacy.tokenizer</a></li>
-</ul></ul>
+  <div class="section" id="serialization">
+<h1>Serialization<a class="headerlink" href="#serialization" title="Permalink to this headline">¶</a></h1>
+<p>spaCy features efficient and lossless binary serialization.  After processing
+some text, you can save the Doc object as a byte string:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">moby_dick</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">byte_string</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">as_bytes</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">byte_string</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/moby_dick.bin&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">byte_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can then load it back, losslessly:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">en</span><span class="o">.</span><span class="n">English</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">byte_string</span> <span class="ow">in</span> <span class="n">Doc</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/moby_dick.bin&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)):</span>
+<span class="gp">... </span>    <span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">doc</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">byte_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The binary representation is very compact: the text, tokenization, part-of-speech
+tags, dependency parse and named entity annotations together require only TODO
+bits per word on average &#8212; less than plain text.</p>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p># Write a document to disk
+with open(your_file, &#8216;wb&#8217;) as <a href="#id1"><span class="problematic" id="id2">file_</span></a>:</p>
+<blockquote>
+<div>byte_string = doc.to_bytes()
+<a href="#id3"><span class="problematic" id="id4">file_</span></a>.write(byte_string)</div></blockquote>
+<p># Iterate from a file
+with open(your_file, &#8216;rb&#8217;) as <a href="#id5"><span class="problematic" id="id6">file_</span></a>:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>for doc in Doc.from_bytes(vocab, <a href="#id7"><span class="problematic" id="id8">file_</span></a>):</dt>
+<dd>...</dd>
+</dl>
+</div></blockquote>
+<p># Get list from a file
+docs = list(Doc.from_bytes(vocab, open(your_loc, &#8216;rb&#8217;)))</p>
+<p># Get single document from a string
+from stringio import StringIO</p>
+<p>doc = Doc.from_bytes(vocab, StringIO(byte_string)).next()</p>
+</div></blockquote>
+</div>
+<div class="section" id="performance-notes">
+<h2>Performance Notes<a class="headerlink" href="#performance-notes" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="algorithmic-overview">
+<h2>Algorithmic Overview<a class="headerlink" href="#algorithmic-overview" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
 
           </div>
           <footer>

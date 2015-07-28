@@ -1,0 +1,65 @@
+=============
+Serialization
+=============
+
+spaCy features efficient and lossless binary serialization.  After processing
+some text, you can save the Doc object as a byte string:
+
+    >>> nlp = spacy.en.English()
+    >>> doc = nlp(moby_dick)
+    >>> byte_string = doc.as_bytes()
+    >>> type(byte_string)
+    >>> open('/tmp/moby_dick.bin', 'wb').write(byte_string)
+
+You can then load it back, losslessly:
+
+    >>> nlp = spacy.en.English()
+    >>> for byte_string in Doc.read(open('/tmp/moby_dick.bin', 'rb')):
+    ...     doc = Doc(nlp.vocab)
+    ...     doc.from_bytes(byte_string)
+
+The binary representation is very compact: the text, tokenization, part-of-speech
+tags, dependency parse and named entity annotations together require only TODO
+bits per word on average --- less than plain text.
+
+
+
+
+
+Examples
+---------
+
+    # Write a document to disk
+    with open(your_file, 'wb') as file_:
+        byte_string = doc.to_bytes()
+        file_.write(byte_string)
+
+    # Iterate from a file
+    with open(your_file, 'rb') as file_:
+        for doc in Doc.from_bytes(vocab, file_):
+            ...
+        
+    # Get list from a file
+    docs = list(Doc.from_bytes(vocab, open(your_loc, 'rb')))
+
+    # Get single document from a string
+    from stringio import StringIO
+
+    doc = Doc.from_bytes(vocab, StringIO(byte_string)).next()
+
+
+Performance Notes
+-----------------
+
+
+Algorithmic Overview
+--------------------
+
+
+
+
+
+
+
+
+

@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>The Span Object &mdash; spaCy 0.85 documentation</title>
+  <title>The Lexeme Object &mdash; spaCy 0.85 documentation</title>
   
 
   
@@ -30,8 +30,8 @@
   
     <link rel="top" title="spaCy 0.85 documentation" href="../../index.html"/>
         <link rel="up" title="Documentation" href="../index.html"/>
-        <link rel="next" title="The Token Object" href="token.html"/>
-        <link rel="prev" title="The Doc Object" href="document.html"/> 
+        <link rel="next" title="License" href="../../license.html"/>
+        <link rel="prev" title="The Token Object" href="token.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -85,9 +85,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../loading.html">Loading Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../processing.html">Processing Text</a></li>
 <li class="toctree-l2"><a class="reference internal" href="document.html">The Doc Object</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="token.html">The Token Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lexeme.html">The Lexeme Object</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">The Lexeme Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
@@ -136,10 +136,10 @@
       
           <li><a href="../index.html">Documentation</a> &raquo;</li>
       
-    <li>The Span Object</li>
+    <li>The Lexeme Object</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../../_sources/reference/using/span.txt" rel="nofollow"> View page source</a>
+          <a href="../../_sources/reference/using/lexeme.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -147,27 +147,92 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="the-span-object">
-<h1>The Span Object<a class="headerlink" href="#the-span-object" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="the-lexeme-object">
+<h1>The Lexeme Object<a class="headerlink" href="#the-lexeme-object" title="Permalink to this headline">¶</a></h1>
+<p>The Lexeme object represents a lexical <em>type</em>, stored in the vocabulary &#8212;
+as opposed to a <em>token</em>, occurring in a document.</p>
+<p>Lexemes store various features, so that these features can be computed once per
+type, rather than once per token.  As job sizes grow, this can amount to a substantial
+efficiency improvement.</p>
+<p>All Lexeme attributes are therefore context independent, as a single lexeme
+is reused for all usages of that word. Lexemes are keyed by the &#8220;orth&#8221;
+attribute.</p>
+<p>All Lexeme attributes are accessible directly on the Token object.</p>
+<p><strong>String Features</strong></p>
 <dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">__getitem__</span></tt>, <tt class="code docutils literal"><span class="pre">__iter__</span></tt>, <tt class="code docutils literal"><span class="pre">__len__</span></tt></dt>
-<dd>Sequence API</dd>
-<dt><tt class="code docutils literal"><span class="pre">head</span></tt></dt>
-<dd>Syntactic head, or None</dd>
-<dt><tt class="code docutils literal"><span class="pre">left</span></tt></dt>
-<dd>Tokens to the left of the span</dd>
-<dt><tt class="code docutils literal"><span class="pre">rights</span></tt></dt>
-<dd>Tokens to the left of the span</dd>
 <dt><tt class="code docutils literal"><span class="pre">orth</span></tt> / <tt class="code docutils literal"><span class="pre">orth_</span></tt></dt>
-<dd>Orth string</dd>
+<dd>The form of the word with no string normalization or processing, as it
+appears in the string, without trailing whitespace.</dd>
 <dt><tt class="code docutils literal"><span class="pre">lemma</span></tt> / <tt class="code docutils literal"><span class="pre">lemma_</span></tt></dt>
-<dd>Lemma string</dd>
+<dd>The &#8220;base&#8221; of the word, with no inflectional suffixes, e.g. the lemma of
+&#8220;developing&#8221; is &#8220;develop&#8221;, the lemma of &#8220;geese&#8221; is &#8220;goose&#8221;, etc.  Note that
+<em>derivational</em> suffixes are not stripped, e.g. the lemma of &#8220;instutitions&#8221;
+is &#8220;institution&#8221;, not &#8220;institute&#8221;.  Lemmatization is performed using the
+WordNet data, but extended to also cover closed-class words such as
+pronouns.  By default, the WN lemmatizer returns &#8220;hi&#8221; as the lemma of &#8220;his&#8221;.
+We assign pronouns the lemma -PRON-.</dd>
+<dt><tt class="code docutils literal"><span class="pre">lower</span></tt> / <tt class="code docutils literal"><span class="pre">lower_</span></tt></dt>
+<dd>The form of the word, but forced to lower-case, i.e. lower = word.orth_.lower()</dd>
+<dt><tt class="code docutils literal"><span class="pre">norm</span></tt> / <tt class="code docutils literal"><span class="pre">norm_</span></tt></dt>
+<dd>The form of the word, after language-specific normalizations have been
+applied.</dd>
+<dt><tt class="code docutils literal"><span class="pre">shape</span></tt> / <tt class="code docutils literal"><span class="pre">shape_</span></tt></dt>
+<dd>A transform of the word&#8217;s string, to show orthographic features.  The
+characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.
+After these mappings, sequences of 4 or more of the same character are
+truncated to length 4.  Examples: C3Po &#8211;&gt; XdXx, favorite &#8211;&gt; xxxx,
+:) &#8211;&gt; :)</dd>
+<dt><tt class="code docutils literal"><span class="pre">prefix</span></tt> / <tt class="code docutils literal"><span class="pre">prefix_</span></tt></dt>
+<dd>A length-N substring from the start of the word.  Length may vary by
+language; currently for English n=1, i.e. prefix = word.orth_[:1]</dd>
+<dt><tt class="code docutils literal"><span class="pre">suffix</span></tt> / <tt class="code docutils literal"><span class="pre">suffix_</span></tt></dt>
+<dd>A length-N substring from the end of the word.  Length may vary by
+language; currently for English n=3, i.e. suffix = word.orth_[-3:]</dd>
 <dt><tt class="code docutils literal"><span class="pre">string</span></tt></dt>
-<dd>String</dd>
-<dt><tt class="code docutils literal"><span class="pre">label</span></tt> / <tt class="code docutils literal"><span class="pre">label_</span></tt></dt>
-<dd>Label</dd>
-<dt><tt class="code docutils literal"><span class="pre">subtree</span></tt></dt>
-<dd>Lefts + [self] + Rights</dd>
+<dd>The form of the word as it appears in the string, <strong>including trailing
+whitespace</strong>.  This is useful when you need to use linguistic features to
+add inline mark-up to the string.</dd>
+</dl>
+<p><strong>Boolean Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">is_oov</span></tt></dt>
+<dd>Is the word out-of-vocabulary?</dd>
+<dt><tt class="code docutils literal"><span class="pre">is_alpha</span></tt></dt>
+<dd>Equivalent to <cite>word.orth_.isalpha()</cite></dd>
+<dt><tt class="code docutils literal"><span class="pre">is_ascii</span></tt></dt>
+<dd>Equivalent to <cite>any(ord(c) &gt;= 128 for c in word.orth_)</cite></dd>
+<dt><tt class="code docutils literal"><span class="pre">is_digit</span></tt></dt>
+<dd>Equivalent to <cite>word.orth_.isdigit()</cite></dd>
+<dt><tt class="code docutils literal"><span class="pre">is_lower</span></tt></dt>
+<dd>Equivalent to <cite>word.orth_.islower()</cite></dd>
+<dt><tt class="code docutils literal"><span class="pre">is_title</span></tt></dt>
+<dd>Equivalent to <cite>word.orth_.istitle()</cite></dd>
+<dt><tt class="code docutils literal"><span class="pre">is_punct</span></tt></dt>
+<dd>Equivalent to <cite>word.orth_.ispunct()</cite></dd>
+<dt><tt class="code docutils literal"><span class="pre">is_space</span></tt></dt>
+<dd>Equivalent to <cite>word.orth_.isspace()</cite></dd>
+<dt><tt class="code docutils literal"><span class="pre">like_url</span></tt></dt>
+<dd>Does the word resembles a URL?</dd>
+<dt><tt class="code docutils literal"><span class="pre">like_num</span></tt></dt>
+<dd>Does the word represent a number? e.g. &#8220;10.9&#8221;, &#8220;10&#8221;, &#8220;ten&#8221;, etc</dd>
+<dt><tt class="code docutils literal"><span class="pre">like_email</span></tt></dt>
+<dd>Does the word resemble an email?</dd>
+</dl>
+<p><strong>Distributional Features</strong></p>
+<dl class="docutils">
+<dt><tt class="code docutils literal"><span class="pre">prob</span></tt></dt>
+<dd>The unigram log-probability of the word, estimated from counts from a
+large corpus, smoothed using Simple Good Turing estimation.</dd>
+<dt><tt class="code docutils literal"><span class="pre">cluster</span></tt></dt>
+<dd>The Brown cluster ID of the word.  These are often useful features for
+linear models.  If you&#8217;re using a non-linear model, particularly
+a neural net or random forest, consider using the real-valued word
+representation vector, in Token.repvec, instead.</dd>
+<dt><tt class="code docutils literal"><span class="pre">repvec</span></tt></dt>
+<dd>A &#8220;word embedding&#8221; representation: a dense real-valued vector that supports
+similarity queries between words.  By default, spaCy currently loads
+vectors produced by the Levy and Goldberg (2014) dependency-based word2vec
+model.</dd>
 </dl>
 </div>
 
@@ -177,10 +242,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="token.html" class="btn btn-neutral float-right" title="The Token Object">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../license.html" class="btn btn-neutral float-right" title="License">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="document.html" class="btn btn-neutral" title="The Doc Object"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="token.html" class="btn btn-neutral" title="The Token Object"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
