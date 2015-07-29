@@ -58,7 +58,36 @@ The Doc Object
   Merge a multi-word expression into a single token.  Currently
   experimental; API is likely to change.
 
+:code:`to_bytes()`
+  Get a byte-string representation of the document, i.e. serialize.
 
+:code:`from_bytes(self, byte_string)`
+  Load data from a byte-string, i.e. deserialize
+
+:code:`Doc.read_bytes`
+  A staticmethod, used to read bytes from a file.
+
+
+Example of serialization:
+
+::
+
+    doc1 = EN(u'This is a simple test. With a couple of sentences.')
+    doc2 = EN(u'This is another test document.')
+
+    with open('/tmp/spacy_docs.bin', 'wb') as file_:
+        file_.write(doc1.to_bytes())
+        file_.write(doc2.to_bytes())
+
+    with open('/tmp/spacy_docs.bin', 'rb') as file_:
+        bytes1, bytes2 = Doc.read_bytes(file_)
+        r1 = Doc(EN.vocab).from_bytes(bytes1)
+        r2 = Doc(EN.vocab).from_bytes(bytes2)
+
+    assert r1.string == doc1.string
+    assert r2.string == doc2.string
+
+    
 Internals
   A Tokens instance stores the annotations in a C-array of `TokenC` structs.
   Each TokenC struct holds a const pointer to a LexemeC struct, which describes

@@ -154,30 +154,70 @@ $ python -m spacy.en.download all
 <div class="section" id="v0-89">
 <h2>2015-07-28 v0.89<a class="headerlink" href="#v0-89" title="Permalink to this headline">¶</a></h2>
 <p>Major update!</p>
-<ul class="simple">
-<li>Support efficient binary serialization.  The dependency tree,
+<ul>
+<li><p class="first">Support efficient binary serialization.  The dependency tree,
 part-of-speech tags, named entities, tokenization and text can be dumped to a
 byte string smaller than the original text representation.  Serialization is
-lossless, so there&#8217;s no need to separately store the original text.</li>
-<li>Fix probability estimates, and base them off counts from the 2015 Reddit Comments
+lossless, so there&#8217;s no need to separately store the original text.</p>
+<p>Serialize:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">byte_string</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Deserialize by first creating a Doc object, and then loading the bytes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span>
+<span class="n">doc</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">byte_string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have a binary file with several parses saved, you can iterate over
+them using the staticmethod <cite>Doc.read_bytes</cite>. Putting it all together:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">codecs</span>
+
+<span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
+
+<span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">texts</span><span class="p">,</span> <span class="n">out_loc</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_loc</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">:</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">out_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">nlp</span><span class="p">,</span> <span class="n">file_loc</span><span class="p">):</span>
+    <span class="n">docs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_loc</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">byte_string</span> <span class="ow">in</span> <span class="n">Doc</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="n">read_file</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)):</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">byte_string</span><span class="p">)</span>
+            <span class="n">docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">docs</span>
+</pre></div>
+</div>
+<p>Full tutorial coming soon.</p>
+</li>
+<li><p class="first">Fix probability estimates, and base them off counts from the 2015 Reddit Comments
 dump.  The probability estimates are now very reliable, and out-of-vocabulary
-words now receive an accurate smoothed probability estimate.</li>
-<li>Fix regression in parse times on very long texts. Recent versions were
-calculating parse features in a way that was polynomial in input length.</li>
-<li>Allow slicing into the Doc object, so that you can do e.g. doc[2:4]. Returns
-a Span object.</li>
-<li>Add tag SP (coarse tag SPACE) for whitespace tokens.  Fix bug where
-whitespace was sometimes marked as an entity.</li>
-<li>Reduce memory usage. Memory usage now under 2GB per process.</li>
-<li>Rename <tt class="code docutils literal"><span class="pre">Span.head</span></tt> to <tt class="code docutils literal"><span class="pre">Span.root</span></tt>, fix its documentation, and make
+words now receive an accurate smoothed probability estimate.</p>
+</li>
+<li><p class="first">Fix regression in parse times on very long texts. Recent versions were
+calculating parse features in a way that was polynomial in input length.</p>
+</li>
+<li><p class="first">Allow slicing into the Doc object, so that you can do e.g. doc[2:4]. Returns
+a Span object.</p>
+</li>
+<li><p class="first">Add tag SP (coarse tag SPACE) for whitespace tokens.  Fix bug where
+whitespace was sometimes marked as an entity.</p>
+</li>
+<li><p class="first">Reduce memory usage. Memory usage now under 2GB per process.</p>
+</li>
+<li><p class="first">Rename <tt class="code docutils literal"><span class="pre">Span.head</span></tt> to <tt class="code docutils literal"><span class="pre">Span.root</span></tt>, fix its documentation, and make
 it more efficient.  I considered adding Span.head, Span.dep and Span.dep_ as
 well, but for now I leave these as accessible via <tt class="code docutils literal"><span class="pre">Span.root.head</span></tt>,
-<tt class="code docutils literal"><span class="pre">Span.head.dep</span></tt>, and <tt class="code docutils literal"><span class="pre">Span.head.dep\_</span></tt>, to keep the API smaller.</li>
-<li>Add boolean features to Token and Lexeme objects.</li>
-<li>Main parse function now marked <strong>nogil</strong>. This
+<tt class="code docutils literal"><span class="pre">Span.head.dep</span></tt>, and <tt class="code docutils literal"><span class="pre">Span.head.dep\_</span></tt>, to keep the API smaller.</p>
+</li>
+<li><p class="first">Add boolean features to Token and Lexeme objects.</p>
+</li>
+<li><p class="first">Main parse function now marked <strong>nogil</strong>. This
 means I&#8217;ll be able to add a Worker class that allows multi-threaded
 processing.  This will be available in the next version.  In the meantime,
-you should continue to use multiprocessing for parallelization.</li>
+you should continue to use multiprocessing for parallelization.</p>
+</li>
 </ul>
 </div>
 <div class="section" id="v0-88">

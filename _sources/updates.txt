@@ -20,6 +20,46 @@ Major update!
   byte string smaller than the original text representation.  Serialization is
   lossless, so there's no need to separately store the original text.
 
+  Serialize:
+    
+  .. code-block:: python
+
+      byte_string = doc.to_bytes()
+
+  Deserialize by first creating a Doc object, and then loading the bytes:
+  
+  .. code-block:: python
+      
+      doc = Doc(nlp.vocab)
+      doc.from_bytes(byte_string)
+
+  If you have a binary file with several parses saved, you can iterate over
+  them using the staticmethod `Doc.read_bytes`. Putting it all together:
+
+  .. code-block:: python
+
+      import codecs
+
+      from spacy.en import English
+
+      def serialize(nlp, texts, out_loc):
+          with open(out_loc, 'wb') as out_file:
+              for text in texts:
+                  doc = nlp(text)
+                  out_file.write(doc.to_bytes())
+
+      def deserialize(nlp, file_loc):
+          docs = []
+          with open(file_loc, 'rb') as read_file:
+              for byte_string in Doc.read_bytes(read_file, 'rb')):
+                  doc = Doc(nlp.vocab).from_bytes(byte_string)
+                  docs.append(doc)
+          return docs
+
+
+  Full tutorial coming soon.
+
+
 * Fix probability estimates, and base them off counts from the 2015 Reddit Comments
   dump.  The probability estimates are now very reliable, and out-of-vocabulary
   words now receive an accurate smoothed probability estimate.

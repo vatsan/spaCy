@@ -203,6 +203,31 @@ by the values of the given attribute ID.</p>
 <dt><tt class="code docutils literal"><span class="pre">merge</span></tt></dt>
 <dd>Merge a multi-word expression into a single token.  Currently
 experimental; API is likely to change.</dd>
+<dt><tt class="code docutils literal"><span class="pre">to_bytes()</span></tt></dt>
+<dd>Get a byte-string representation of the document, i.e. serialize.</dd>
+<dt><tt class="code docutils literal"><span class="pre">from_bytes(self,</span> <span class="pre">byte_string)</span></tt></dt>
+<dd>Load data from a byte-string, i.e. deserialize</dd>
+<dt><tt class="code docutils literal"><span class="pre">Doc.read_bytes</span></tt></dt>
+<dd>A staticmethod, used to read bytes from a file.</dd>
+</dl>
+<p>Example of serialization:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">doc1</span> <span class="o">=</span> <span class="n">EN</span><span class="p">(</span><span class="s">u&#39;This is a simple test. With a couple of sentences.&#39;</span><span class="p">)</span>
+<span class="n">doc2</span> <span class="o">=</span> <span class="n">EN</span><span class="p">(</span><span class="s">u&#39;This is another test document.&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/spacy_docs.bin&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+    <span class="n">file_</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">doc1</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+    <span class="n">file_</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">doc2</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/spacy_docs.bin&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+    <span class="n">bytes1</span><span class="p">,</span> <span class="n">bytes2</span> <span class="o">=</span> <span class="n">Doc</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="n">file_</span><span class="p">)</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">bytes1</span><span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">bytes2</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">r1</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">doc1</span><span class="o">.</span><span class="n">string</span>
+<span class="k">assert</span> <span class="n">r2</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">doc2</span><span class="o">.</span><span class="n">string</span>
+</pre></div>
+</div>
+<dl class="docutils">
 <dt>Internals</dt>
 <dd><p class="first">A Tokens instance stores the annotations in a C-array of <cite>TokenC</cite> structs.
 Each TokenC struct holds a const pointer to a LexemeC struct, which describes
