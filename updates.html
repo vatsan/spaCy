@@ -72,12 +72,6 @@
           
           
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">spaCy: Industrial-strength NLP</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="index.html#example-functionality">Example functionality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#independent-evaluation">Independent Evaluation</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html#detailed-speed-comparison">Detailed Speed Comparison</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#usage">Usage</a></li>
@@ -85,11 +79,13 @@
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="howworks.html">How spaCy Works</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#tokenizer-and-lexicon">Tokenizer and Lexicon</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#part-of-speech-tagger">Part-of-speech Tagger</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howworks.html#dependency-parser">Dependency Parser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/document.html">The Doc Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/span.html">The Span Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/token.html">The Token Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/using/lexeme.html">The Lexeme Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
@@ -97,6 +93,8 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-89">2015-07-28 v0.89</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-86">2015-06-24 v0.86</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v0-85">2015-05-12 v0.85</a></li>
@@ -153,6 +151,49 @@ $ python -m spacy.en.download all
 </pre></div>
 </div>
 <p>Most updates ship a new model, so you will usually have to redownload the data.</p>
+<div class="section" id="v0-89">
+<h2>2015-07-28 v0.89<a class="headerlink" href="#v0-89" title="Permalink to this headline">¶</a></h2>
+<p>Major update!</p>
+<ul class="simple">
+<li>Support efficient binary serialization.  The dependency tree,
+part-of-speech tags, named entities, tokenization and text can be dumped to a
+byte string smaller than the original text representation.  Serialization is
+lossless, so there&#8217;s no need to separately store the original text.</li>
+<li>Fix probability estimates, and base them off counts from the 2015 Reddit Comments
+dump.  The probability estimates are now very reliable, and out-of-vocabulary
+words now receive an accurate smoothed probability estimate.</li>
+<li>Fix regression in parse times on very long texts. Recent versions were
+calculating parse features in a way that was polynomial in input length.</li>
+<li>Add tag SP (coarse tag SPACE) for whitespace tokens.  Fix bug where
+whitespace was sometimes marked as an entity.</li>
+<li>Reduce memory usage. Memory usage now under 2GB per process.</li>
+<li>Rename <tt class="code docutils literal"><span class="pre">Span.head</span></tt> to <tt class="code docutils literal"><span class="pre">Span.root</span></tt>, fix its documentation, and make
+it more efficient.  I considered adding Span.head, Span.dep and Span.dep_ as
+well, but for now I leave these as accessible via <tt class="code docutils literal"><span class="pre">Span.root.head</span></tt>,
+<tt class="code docutils literal"><span class="pre">Span.head.dep</span></tt>, and <tt class="code docutils literal"><span class="pre">Span.head.dep\_</span></tt>, to keep the API smaller.</li>
+<li>Add boolean features to Token and Lexeme objects.</li>
+<li>Main parse function now marked <strong>nogil</strong>. This
+means I&#8217;ll be able to add a Worker class that allows multi-threaded
+processing.  This will be available in the next version.  In the meantime,
+you should continue to use multiprocessing for parallelization.</li>
+</ul>
+</div>
+<div class="section" id="v0-88">
+<h2>2015-07-08 v0.88<a class="headerlink" href="#v0-88" title="Permalink to this headline">¶</a></h2>
+<p>Refactoring release.</p>
+<p>If you have the data for v0.87, you don&#8217;t need to redownload the data for this
+release.</p>
+<ul class="simple">
+<li>You can now set tag=False, parse=False or entity=False when creating the pipleine,
+to disable some of the models. See the documentation for details.</li>
+<li>Models no longer lazy-loaded.</li>
+<li>Warning emitted when parse=True or entity=True but model not loaded.</li>
+<li>Rename the tokens.Tokens class to tokens.Doc. An alias has been made to assist
+backwards compatibility, but you should update your code to refer to the new
+class name.</li>
+<li>Various bits of internal refactoring</li>
+</ul>
+</div>
 <div class="section" id="v0-87">
 <h2>2015-07-01 v0.87<a class="headerlink" href="#v0-87" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">

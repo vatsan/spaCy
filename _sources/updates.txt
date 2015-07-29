@@ -10,6 +10,59 @@ To update your installation:
 
 Most updates ship a new model, so you will usually have to redownload the data.
 
+2015-07-28 v0.89
+----------------
+
+Major update!
+
+* Support efficient binary serialization.  The dependency tree,
+  part-of-speech tags, named entities, tokenization and text can be dumped to a
+  byte string smaller than the original text representation.  Serialization is
+  lossless, so there's no need to separately store the original text.
+
+* Fix probability estimates, and base them off counts from the 2015 Reddit Comments
+  dump.  The probability estimates are now very reliable, and out-of-vocabulary
+  words now receive an accurate smoothed probability estimate.
+
+* Fix regression in parse times on very long texts. Recent versions were
+  calculating parse features in a way that was polynomial in input length. 
+
+* Add tag SP (coarse tag SPACE) for whitespace tokens.  Fix bug where
+  whitespace was sometimes marked as an entity.
+
+* Reduce memory usage. Memory usage now under 2GB per process.
+
+* Rename :code:`Span.head` to :code:`Span.root`, fix its documentation, and make
+  it more efficient.  I considered adding Span.head, Span.dep and Span.dep\_ as
+  well, but for now I leave these as accessible via :code:`Span.root.head`,
+  :code:`Span.head.dep`, and :code:`Span.head.dep\_`, to keep the API smaller.  
+
+* Add boolean features to Token and Lexeme objects.
+
+* Main parse function now marked **nogil**. This
+  means I'll be able to add a Worker class that allows multi-threaded
+  processing.  This will be available in the next version.  In the meantime,
+  you should continue to use multiprocessing for parallelization.
+
+
+2015-07-08 v0.88
+----------------
+
+Refactoring release.
+
+If you have the data for v0.87, you don't need to redownload the data for this
+release.
+
+* You can now set tag=False, parse=False or entity=False when creating the pipleine,
+  to disable some of the models. See the documentation for details.
+* Models no longer lazy-loaded.
+* Warning emitted when parse=True or entity=True but model not loaded.
+* Rename the tokens.Tokens class to tokens.Doc. An alias has been made to assist
+  backwards compatibility, but you should update your code to refer to the new
+  class name.
+* Various bits of internal refactoring
+
+
 2015-07-01 v0.87
 ----------------
 
