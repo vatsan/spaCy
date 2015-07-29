@@ -164,6 +164,8 @@ dump.  The probability estimates are now very reliable, and out-of-vocabulary
 words now receive an accurate smoothed probability estimate.</li>
 <li>Fix regression in parse times on very long texts. Recent versions were
 calculating parse features in a way that was polynomial in input length.</li>
+<li>Allow slicing into the Doc object, so that you can do e.g. doc[2:4]. Returns
+a Span object.</li>
 <li>Add tag SP (coarse tag SPACE) for whitespace tokens.  Fix bug where
 whitespace was sometimes marked as an entity.</li>
 <li>Reduce memory usage. Memory usage now under 2GB per process.</li>

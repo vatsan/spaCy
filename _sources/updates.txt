@@ -27,6 +27,9 @@ Major update!
 * Fix regression in parse times on very long texts. Recent versions were
   calculating parse features in a way that was polynomial in input length. 
 
+* Allow slicing into the Doc object, so that you can do e.g. doc[2:4]. Returns
+  a Span object.
+
 * Add tag SP (coarse tag SPACE) for whitespace tokens.  Fix bug where
   whitespace was sometimes marked as an entity.
 
