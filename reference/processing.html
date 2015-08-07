@@ -94,6 +94,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -151,24 +152,59 @@
 and you will almost always apply the pipeline all at once.</p>
 <div class="section" id="applying-a-pipeline">
 <h2>Applying a pipeline<a class="headerlink" href="#applying-a-pipeline" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="spacy.en.English">
+<em class="property">class </em><tt class="descclassname">spacy.en.</tt><tt class="descname">English</tt><a class="headerlink" href="#spacy.en.English" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="spacy.en.English.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>data_dir=...</em>, <em>Tokenizer=...</em>, <em>Tagger=...</em>, <em>Parser=...</em>, <em>Entity=...</em>, <em>Matcher=...</em>, <em>Packer=None</em>, <em>load_vectors=True</em><big>)</big><a class="headerlink" href="#spacy.en.English.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_dir</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; The data directory.  May be None, to disable any data loading (including
+the vocabulary).</li>
+<li><strong>Tokenizer</strong> &#8211; A class/function that creates the tokenizer.</li>
+<li><strong>Tagger</strong> &#8211; A class/function that creates the part-of-speech tagger.</li>
+<li><strong>Parser</strong> &#8211; A class/function that creates the dependency parser.</li>
+<li><strong>Entity</strong> &#8211; A class/function that creates the named entity recogniser.</li>
+<li><strong>load_vectors</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; A boolean value to control whether the word vectors are loaded.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt>
-<tt class="descname">English.__call__(text, tag=True, parse=True, entity=True) --&gt; Doc</tt></dt>
-<dd></dd></dl>
-
-<dl class="docutils">
-<dt>text (unicode)</dt>
-<dd>The text to be processed.  No pre-processing needs to be applied, and any
+<tt class="descname">__call__(text, tag=True, parse=True, entity=True) --&gt; Doc</tt></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; The text to be processed.  No pre-processing needs to be applied, and any
 length of text can be submitted.  Usually you will submit a whole document.
-Text may be zero-length. An exception is raised if byte strings are supplied.</dd>
-<dt>tag (bool)</dt>
-<dd>Whether to apply the part-of-speech tagger. Required for parsing and entity recognition.</dd>
-<dt>parse (bool)</dt>
-<dd>Whether to apply the syntactic dependency parser.</dd>
-<dt>entity (bool)</dt>
-<dd>Whether to apply the named entity recognizer.</dd>
-</dl>
-<p><strong>Examples</strong></p>
+Text may be zero-length. An exception is raised if byte strings are supplied.</li>
+<li><strong>tag</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Whether to apply the part-of-speech tagger. Required for parsing and entity
+recognition.</li>
+<li><strong>parse</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Whether to apply the syntactic dependency parser.</li>
+<li><strong>entity</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; Whether to apply the named entity recognizer.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A document</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="xref py py-class docutils literal"><span class="pre">spacy.tokens.Doc</span></tt></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Some text.) # Applies tagger, parser, entity</span>
@@ -184,93 +220,26 @@ Text may be zero-length. An exception is raised if byte strings are supplied.</d
 <span class="gr">TypeError</span>: <span class="n">Argument &#39;string&#39; has incorrect type (expected unicode, got str)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;Some text&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">))</span> <span class="c"># Encode to unicode first.</span>
 <span class="go">&gt;&gt;&gt;</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">&quot;spacy/en/__init__.py&quot;</span>, line <span class="m">128</span>, in <span class="n">__call__</span>
+<span class="gr">  tokens = self.tokenizer(text)</span>
+<span class="gr">TypeError</span>: <span class="n">Argument &#39;string&#39; has incorrect type (expected unicode, got str)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="tokenizer">
 <h2>Tokenizer<a class="headerlink" href="#tokenizer" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="spacy.tokenizer.Tokenizer">
-<em class="property">class </em><tt class="descclassname">spacy.tokenizer.</tt><tt class="descname">Tokenizer</tt><a class="headerlink" href="#spacy.tokenizer.Tokenizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tokenizer(Vocab vocab, rules, prefix_re, suffix_re, infix_re)</p>
-<dl class="attribute">
-<dt id="spacy.tokenizer.Tokenizer.__call__">
-<tt class="descname">__call__</tt><a class="headerlink" href="#spacy.tokenizer.Tokenizer.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Tokenize a string.</p>
-<p>The tokenization rules are defined in three places:</p>
-<ul class="simple">
-<li>The data/&lt;lang&gt;/tokenization table, which handles special cases like contractions;</li>
-<li>The data/&lt;lang&gt;/prefix file, used to build a regex to split off prefixes;</li>
-<li>The data/&lt;lang&gt;/suffix file, used to build a regex to split off suffixes.</li>
-</ul>
-<p>The string is first split on whitespace.  To tokenize a whitespace-delimited
-chunk, we first try to look it up in the special-cases. If it&#8217;s not found,
-we split off a prefix, and then try again. If it&#8217;s still not found, we
-split off a suffix, and repeat.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; The string to be tokenized.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>tokens</strong> &#8211;
-A Doc object, giving access to a sequence of LexemeCs.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Doc</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="spacy.tokenizer.Tokenizer.from_dir">
-<em class="property">static </em><tt class="descname">from_dir</tt><big>(</big><em>type cls</em>, <em>Vocab vocab</em>, <em>data_dir</em><big>)</big><a class="headerlink" href="#spacy.tokenizer.Tokenizer.from_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="spacy.tokenizer.Tokenizer.tokens_from_list">
-<tt class="descname">tokens_from_list</tt><big>(</big><em>self</em>, <em>list strings</em><big>)</big> &rarr; Doc<a class="headerlink" href="#spacy.tokenizer.Tokenizer.tokens_from_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="section" id="tagger">
 <h2>Tagger<a class="headerlink" href="#tagger" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="spacy.en.pos.EnPosTagger">
-<em class="property">class </em><tt class="descclassname">spacy.en.pos.</tt><tt class="descname">EnPosTagger</tt><a class="headerlink" href="#spacy.en.pos.EnPosTagger" title="Permalink to this definition">¶</a></dt>
-<dd><p>A part-of-speech tagger for English</p>
-<dl class="attribute">
-<dt id="spacy.en.pos.EnPosTagger.__call__">
-<tt class="descname">__call__</tt><a class="headerlink" href="#spacy.en.pos.EnPosTagger.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply the tagger, setting the POS tags onto the Doc object.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tokens</strong> (<em>Doc</em>) &#8211; The tokens to be tagged.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="section" id="parser-and-entity-recognizer">
 <h2>Parser and Entity Recognizer<a class="headerlink" href="#parser-and-entity-recognizer" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="spacy.syntax.parser.Parser">
-<em class="property">class </em><tt class="descclassname">spacy.syntax.parser.</tt><tt class="descname">Parser</tt><a class="headerlink" href="#spacy.syntax.parser.Parser" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
-<dt id="spacy.syntax.parser.Parser.__call__">
-<tt class="descname">__call__</tt><a class="headerlink" href="#spacy.syntax.parser.Parser.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>x.__call__(...) &lt;==&gt; x(...)</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 </div>
 
