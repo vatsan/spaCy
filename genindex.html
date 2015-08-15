@@ -80,12 +80,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reference/loading.html">Loading Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/processing.html">spacy.en.English</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/using/document.html">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/using/span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/using/token.html">The Token Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/using/lexeme.html">The Lexeme Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/lookup.html">Lexical Lookup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
@@ -93,7 +93,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html">Updates</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-89">2015-07-28 v0.89</a></li>
+<li class="toctree-l2"><a class="reference internal" href="updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -146,8 +146,15 @@
 
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -159,16 +166,136 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="reference/processing.html#spacy.en.pos.EnPosTagger.__call__">__call__ (spacy.en.pos.EnPosTagger attribute)</a>
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.__getitem__">__getitem__() (spacy.tokens.doc.Doc method)</a>, <a href="reference/using/document.html#spacy.tokens.doc.Doc.__getitem__">[1]</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="reference/processing.html#spacy.syntax.parser.Parser.__call__">(spacy.syntax.parser.Parser attribute)</a>
+  <dt><a href="reference/using/span.html#Span.__getitem__">(Span method)</a>
   </dt>
 
         
-  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.__call__">(spacy.tokenizer.Tokenizer attribute)</a>
+  <dt><a href="reference/lookup.html#strings.StringStore.__getitem__">(strings.StringStore method)</a>, <a href="reference/lookup.html#strings.StringStore.__getitem__">[1]</a>, <a href="reference/lookup.html#strings.StringStore.__getitem__">[2]</a>
+  </dt>
+
+        
+  <dt><a href="reference/lookup.html#vocab.Vocab.__getitem__">(vocab.Vocab method)</a>, <a href="reference/lookup.html#vocab.Vocab.__getitem__">[1]</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/processing.html#spacy.en.English.__init__">__init__() (spacy.en.English method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.__init__">(Token method)</a>
+  </dt>
+
+        
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.__init__">(spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.__iter__">__iter__() (spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/span.html#Span.__iter__">(Span method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.__len__">__len__() (spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/span.html#Span.__len__">(Span method)</a>
+  </dt>
+
+        
+  <dt><a href="reference/using/token.html#Token.__len__">(Token method)</a>
+  </dt>
+
+        
+  <dt><a href="reference/lookup.html#strings.StringStore.__len__">(strings.StringStore method)</a>
+  </dt>
+
+        
+  <dt><a href="reference/lookup.html#vocab.Vocab.__len__">(vocab.Vocab method)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/lookup.html#vocab.Vocab.__setitem__">__setitem__() (vocab.Vocab method)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/token.html#Token.__str__">__str__() (Token method)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/token.html#Token.__unicode__">__unicode__() (Token method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.check_flag">check_flag() (Lexeme method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.check_flag">(Token method)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/token.html#Token.children">children (Token attribute)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.cluster">cluster (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.cluster">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/token.html#Token.conjuncts">conjuncts (Token attribute)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.count_by">count_by() (spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/lookup.html#strings.StringStore.dump">dump() (strings.StringStore method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/lookup.html#vocab.Vocab.dump">(vocab.Vocab method)</a>
   </dt>
 
       </dl></dd>
@@ -179,7 +306,17 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="reference/processing.html#spacy.en.pos.EnPosTagger">EnPosTagger (class in spacy.en.pos)</a>
+  <dt><a href="reference/using/token.html#Token.ent_iob">ent_iob (Token attribute)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/token.html#Token.ent_type">ent_type (Token attribute)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.ents">ents (spacy.tokens.doc.Doc attribute)</a>
   </dt>
 
   </dl></td>
@@ -189,21 +326,221 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.find_infix">find_infix() (spacy.tokenizer.Tokenizer method)</a>
-  </dt>
-
-      
-  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.find_prefix">find_prefix() (spacy.tokenizer.Tokenizer method)</a>
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.from_array">from_array() (spacy.tokens.doc.Doc method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.find_suffix">find_suffix() (spacy.tokenizer.Tokenizer method)</a>
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.from_bytes">from_bytes() (spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/token.html#Token.head">head (Token attribute)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/token.html#Token.idx">idx (Token attribute)</a>
   </dt>
 
       
-  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.from_dir">from_dir() (spacy.tokenizer.Tokenizer static method)</a>
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_alpha">is_alpha (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_alpha">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_ascii">is_ascii (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_ascii">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_digit">is_digit (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_digit">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_lower">is_lower (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_lower">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_oov">is_oov (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_oov">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_punct">is_punct (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_punct">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_space">is_space (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_space">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.is_title">is_title (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.is_title">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/token.html#Token.left_edge">left_edge (Token attribute)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/span.html#Span.lefts">lefts (Span attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.lefts">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/token.html#Token.lex_id">lex_id (Token attribute)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme">Lexeme (built-in class)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.like_email">like_email (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.like_email">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.like_num">like_num (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.like_num">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.like_url">like_url (Lexeme attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.like_url">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/lookup.html#strings.StringStore.load">load() (strings.StringStore method)</a>
+  </dt>
+
+      
+  <dt><a href="reference/lookup.html#vocab.Vocab.load_lexemes">load_lexemes() (vocab.Vocab method)</a>
+  </dt>
+
+      
+  <dt><a href="reference/lookup.html#vocab.Vocab.load_vectors">load_vectors() (vocab.Vocab method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.merge">merge() (spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/token.html#Token.n_lefts">n_lefts (Token attribute)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/token.html#Token.n_rights">n_rights (Token attribute)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/token.html#Token.nbor">nbor() (Token method)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.noun_chunks">noun_chunks (spacy.tokens.doc.Doc attribute)</a>
   </dt>
 
   </dl></td>
@@ -213,9 +550,15 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="reference/processing.html#spacy.syntax.parser.Parser">Parser (class in spacy.syntax.parser)</a>
+  <dt><a href="reference/using/lexeme.html#Lexeme.prob">prob (Lexeme attribute)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.prob">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -223,15 +566,47 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="quickstart.html#spacy.lexeme.Lexeme.repvec">repvec (spacy.lexeme.Lexeme attribute)</a>
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.read_bytes">read_bytes() (spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/lexeme.html#Lexeme.repvec">repvec (Lexeme attribute)</a>
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.repvec">(Token attribute)</a>
+  </dt>
+
+        
+  <dt><a href="quickstart.html#spacy.lexeme.Lexeme.repvec">(spacy.lexeme.Lexeme attribute)</a>
+  </dt>
+
         
   <dt><a href="quickstart.html#spacy.tokens.Token.repvec">(spacy.tokens.Token attribute)</a>
   </dt>
 
       </dl></dd>
+      
+  <dt><a href="reference/using/token.html#Token.right_edge">right_edge (Token attribute)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="reference/using/span.html#Span.rights">rights (Span attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.rights">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/span.html#Span.root">root (Span attribute)</a>
+  </dt>
+
   </dl></td>
 </tr></table>
 
@@ -239,15 +614,53 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="quickstart.html#spacy.spacy.en.English">spacy.en.English (class in spacy)</a>
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.sents">sents (spacy.tokens.doc.Doc attribute)</a>
+  </dt>
+
+      
+  <dt><a href="reference/processing.html#spacy.en.English">spacy.en.English (built-in class)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="quickstart.html#spacy.spacy.en.English">(class in spacy)</a>
+  </dt>
+
+      </dl></dd>
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc">spacy.tokens.doc.Doc (built-in class)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/span.html#Span">Span (built-in class)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="reference/using/span.html#Span.string">string (Span attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.string">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
+      
   <dt><a href="reference/lookup.html#strings.StringStore">strings.StringStore (built-in class)</a>
   </dt>
 
+      
+  <dt><a href="reference/using/span.html#Span.subtree">subtree (Span attribute)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="reference/using/token.html#Token.subtree">(Token attribute)</a>
+  </dt>
+
+      </dl></dd>
   </dl></td>
 </tr></table>
 
@@ -255,13 +668,17 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer">Tokenizer (class in spacy.tokenizer)</a>
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.to_array">to_array() (spacy.tokens.doc.Doc method)</a>
+  </dt>
+
+      
+  <dt><a href="reference/using/document.html#spacy.tokens.doc.Doc.to_bytes">to_bytes() (spacy.tokens.doc.Doc method)</a>
   </dt>
 
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="reference/processing.html#spacy.tokenizer.Tokenizer.tokens_from_list">tokens_from_list() (spacy.tokenizer.Tokenizer method)</a>
+  <dt><a href="reference/using/token.html#Token">Token (built-in class)</a>
   </dt>
 
   </dl></td>

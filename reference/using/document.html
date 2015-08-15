@@ -87,7 +87,6 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="token.html">The Token Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lexeme.html">The Lexeme Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
@@ -95,7 +94,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../updates.html">Updates</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-89">2015-07-28 v0.89</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -149,45 +148,139 @@
             
   <div class="section" id="the-doc-object">
 <h1>The Doc Object<a class="headerlink" href="#the-doc-object" title="Permalink to this headline">¶</a></h1>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">__getitem__</span></tt>, <tt class="code docutils literal"><span class="pre">__iter__</span></tt>, <tt class="code docutils literal"><span class="pre">__len__</span></tt></dt>
-<dd><p class="first">The Tokens class behaves as a Python sequence, supporting the usual operators,
-len(), etc.  Negative indexing is supported. Slices are supported as of v0.89</p>
-<div class="code last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Zero one two three four five six&#39;</span><span class="p">)</span>
+<dl class="class">
+<dt id="spacy.tokens.doc.Doc">
+<em class="property">class </em><tt class="descclassname">spacy.tokens.doc.</tt><tt class="descname">Doc</tt><a class="headerlink" href="#spacy.tokens.doc.Doc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="spacy.tokens.doc.Doc.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>Vocab vocab</em>, <em>orths_and_spaces=None</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vocab</strong> (<em>Vocab</em>) &#8211; A vocabulary object.</li>
+<li><strong>orths_and_spaces=None</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Defaults to None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>self</em>, <em>int i</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Token</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__getitem__</tt><big>(</big><em>self</em>, <em>slice start_colon_end</em><big>)</big></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Span</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.__iter__">
+<tt class="descname">__iter__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over tokens</p>
+<div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;Zero one two three four five six&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">orth_</span>
 <span class="go">u&#39;Zero&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">orth_</span>
 <span class="go">u&#39;six&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">span</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">w</span><span class="o">.</span><span class="n">orth_</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">span</span><span class="p">]</span>
-<span class="go">[u&#39;Zero&#39;, u&#39;one&#39;, u&#39;two&#39;, u&#39;three&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">span</span><span class="o">.</span><span class="n">string</span>
-<span class="go">u&#39;Zero one two three&#39;</span>
 </pre></div>
 </div>
-</dd>
-<dt><tt class="code docutils literal"><span class="pre">sents</span></tt></dt>
-<dd>Iterate over sentences in the document. Each sentence is a Span object.</dd>
-<dt><tt class="code docutils literal"><span class="pre">ents</span></tt></dt>
-<dd>Iterate over entities in the document. Each entity is a Span object.</dd>
-<dt><tt class="code docutils literal"><span class="pre">to_array</span></tt></dt>
-<dd><p class="first">Given a list of M attribute IDs, export the tokens to a numpy ndarray
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.__len__">
+<tt class="descname">__len__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of tokens</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.tokens.doc.Doc.sents">
+<tt class="descname">sents</tt><a class="headerlink" href="#spacy.tokens.doc.Doc.sents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over sentences in the document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Returns generator:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Sentences</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.tokens.doc.Doc.ents">
+<tt class="descname">ents</tt><a class="headerlink" href="#spacy.tokens.doc.Doc.ents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over named entities in the document.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns tuple:</th><td class="field-body">Named Entities</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="spacy.tokens.doc.Doc.noun_chunks">
+<tt class="descname">noun_chunks</tt><a class="headerlink" href="#spacy.tokens.doc.Doc.noun_chunks" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Returns generator:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.to_array">
+<tt class="descname">to_array</tt><big>(</big><em>self</em>, <em>list attr_ids</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.to_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of M attribute IDs, export the tokens to a numpy ndarray
 of shape N*M, where N is the length of the sentence.</p>
-<blockquote class="last">
-<div><dl class="docutils">
-<dt>Arguments:</dt>
-<dd>attr_ids (list[int]): A list of attribute ID ints.</dd>
-<dt>Returns:</dt>
-<dd>feat_array (numpy.ndarray[long, ndim=2]):
-A feature matrix, with one row per word, and one column per attribute
-indicated in the input attr_ids.</dd>
-</dl>
-</div></blockquote>
-</dd>
-<dt><tt class="code docutils literal"><span class="pre">count_by</span></tt></dt>
-<dd><p class="first">Produce a dict of {attribute (int): count (ints)} frequencies, keyed
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attr_ids</strong> (<em>list[int]</em>) &#8211; A list of attribute ID ints.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Returns feat_array:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">A feature matrix, with one row per word, and one column per attribute
+indicated in the input attr_ids.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.count_by">
+<tt class="descname">count_by</tt><big>(</big><em>self</em>, <em>attr_id</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.count_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a dict of {attribute (int): count (ints)} frequencies, keyed
 by the values of the given attribute ID.</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span><span class="p">,</span> <span class="n">attrs</span>
+<div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span><span class="p">,</span> <span class="n">attrs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s">u&#39;apple apple orange banana&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span><span class="o">.</span><span class="n">count_by</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">ORTH</span><span class="p">)</span>
@@ -199,45 +292,37 @@ by the values of the given attribute ID.</p>
 <span class="go">      [12800]])</span>
 </pre></div>
 </div>
-</dd>
-<dt><tt class="code docutils literal"><span class="pre">merge</span></tt></dt>
-<dd>Merge a multi-word expression into a single token.  Currently
-experimental; API is likely to change.</dd>
-<dt><tt class="code docutils literal"><span class="pre">to_bytes()</span></tt></dt>
-<dd>Get a byte-string representation of the document, i.e. serialize.</dd>
-<dt><tt class="code docutils literal"><span class="pre">from_bytes(self,</span> <span class="pre">byte_string)</span></tt></dt>
-<dd>Load data from a byte-string, i.e. deserialize</dd>
-<dt><tt class="code docutils literal"><span class="pre">Doc.read_bytes</span></tt></dt>
-<dd>A staticmethod, used to read bytes from a file.</dd>
-</dl>
-<p>Example of serialization:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">doc1</span> <span class="o">=</span> <span class="n">EN</span><span class="p">(</span><span class="s">u&#39;This is a simple test. With a couple of sentences.&#39;</span><span class="p">)</span>
-<span class="n">doc2</span> <span class="o">=</span> <span class="n">EN</span><span class="p">(</span><span class="s">u&#39;This is another test document.&#39;</span><span class="p">)</span>
+</dd></dl>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/spacy_docs.bin&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
-    <span class="n">file_</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">doc1</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
-    <span class="n">file_</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">doc2</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.from_array">
+<tt class="descname">from_array</tt><big>(</big><em>self</em>, <em>attrs</em>, <em>array</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.from_array" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/spacy_docs.bin&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
-    <span class="n">bytes1</span><span class="p">,</span> <span class="n">bytes2</span> <span class="o">=</span> <span class="n">Doc</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="n">file_</span><span class="p">)</span>
-    <span class="n">r1</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">bytes1</span><span class="p">)</span>
-    <span class="n">r2</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">(</span><span class="n">EN</span><span class="o">.</span><span class="n">vocab</span><span class="p">)</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">bytes2</span><span class="p">)</span>
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.to_bytes">
+<tt class="descname">to_bytes</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.to_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<span class="k">assert</span> <span class="n">r1</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">doc1</span><span class="o">.</span><span class="n">string</span>
-<span class="k">assert</span> <span class="n">r2</span><span class="o">.</span><span class="n">string</span> <span class="o">==</span> <span class="n">doc2</span><span class="o">.</span><span class="n">string</span>
-</pre></div>
-</div>
-<dl class="docutils">
-<dt>Internals</dt>
-<dd><p class="first">A Tokens instance stores the annotations in a C-array of <cite>TokenC</cite> structs.
-Each TokenC struct holds a const pointer to a LexemeC struct, which describes
-a vocabulary item.</p>
-<p>The Token objects are built lazily, from this underlying C-data.</p>
-<p class="last">For faster access, the underlying C data can be accessed from Cython.  You
-can also export the data to a numpy array, via <cite>Tokens.to_array</cite>, if pure Python
-access is required, and you need slightly better performance.</p>
-</dd>
-</dl>
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.from_bytes">
+<tt class="descname">from_bytes</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.from_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.read_bytes">
+<tt class="descname">read_bytes</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.read_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="spacy.tokens.doc.Doc.merge">
+<tt class="descname">merge</tt><big>(</big><em>self</em>, <em>int start_idx</em>, <em>int end_idx</em>, <em>unicode tag</em>, <em>unicode lemma</em>, <em>unicode ent_type</em><big>)</big><a class="headerlink" href="#spacy.tokens.doc.Doc.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge a multi-word expression into a single token.  Currently
+experimental; API is likely to change.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

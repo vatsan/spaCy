@@ -28,7 +28,10 @@
   
 
   
-    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/> 
+    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/>
+        <link rel="up" title="Documentation" href="index.html"/>
+        <link rel="next" title="The Doc Object" href="using/document.html"/>
+        <link rel="prev" title="Processing Text" href="processing.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -70,7 +73,7 @@
         
           
           
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#usage">Usage</a></li>
@@ -78,9 +81,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Documentation</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="loading.html">Loading Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="processing.html">Processing Text</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lexical Lookup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/token.html">The Token Object</a></li>
@@ -91,6 +95,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -129,6 +134,8 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
+          <li><a href="index.html">Documentation</a> &raquo;</li>
+      
     <li>Lexical Lookup</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -159,39 +166,108 @@ up in the vocabulary directly:</p>
 <dt id="vocab.Vocab">
 <em class="property">class </em><tt class="descclassname">vocab.</tt><tt class="descname">Vocab</tt><big>(</big><em>self</em>, <em>data_dir=None</em>, <em>lex_props_getter=None</em><big>)</big><a class="headerlink" href="#vocab.Vocab" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt>
-<tt class="descname">__len__(self) --&gt; int</tt></dt>
-<dd></dd></dl>
+<dt id="vocab.Vocab.__len__">
+<tt class="descname">__len__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#vocab.Vocab.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of words in the vocabulary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="vocab.Vocab.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>self</em>, <em>key_int</em><big>)</big><a class="headerlink" href="#vocab.Vocab.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Integer ID</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Lexeme object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt>
-<tt class="descname">__getitem__(self, id: int) --&gt; unicode</tt></dt>
-<dd></dd></dl>
+<tt class="descname">__getitem__</tt><big>(</big><em>self</em>, <em>key_str</em><big>)</big></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_str</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; A string in the vocabulary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Lexeme</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt>
-<tt class="descname">__getitem__(self, string: unicode) --&gt; int</tt></dt>
-<dd></dd></dl>
+<dt id="vocab.Vocab.__setitem__">
+<tt class="descname">__setitem__</tt><big>(</big><em>self</em>, <em>orth_str</em>, <em>props</em><big>)</big><a class="headerlink" href="#vocab.Vocab.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>orth_str</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; The orth key</li>
+<li><strong>props</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; A props dictionary</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt>
-<tt class="descname">__setitem__(self, py_str: unicode, props: Dict[str, int[float]) --&gt; None</tt></dt>
-<dd></dd></dl>
+<dt id="vocab.Vocab.dump">
+<tt class="descname">dump</tt><big>(</big><em>self</em>, <em>loc</em><big>)</big><a class="headerlink" href="#vocab.Vocab.dump" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loc</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Path where the vocabulary should be saved</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt>
-<tt class="descname">dump(self, loc: unicode) --&gt; None</tt></dt>
-<dd></dd></dl>
+<dt id="vocab.Vocab.load_lexemes">
+<tt class="descname">load_lexemes</tt><big>(</big><em>self</em>, <em>loc</em><big>)</big><a class="headerlink" href="#vocab.Vocab.load_lexemes" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loc</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Path to load the lexemes.bin file from</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt>
-<tt class="descname">load_lexemes(self, loc: unicode) --&gt; None</tt></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt>
-<tt class="descname">load_vectors(self, loc: unicode) --&gt; None</tt></dt>
-<dd></dd></dl>
+<dt id="vocab.Vocab.load_vectors">
+<tt class="descname">load_vectors</tt><big>(</big><em>self</em>, <em>loc</em><big>)</big><a class="headerlink" href="#vocab.Vocab.load_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loc</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#unicode" title="(in Python v2.7)"><em>unicode</em></a>) &#8211; Path to load the vectors.bin from</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -199,34 +275,100 @@ up in the vocabulary directly:</p>
 <dt id="strings.StringStore">
 <em class="property">class </em><tt class="descclassname">strings.</tt><tt class="descname">StringStore</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#strings.StringStore" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt>
-<tt class="descname">__len__(self) --&gt; int</tt></dt>
-<dd></dd></dl>
+<dt id="strings.StringStore.__len__">
+<tt class="descname">__len__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#strings.StringStore.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Number of strings in the string-store</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="strings.StringStore.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>self</em>, <em>key_int</em><big>)</big><a class="headerlink" href="#strings.StringStore.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_int</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; An integer key</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string that the integer key maps to<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">unicode</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt>
-<tt class="descname">__getitem__(self, id: int) --&gt; unicode</tt></dt>
-<dd></dd></dl>
+<tt class="descname">__getitem__</tt><big>(</big><em>self</em>, <em>key_unicode</em><big>)</big></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_unicode</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; A key, as a unicode string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The integer ID of the string.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt>
-<tt class="descname">__getitem__(self, string: bytes) --&gt; id</tt></dt>
-<dd></dd></dl>
+<tt class="descname">__getitem__</tt><big>(</big><em>self</em>, <em>key_utf8_bytes</em><big>)</big></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_utf8_bytes</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; A key, as a UTF-8 encoded byte-string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The integer ID of the string.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt>
-<tt class="descname">__getitem__(self, string: unicode) --&gt; id</tt></dt>
-<dd></dd></dl>
+<dt id="strings.StringStore.dump">
+<tt class="descname">dump</tt><big>(</big><em>self</em>, <em>loc</em><big>)</big><a class="headerlink" href="#strings.StringStore.dump" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loc</strong> &#8211; File path to save the strings.txt to.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt>
-<tt class="descname">dump(self, loc: unicode) --&gt; None</tt></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt>
-<tt class="descname">load(self, loc: unicode) --&gt; None</tt></dt>
-<dd></dd></dl>
+<dt id="strings.StringStore.load">
+<tt class="descname">load</tt><big>(</big><em>self</em>, <em>loc</em><big>)</big><a class="headerlink" href="#strings.StringStore.load" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loc</strong> &#8211; File path to load the strings.txt from.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -235,6 +377,15 @@ up in the vocabulary directly:</p>
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="using/document.html" class="btn btn-neutral float-right" title="The Doc Object">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="processing.html" class="btn btn-neutral" title="Processing Text"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

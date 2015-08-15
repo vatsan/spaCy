@@ -28,10 +28,7 @@
   
 
   
-    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/>
-        <link rel="up" title="Documentation" href="index.html"/>
-        <link rel="next" title="Processing Text" href="processing.html"/>
-        <link rel="prev" title="Documentation" href="index.html"/> 
+    <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -73,7 +70,7 @@
         
           
           
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#usage">Usage</a></li>
@@ -81,12 +78,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">Loading Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing.html">Processing Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">spacy.en.English</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/token.html">The Token Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using/lexeme.html">The Lexeme Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup.html">Lexical Lookup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
@@ -94,6 +92,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -132,8 +131,6 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="index.html">Documentation</a> &raquo;</li>
-      
     <li>Loading Resources</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -147,25 +144,6 @@
             
   <div class="section" id="loading-resources">
 <h1>Loading Resources<a class="headerlink" href="#loading-resources" title="Permalink to this headline">¶</a></h1>
-<p>99% of the time, you will load spaCy&#8217;s resources using a language pipeline class,
-e.g. <cite>spacy.en.English</cite>. The pipeline class reads the data from disk, from a
-specified directory.  By default, spaCy installs data into each language&#8217;s
-package directory, and loads it from there.</p>
-<p>Usually, this is all you will need:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>If you need to replace some of the components, you may want to just make your
-own pipeline class &#8212; the English class itself does almost no work; it just
-applies the modules in order. You can also provide a function or class that
-produces a tokenizer, tagger, parser or entity recognizer to <tt class="code docutils literal"><span class="pre">English.__init__</span></tt>,
-to customize the pipeline:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">spacy.en</span> <span class="kn">import</span> <span class="n">English</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">my_module</span> <span class="kn">import</span> <span class="n">MyTagger</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">(</span><span class="n">Tagger</span><span class="o">=</span><span class="n">MyTagger</span><span class="p">)</span>
-</pre></div>
-</div>
 <p>In more detail:</p>
 <div class="code highlight-python"><div class="highlight"><pre>class English(object):
     def __init__(self,
@@ -203,15 +181,6 @@ A boolean value to control whether the word vectors are loaded.</dd>
 
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="processing.html" class="btn btn-neutral float-right" title="Processing Text">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral" title="Documentation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

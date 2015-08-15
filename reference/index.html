@@ -29,7 +29,7 @@
 
   
     <link rel="top" title="spaCy 0.85 documentation" href="../index.html"/>
-        <link rel="next" title="Loading Resources" href="loading.html"/>
+        <link rel="next" title="spacy.en.English" href="processing.html"/>
         <link rel="prev" title="Quick Start" href="../quickstart.html"/> 
 
   
@@ -81,12 +81,12 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="loading.html">Loading Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">spacy.en.English</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/token.html">The Token Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using/lexeme.html">The Lexeme Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup.html">Lexical Lookup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
@@ -94,7 +94,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../updates.html">Updates</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-89">2015-07-28 v0.89</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -180,7 +180,7 @@ and a small usage snippet.</p>
 <td>sent = doc.sents.next()</td>
 <td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/spans.pyx">spacy/span.pyx</a></td>
 </tr>
-<tr class="row-odd"><td><a class="reference external" href="using/lexeme.html">Lexeme</a></td>
+<tr class="row-odd"><td><a class="reference external" href="lookup.html">Lexeme</a></td>
 <td>lex = nlp.vocab[u&#8217;word&#8217;]</td>
 <td><a class="reference external" href="https://github.com/honnibal/spaCy/tree/master/spacy/lexeme.pyx">spacy/lexeme.pyx</a></td>
 </tr>
@@ -237,18 +237,12 @@ and a small usage snippet.</p>
 </div></blockquote>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="loading.html">Loading Resources</a></li>
-<li class="toctree-l1"><a class="reference internal" href="processing.html">Processing Text</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="processing.html#applying-a-pipeline">Applying a pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing.html#tokenizer">Tokenizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing.html#tagger">Tagger</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing.html#parser-and-entity-recognizer">Parser and Entity Recognizer</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="processing.html">spacy.en.English</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using/document.html">The Doc Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using/span.html">The Span Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using/token.html">The Token Object</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using/lexeme.html">The Lexeme Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lookup.html">Lexical Lookup</a></li>
 </ul>
 </div>
 </div>
@@ -259,7 +253,7 @@ and a small usage snippet.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="loading.html" class="btn btn-neutral float-right" title="Loading Resources">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="processing.html" class="btn btn-neutral float-right" title="spacy.en.English">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../quickstart.html" class="btn btn-neutral" title="Quick Start"><span class="fa fa-arrow-circle-left"></span> Previous</a>

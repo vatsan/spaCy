@@ -82,12 +82,12 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../loading.html">Loading Resources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../processing.html">spacy.en.English</a></li>
 <li class="toctree-l2"><a class="reference internal" href="document.html">The Doc Object</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="token.html">The Token Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lexeme.html">The Lexeme Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lookup.html">Lexical Lookup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
@@ -95,7 +95,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../updates.html">Updates</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-89">2015-07-28 v0.89</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -149,26 +149,85 @@
             
   <div class="section" id="the-span-object">
 <h1>The Span Object<a class="headerlink" href="#the-span-object" title="Permalink to this headline">¶</a></h1>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">__getitem__</span></tt>, <tt class="code docutils literal"><span class="pre">__iter__</span></tt>, <tt class="code docutils literal"><span class="pre">__len__</span></tt></dt>
-<dd>Sequence API</dd>
-<dt><tt class="code docutils literal"><span class="pre">head</span></tt></dt>
-<dd>Syntactic head, or None</dd>
-<dt><tt class="code docutils literal"><span class="pre">left</span></tt></dt>
-<dd>Tokens to the left of the span</dd>
-<dt><tt class="code docutils literal"><span class="pre">rights</span></tt></dt>
-<dd>Tokens to the left of the span</dd>
-<dt><tt class="code docutils literal"><span class="pre">orth</span></tt> / <tt class="code docutils literal"><span class="pre">orth_</span></tt></dt>
-<dd>Orth string</dd>
-<dt><tt class="code docutils literal"><span class="pre">lemma</span></tt> / <tt class="code docutils literal"><span class="pre">lemma_</span></tt></dt>
-<dd>Lemma string</dd>
-<dt><tt class="code docutils literal"><span class="pre">string</span></tt></dt>
-<dd>String</dd>
-<dt><tt class="code docutils literal"><span class="pre">label</span></tt> / <tt class="code docutils literal"><span class="pre">label_</span></tt></dt>
-<dd>Label</dd>
-<dt><tt class="code docutils literal"><span class="pre">subtree</span></tt></dt>
-<dd>Lefts + [self] + Rights</dd>
-</dl>
+<dl class="class">
+<dt id="Span">
+<em class="property">class </em><tt class="descname">Span</tt><a class="headerlink" href="#Span" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Span.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><big>)</big><a class="headerlink" href="#Span.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Span.__iter__">
+<tt class="descname">__iter__</tt><big>(</big><big>)</big><a class="headerlink" href="#Span.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Span.__len__">
+<tt class="descname">__len__</tt><big>(</big><big>)</big><a class="headerlink" href="#Span.__len__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Span.root">
+<tt class="descname">root</tt><a class="headerlink" href="#Span.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syntactic head</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Span.lefts">
+<tt class="descname">lefts</tt><a class="headerlink" href="#Span.lefts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tokens that are:</p>
+<ol class="arabic simple">
+<li>To the left of the span;</li>
+<li>Syntactic children of words within the span</li>
+</ol>
+<p>i.e.</p>
+<div class="code highlight-python"><div class="highlight"><pre><span class="n">lefts</span> <span class="o">=</span> <span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">doc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">span</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="k">if</span> <span class="n">span</span><span class="o">.</span><span class="n">doc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">head</span> <span class="ow">in</span> <span class="n">span</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Span.rights">
+<tt class="descname">rights</tt><a class="headerlink" href="#Span.rights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tokens that are:</p>
+<ol class="arabic simple">
+<li>To the right of the span;</li>
+<li>Syntactic children of words within the span</li>
+</ol>
+<p>i.e.</p>
+<div class="code highlight-python"><div class="highlight"><pre><span class="n">rights</span> <span class="o">=</span> <span class="p">[</span><span class="n">span</span><span class="o">.</span><span class="n">doc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">span</span><span class="o">.</span><span class="n">doc</span><span class="p">))</span> <span class="k">if</span> <span class="n">span</span><span class="o">.</span><span class="n">doc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">head</span> <span class="ow">in</span> <span class="n">span</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Tokens that are:</p>
+<ol class="arabic simple">
+<li>To the right of the span;</li>
+<li>Syntactic children of words within the span</li>
+</ol>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Span.string">
+<tt class="descname">string</tt><a class="headerlink" href="#Span.string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">lemma / lemma_</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">label / label_</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Span.subtree">
+<tt class="descname">subtree</tt><a class="headerlink" href="#Span.subtree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 

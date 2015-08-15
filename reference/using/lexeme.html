@@ -28,10 +28,7 @@
   
 
   
-    <link rel="top" title="spaCy 0.85 documentation" href="../../index.html"/>
-        <link rel="up" title="Documentation" href="../index.html"/>
-        <link rel="next" title="License" href="../../license.html"/>
-        <link rel="prev" title="The Token Object" href="token.html"/> 
+    <link rel="top" title="spaCy 0.85 documentation" href="../../index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -73,7 +70,7 @@
         
           
           
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#usage">Usage</a></li>
@@ -81,13 +78,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#features">Features</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Documentation</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../loading.html">Loading Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../processing.html">Processing Text</a></li>
 <li class="toctree-l2"><a class="reference internal" href="document.html">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="token.html">The Token Object</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">The Lexeme Object</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a><ul>
@@ -134,8 +130,6 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../index.html">Documentation</a> &raquo;</li>
-      
     <li>The Lexeme Object</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -158,96 +152,169 @@ efficiency improvement.</p>
 is reused for all usages of that word. Lexemes are keyed by the &#8220;orth&#8221;
 attribute.</p>
 <p>All Lexeme attributes are accessible directly on the Token object.</p>
-<p><strong>String Features</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">orth</span></tt> / <tt class="code docutils literal"><span class="pre">orth_</span></tt></dt>
-<dd>The form of the word with no string normalization or processing, as it
-appears in the string, without trailing whitespace.</dd>
-<dt><tt class="code docutils literal"><span class="pre">lemma</span></tt> / <tt class="code docutils literal"><span class="pre">lemma_</span></tt></dt>
-<dd>The &#8220;base&#8221; of the word, with no inflectional suffixes, e.g. the lemma of
-&#8220;developing&#8221; is &#8220;develop&#8221;, the lemma of &#8220;geese&#8221; is &#8220;goose&#8221;, etc.  Note that
-<em>derivational</em> suffixes are not stripped, e.g. the lemma of &#8220;instutitions&#8221;
-is &#8220;institution&#8221;, not &#8220;institute&#8221;.  Lemmatization is performed using the
-WordNet data, but extended to also cover closed-class words such as
-pronouns.  By default, the WN lemmatizer returns &#8220;hi&#8221; as the lemma of &#8220;his&#8221;.
-We assign pronouns the lemma -PRON-.</dd>
-<dt><tt class="code docutils literal"><span class="pre">lower</span></tt> / <tt class="code docutils literal"><span class="pre">lower_</span></tt></dt>
-<dd>The form of the word, but forced to lower-case, i.e. lower = word.orth_.lower()</dd>
-<dt><tt class="code docutils literal"><span class="pre">norm</span></tt> / <tt class="code docutils literal"><span class="pre">norm_</span></tt></dt>
-<dd>The form of the word, after language-specific normalizations have been
-applied.</dd>
-<dt><tt class="code docutils literal"><span class="pre">shape</span></tt> / <tt class="code docutils literal"><span class="pre">shape_</span></tt></dt>
-<dd>A transform of the word&#8217;s string, to show orthographic features.  The
-characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.
-After these mappings, sequences of 4 or more of the same character are
-truncated to length 4.  Examples: C3Po &#8211;&gt; XdXx, favorite &#8211;&gt; xxxx,
-:) &#8211;&gt; :)</dd>
-<dt><tt class="code docutils literal"><span class="pre">prefix</span></tt> / <tt class="code docutils literal"><span class="pre">prefix_</span></tt></dt>
-<dd>A length-N substring from the start of the word.  Length may vary by
-language; currently for English n=1, i.e. prefix = word.orth_[:1]</dd>
-<dt><tt class="code docutils literal"><span class="pre">suffix</span></tt> / <tt class="code docutils literal"><span class="pre">suffix_</span></tt></dt>
-<dd>A length-N substring from the end of the word.  Length may vary by
-language; currently for English n=3, i.e. suffix = word.orth_[-3:]</dd>
-<dt><tt class="code docutils literal"><span class="pre">string</span></tt></dt>
-<dd>The form of the word as it appears in the string, <strong>including trailing
-whitespace</strong>.  This is useful when you need to use linguistic features to
-add inline mark-up to the string.</dd>
-</dl>
+<dl class="class">
+<dt id="Lexeme">
+<em class="property">class </em><tt class="descname">Lexeme</tt><a class="headerlink" href="#Lexeme" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>String Views</strong></p>
+<dl class="attribute">
+<dt>
+<tt class="descname">orth / orth_</tt></dt>
+<dd><p>The form of the word with no string normalization or processing, as it
+appears in the string, without trailing whitespace.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">lower / lower_</tt></dt>
+<dt>
+<tt class="descname">The form of the word, but forced to lower-case, i.e. lower = word.orth_.lower()</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">norm / norm_</tt></dt>
+<dt>
+<tt class="descname">The form of the word, after language-specific normalizations have been</tt></dt>
+<dt>
+<tt class="descname">applied.</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">shape / shape_</tt></dt>
+<dt>
+<tt class="descname">A transform of the word's string, to show orthographic features.  The</tt></dt>
+<dt>
+<tt class="descname">characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.</tt></dt>
+<dt>
+<tt class="descname">After these mappings, sequences of 4 or more of the same character are</tt></dt>
+<dt>
+<tt class="descname">truncated to length 4.  Examples: C3Po --&gt; XdXx, favorite --&gt; xxxx,</tt></dt>
+<dt>
+<tt class="descname">:) --&gt; :)</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">prefix / prefix_</tt></dt>
+<dt>
+<tt class="descname">A length-N substring from the start of the word.  Length may vary by</tt></dt>
+<dt>
+<tt class="descname">language; currently for English n=1, i.e. prefix = word.orth_[:1]</tt></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">suffix / suffix_</tt></dt>
+<dd><p>A length-N substring from the end of the word.  Length may vary by
+language; currently for English n=3, i.e. suffix = word.orth_[-3:]</p>
+</dd></dl>
+
 <p><strong>Boolean Features</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">is_oov</span></tt></dt>
-<dd>Is the word out-of-vocabulary?</dd>
-<dt><tt class="code docutils literal"><span class="pre">is_alpha</span></tt></dt>
-<dd>Equivalent to <cite>word.orth_.isalpha()</cite></dd>
-<dt><tt class="code docutils literal"><span class="pre">is_ascii</span></tt></dt>
-<dd>Equivalent to <cite>any(ord(c) &gt;= 128 for c in word.orth_)</cite></dd>
-<dt><tt class="code docutils literal"><span class="pre">is_digit</span></tt></dt>
-<dd>Equivalent to <cite>word.orth_.isdigit()</cite></dd>
-<dt><tt class="code docutils literal"><span class="pre">is_lower</span></tt></dt>
-<dd>Equivalent to <cite>word.orth_.islower()</cite></dd>
-<dt><tt class="code docutils literal"><span class="pre">is_title</span></tt></dt>
-<dd>Equivalent to <cite>word.orth_.istitle()</cite></dd>
-<dt><tt class="code docutils literal"><span class="pre">is_punct</span></tt></dt>
-<dd>Equivalent to <cite>word.orth_.ispunct()</cite></dd>
-<dt><tt class="code docutils literal"><span class="pre">is_space</span></tt></dt>
-<dd>Equivalent to <cite>word.orth_.isspace()</cite></dd>
-<dt><tt class="code docutils literal"><span class="pre">like_url</span></tt></dt>
-<dd>Does the word resembles a URL?</dd>
-<dt><tt class="code docutils literal"><span class="pre">like_num</span></tt></dt>
-<dd>Does the word represent a number? e.g. &#8220;10.9&#8221;, &#8220;10&#8221;, &#8220;ten&#8221;, etc</dd>
-<dt><tt class="code docutils literal"><span class="pre">like_email</span></tt></dt>
-<dd>Does the word resemble an email?</dd>
-</dl>
+<dl class="method">
+<dt id="Lexeme.check_flag">
+<tt class="descname">check_flag</tt><big>(</big><em>self</em>, <em>attr_id_t flag_id</em><big>)</big><a class="headerlink" href="#Lexeme.check_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_oov">
+<tt class="descname">is_oov</tt><a class="headerlink" href="#Lexeme.is_oov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the word out-of-vocabulary?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_alpha">
+<tt class="descname">is_alpha</tt><a class="headerlink" href="#Lexeme.is_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>word.orth_.isalpha()</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_ascii">
+<tt class="descname">is_ascii</tt><a class="headerlink" href="#Lexeme.is_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>any(ord(c) &gt;= 128 for c in word.orth_)</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_digit">
+<tt class="descname">is_digit</tt><a class="headerlink" href="#Lexeme.is_digit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>word.orth_.isdigit()</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_lower">
+<tt class="descname">is_lower</tt><a class="headerlink" href="#Lexeme.is_lower" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>word.orth_.islower()</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_title">
+<tt class="descname">is_title</tt><a class="headerlink" href="#Lexeme.is_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>word.orth_.istitle()</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_punct">
+<tt class="descname">is_punct</tt><a class="headerlink" href="#Lexeme.is_punct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>word.orth_.ispunct()</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.is_space">
+<tt class="descname">is_space</tt><a class="headerlink" href="#Lexeme.is_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent to <cite>word.orth_.isspace()</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.like_url">
+<tt class="descname">like_url</tt><a class="headerlink" href="#Lexeme.like_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the word resembles a URL?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.like_num">
+<tt class="descname">like_num</tt><a class="headerlink" href="#Lexeme.like_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the word represent a number? e.g. &#8220;10.9&#8221;, &#8220;10&#8221;, &#8220;ten&#8221;, etc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.like_email">
+<tt class="descname">like_email</tt><a class="headerlink" href="#Lexeme.like_email" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the word resemble an email?</p>
+</dd></dl>
+
 <p><strong>Distributional Features</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">prob</span></tt></dt>
-<dd>The unigram log-probability of the word, estimated from counts from a
-large corpus, smoothed using Simple Good Turing estimation.</dd>
-<dt><tt class="code docutils literal"><span class="pre">cluster</span></tt></dt>
-<dd>The Brown cluster ID of the word.  These are often useful features for
+<dl class="attribute">
+<dt id="Lexeme.prob">
+<tt class="descname">prob</tt><a class="headerlink" href="#Lexeme.prob" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unigram log-probability of the word, estimated from counts from a
+large corpus, smoothed using Simple Good Turing estimation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.cluster">
+<tt class="descname">cluster</tt><a class="headerlink" href="#Lexeme.cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Brown cluster ID of the word.  These are often useful features for
 linear models.  If you&#8217;re using a non-linear model, particularly
 a neural net or random forest, consider using the real-valued word
-representation vector, in Token.repvec, instead.</dd>
-<dt><tt class="code docutils literal"><span class="pre">repvec</span></tt></dt>
-<dd>A &#8220;word embedding&#8221; representation: a dense real-valued vector that supports
+representation vector, in Token.repvec, instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Lexeme.repvec">
+<tt class="descname">repvec</tt><a class="headerlink" href="#Lexeme.repvec" title="Permalink to this definition">¶</a></dt>
+<dd><p>A &#8220;word embedding&#8221; representation: a dense real-valued vector that supports
 similarity queries between words.  By default, spaCy currently loads
 vectors produced by the Levy and Goldberg (2014) dependency-based word2vec
-model.</dd>
-</dl>
+model.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../../license.html" class="btn btn-neutral float-right" title="License">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="token.html" class="btn btn-neutral" title="The Token Object"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

@@ -15,98 +15,104 @@ attribute.
 
 All Lexeme attributes are accessible directly on the Token object.
 
-**String Features**
 
-:code:`orth` / :code:`orth_`
-  The form of the word with no string normalization or processing, as it
-  appears in the string, without trailing whitespace.
+.. py:class:: Lexeme
 
-:code:`lemma` / :code:`lemma_`
-  The "base" of the word, with no inflectional suffixes, e.g. the lemma of
-  "developing" is "develop", the lemma of "geese" is "goose", etc.  Note that
-  *derivational* suffixes are not stripped, e.g. the lemma of "instutitions"
-  is "institution", not "institute".  Lemmatization is performed using the
-  WordNet data, but extended to also cover closed-class words such as
-  pronouns.  By default, the WN lemmatizer returns "hi" as the lemma of "his".
-  We assign pronouns the lemma -PRON-.
+  **String Views**
 
-:code:`lower` / :code:`lower_`
-  The form of the word, but forced to lower-case, i.e. lower = word.orth\_.lower()
+  .. py:attribute:: orth / orth\_
 
-:code:`norm` / :code:`norm_`
-  The form of the word, after language-specific normalizations have been
-  applied.
+    The form of the word with no string normalization or processing, as it
+    appears in the string, without trailing whitespace.
 
-:code:`shape` / :code:`shape_`
-  A transform of the word's string, to show orthographic features.  The
-  characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.
-  After these mappings, sequences of 4 or more of the same character are
-  truncated to length 4.  Examples: C3Po --> XdXx, favorite --> xxxx,
-  :) --> :)
+  .. py:attribute:: lower / lower\_
+    The form of the word, but forced to lower-case, i.e. lower = word.orth\_.lower()
 
-:code:`prefix` / :code:`prefix_`
-  A length-N substring from the start of the word.  Length may vary by
-  language; currently for English n=1, i.e. prefix = word.orth\_[:1]
+  .. py:attribute:: norm / norm\_
+    The form of the word, after language-specific normalizations have been
+    applied.
 
-:code:`suffix` / :code:`suffix_`
-  A length-N substring from the end of the word.  Length may vary by
-  language; currently for English n=3, i.e. suffix = word.orth\_[-3:]
+  .. py:attribute:: shape / shape\_
+    A transform of the word's string, to show orthographic features.  The
+    characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.
+    After these mappings, sequences of 4 or more of the same character are
+    truncated to length 4.  Examples: C3Po --> XdXx, favorite --> xxxx,
+    :) --> :)
 
-:code:`string`
-  The form of the word as it appears in the string, **including trailing
-  whitespace**.  This is useful when you need to use linguistic features to
-  add inline mark-up to the string.
+  .. py:attribute:: prefix / prefix\_
+    A length-N substring from the start of the word.  Length may vary by
+    language; currently for English n=1, i.e. prefix = word.orth\_[:1]
 
-**Boolean Features**
+  .. py:attribute:: suffix / suffix\_
 
-:code:`is_oov`
-  Is the word out-of-vocabulary?
+    A length-N substring from the end of the word.  Length may vary by
+    language; currently for English n=3, i.e. suffix = word.orth\_[-3:]
 
-:code:`is_alpha`
-  Equivalent to `word.orth_.isalpha()`
+  **Boolean Features**
 
-:code:`is_ascii`
-  Equivalent to `any(ord(c) >= 128 for c in word.orth_)`
+  .. py:method:: check_flag(self, attr_id_t flag_id)
 
-:code:`is_digit`
-  Equivalent to `word.orth_.isdigit()`
+  .. py:attribute:: is_oov
 
-:code:`is_lower`
-  Equivalent to `word.orth_.islower()`
+    Is the word out-of-vocabulary?
 
-:code:`is_title`
-  Equivalent to `word.orth_.istitle()`
+  .. py:attribute:: is_alpha
 
-:code:`is_punct`
-  Equivalent to `word.orth_.ispunct()`
+    Equivalent to `word.orth_.isalpha()`
 
-:code:`is_space`
-  Equivalent to `word.orth_.isspace()`
+  .. py:attribute:: is_ascii
 
-:code:`like_url`
-  Does the word resembles a URL?
+    Equivalent to `any(ord(c) >= 128 for c in word.orth_)`
 
-:code:`like_num`
-  Does the word represent a number? e.g. "10.9", "10", "ten", etc
+  .. py:attribute:: is_digit
 
-:code:`like_email`
-  Does the word resemble an email?
+    Equivalent to `word.orth_.isdigit()`
 
+  .. py:attribute:: is_lower
 
-**Distributional Features**
+    Equivalent to `word.orth_.islower()`
 
-:code:`prob`
-  The unigram log-probability of the word, estimated from counts from a
-  large corpus, smoothed using Simple Good Turing estimation.
+  .. py:attribute:: is_title
 
-:code:`cluster`
-  The Brown cluster ID of the word.  These are often useful features for
-  linear models.  If you're using a non-linear model, particularly
-  a neural net or random forest, consider using the real-valued word
-  representation vector, in Token.repvec, instead.
+    Equivalent to `word.orth_.istitle()`
 
-:code:`repvec`
-  A "word embedding" representation: a dense real-valued vector that supports
-  similarity queries between words.  By default, spaCy currently loads
-  vectors produced by the Levy and Goldberg (2014) dependency-based word2vec
-  model.
+  .. py:attribute:: is_punct
+
+    Equivalent to `word.orth_.ispunct()`
+
+  .. py:attribute:: is_space
+
+    Equivalent to `word.orth_.isspace()`
+
+  .. py:attribute:: like_url
+
+    Does the word resembles a URL?
+
+  .. py:attribute:: like_num
+
+    Does the word represent a number? e.g. "10.9", "10", "ten", etc
+
+  .. py:attribute:: like_email
+
+    Does the word resemble an email?
+
+  **Distributional Features**
+
+  .. py:attribute:: prob
+
+    The unigram log-probability of the word, estimated from counts from a
+    large corpus, smoothed using Simple Good Turing estimation.
+
+  .. py:attribute:: cluster
+
+    The Brown cluster ID of the word.  These are often useful features for
+    linear models.  If you're using a non-linear model, particularly
+    a neural net or random forest, consider using the real-valued word
+    representation vector, in Token.repvec, instead.
+
+  .. py:attribute:: repvec
+
+    A "word embedding" representation: a dense real-valued vector that supports
+    similarity queries between words.  By default, spaCy currently loads
+    vectors produced by the Levy and Goldberg (2014) dependency-based word2vec
+    model.

@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>spaCy: Industrial-strength NLP &mdash; spaCy 0.85 documentation</title>
+  <title>Example functionality &mdash; spaCy 0.85 documentation</title>
   
 
   
@@ -28,8 +28,7 @@
   
 
   
-    <link rel="top" title="spaCy 0.85 documentation" href="#"/>
-        <link rel="next" title="Quick Start" href="quickstart.html"/> 
+    <link rel="top" title="spaCy 0.85 documentation" href="index.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -55,7 +54,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         
-          <a href="#" class="fa fa-home"> spaCy</a>
+          <a href="index.html" class="fa fa-home"> spaCy</a>
         
         
 <div role="search">
@@ -80,12 +79,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reference/processing.html">spacy.en.English</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/loading.html">Loading Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/processing.html">Processing Text</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/using/document.html">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/using/span.html">The Span Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/using/token.html">The Token Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/using/lexeme.html">The Lexeme Object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/lookup.html">Lexical Lookup</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a><ul>
@@ -121,7 +119,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">spaCy</a>
+        <a href="index.html">spaCy</a>
       </nav>
 
 
@@ -130,12 +128,12 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
+    <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>spaCy: Industrial-strength NLP</li>
+    <li>Example functionality</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+          <a href="_sources/announcement.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -143,10 +141,7 @@
 </div>
           <div role="main" class="document">
             
-  <div class="section" id="spacy-industrial-strength-nlp">
-<h1>spaCy: Industrial-strength NLP<a class="headerlink" href="#spacy-industrial-strength-nlp" title="Permalink to this headline">¶</a></h1>
-<p><strong>2015-07-08</strong>: <a href="#id1"><span class="problematic" id="id2">`Version 0.88 released`_</span></a></p>
-<p><a class="reference external" href="https://github.com/honnibal/spaCy/">spaCy</a> is a new library for text processing in Python and Cython.
+  <p><a class="reference external" href="https://github.com/honnibal/spaCy/">spaCy</a> is a new library for text processing in Python and Cython.
 I wrote it because I think small companies are terrible at
 natural language processing (NLP).  Or rather:
 small companies are using terrible NLP technology.</p>
@@ -185,7 +180,7 @@ it, link it, filter it, categorise it, generate it and correct it.</p>
 products.  It&#8217;s commercial open source software: you can either use it under
 the AGPL, or you can <a class="reference external" href="license.html">buy a commercial license</a> for a one-time fee.</p>
 <div class="section" id="example-functionality">
-<h2>Example functionality<a class="headerlink" href="#example-functionality" title="Permalink to this headline">¶</a></h2>
+<h1>Example functionality<a class="headerlink" href="#example-functionality" title="Permalink to this headline">¶</a></h1>
 <p>Let&#8217;s say you&#8217;re developing a proofreading tool, or possibly an IDE for
 writers.  You&#8217;re convinced by Stephen King&#8217;s advice that <a class="reference external" href="http://www.brainpickings.org/2013/03/13/stephen-king-on-adverbs/">adverbs are not your
 friend</a>, so
@@ -209,7 +204,7 @@ us.</p>
 we want to flag.  The simplest way to exclude adverbs like &#8220;back&#8221; and &#8220;not&#8221;
 is by word frequency: these words are much more common than the prototypical
 manner adverbs that the style guides are worried about.</p>
-<p>The <a class="reference internal" href="reference/using/lexeme.html#Lexeme.prob" title="Lexeme.prob"><tt class="xref py py-attr docutils literal"><span class="pre">Lexeme.prob</span></tt></a> and <a class="reference internal" href="reference/using/token.html#Token.prob" title="Token.prob"><tt class="xref py py-attr docutils literal"><span class="pre">Token.prob</span></tt></a> attribute gives a
+<p>The <tt class="xref py py-attr docutils literal"><span class="pre">Lexeme.prob</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">Token.prob</span></tt> attribute gives a
 log probability estimate of the word:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">nlp</span><span class="o">.</span><span class="n">vocab</span><span class="p">[</span><span class="s">u&#39;back&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">prob</span>
 <span class="go">-7.403977394104004</span>
@@ -332,7 +327,7 @@ spaCy gives you easy and efficient access to them, which lets you build all
 sorts of use products and features that were previously impossible.</p>
 </div>
 <div class="section" id="independent-evaluation">
-<h2>Independent Evaluation<a class="headerlink" href="#independent-evaluation" title="Permalink to this headline">¶</a></h2>
+<h1>Independent Evaluation<a class="headerlink" href="#independent-evaluation" title="Permalink to this headline">¶</a></h1>
 <table border="1" class="docutils">
 <caption>Independent evaluation by Yahoo! Labs and Emory
 University, to appear at ACL 2015. Higher is better.</caption>
@@ -395,7 +390,7 @@ led to the improvement in accuracy between v0.84 and v0.86.  A tip from Jin-ho
 (developer of ClearNLP) was particularly useful.</p>
 </div>
 <div class="section" id="detailed-speed-comparison">
-<h2>Detailed Speed Comparison<a class="headerlink" href="#detailed-speed-comparison" title="Permalink to this headline">¶</a></h2>
+<h1>Detailed Speed Comparison<a class="headerlink" href="#detailed-speed-comparison" title="Permalink to this headline">¶</a></h1>
 <p><strong>Set up</strong>: 100,000 plain-text documents were streamed from an SQLite3
 database, and processed with an NLP library, to one of three levels of detail
 &#8212; tokenization, tagging, or parsing.  The tasks are additive: to parse the
@@ -472,21 +467,11 @@ for any workload.  And the tokenizer doesn&#8217;t just give you a list
 of strings.  A spaCy token is a pointer to a Lexeme struct, from which you can
 access a wide range of pre-computed features, including embedded word
 representations.</p>
-<div class="toctree-wrapper compound">
-</div>
-</div>
 </div>
 
 
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="quickstart.html" class="btn btn-neutral float-right" title="Quick Start">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-    </div>
   
 
   <hr/>

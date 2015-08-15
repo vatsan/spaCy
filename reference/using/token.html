@@ -84,6 +84,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../loading.html">Loading Resources</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../processing.html">Processing Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lookup.html">Lexical Lookup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="document.html">The Doc Object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="span.html">The Span Object</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">The Token Object</a></li>
@@ -94,6 +95,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../updates.html">Updates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-89">v0.89</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-88">2015-07-08 v0.88</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-87">2015-07-01 v0.87</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../updates.html#v0-86">2015-06-24 v0.86</a></li>
@@ -153,99 +155,297 @@ provided by an attribute of the same name followed by an underscore, e.g.
 token.orth is an integer ID, token.orth_ is the unicode value.</p>
 <p>The only exception is the Token.string attribute, which is (unicode)
 string-typed.</p>
-<p><strong>String Features</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">string</span></tt></dt>
-<dd>The form of the word as it appears in the string, include trailing
-whitespace.  This is useful when you need to use linguistic features to
-add inline mark-up to the string.</dd>
-<dt><tt class="code docutils literal"><span class="pre">orth</span></tt> / <tt class="code docutils literal"><span class="pre">orth_</span></tt></dt>
-<dd>The form of the word with no string normalization or processing, as it
-appears in the string, without trailing whitespace.</dd>
-<dt><tt class="code docutils literal"><span class="pre">lemma</span></tt> / <tt class="code docutils literal"><span class="pre">lemma_</span></tt></dt>
-<dd>The &#8220;base&#8221; of the word, with no inflectional suffixes, e.g. the lemma of
+<dl class="class">
+<dt id="Token">
+<em class="property">class </em><tt class="descname">Token</tt><a class="headerlink" href="#Token" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Token.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>self</em>, <em>Vocab vocab</em>, <em>Doc doc</em>, <em>int offset</em><big>)</big><a class="headerlink" href="#Token.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p><strong>String Views</strong></p>
+<dl class="attribute">
+<dt>
+<tt class="descname">orth / orth_</tt></dt>
+<dd><p>The form of the word with no string normalization or processing, as it
+appears in the string, without trailing whitespace.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">lemma / lemma_</tt></dt>
+<dd><p>The &#8220;base&#8221; of the word, with no inflectional suffixes, e.g. the lemma of
 &#8220;developing&#8221; is &#8220;develop&#8221;, the lemma of &#8220;geese&#8221; is &#8220;goose&#8221;, etc.  Note that
 <em>derivational</em> suffixes are not stripped, e.g. the lemma of &#8220;instutitions&#8221;
 is &#8220;institution&#8221;, not &#8220;institute&#8221;.  Lemmatization is performed using the
 WordNet data, but extended to also cover closed-class words such as
 pronouns.  By default, the WN lemmatizer returns &#8220;hi&#8221; as the lemma of &#8220;his&#8221;.
-We assign pronouns the lemma -PRON-.</dd>
-<dt><tt class="code docutils literal"><span class="pre">lower</span></tt> / <tt class="code docutils literal"><span class="pre">lower_</span></tt></dt>
-<dd>The form of the word, but forced to lower-case, i.e. lower = word.orth_.lower()</dd>
-<dt><tt class="code docutils literal"><span class="pre">norm</span></tt> / <tt class="code docutils literal"><span class="pre">norm_</span></tt></dt>
-<dd>The form of the word, after language-specific normalizations have been
-applied.</dd>
-<dt><tt class="code docutils literal"><span class="pre">shape</span></tt> / <tt class="code docutils literal"><span class="pre">shape_</span></tt></dt>
-<dd>A transform of the word&#8217;s string, to show orthographic features.  The
+We assign pronouns the lemma -PRON-.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">lower / lower_</tt></dt>
+<dd><p>The form of the word, but forced to lower-case, i.e. lower = word.orth_.lower()</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">norm / norm_</tt></dt>
+<dd><p>The form of the word, after language-specific normalizations have been
+applied.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">shape / shape_</tt></dt>
+<dd><p>A transform of the word&#8217;s string, to show orthographic features.  The
 characters a-z are mapped to x, A-Z is mapped to X, 0-9 is mapped to d.
 After these mappings, sequences of 4 or more of the same character are
 truncated to length 4.  Examples: C3Po &#8211;&gt; XdXx, favorite &#8211;&gt; xxxx,
-:) &#8211;&gt; :)</dd>
-<dt><tt class="code docutils literal"><span class="pre">prefix</span></tt> / <tt class="code docutils literal"><span class="pre">prefix_</span></tt></dt>
-<dd>A length-N substring from the start of the word.  Length may vary by
-language; currently for English n=1, i.e. prefix = word.orth_[:1]</dd>
-<dt><tt class="code docutils literal"><span class="pre">suffix</span></tt> / <tt class="code docutils literal"><span class="pre">suffix_</span></tt></dt>
-<dd>A length-N substring from the end of the word.  Length may vary by
-language; currently for English n=3, i.e. suffix = word.orth_[-3:]</dd>
-</dl>
+:) &#8211;&gt; :)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">prefix / prefix_</tt></dt>
+<dd><p>A length-N substring from the start of the word.  Length may vary by
+language; currently for English n=1, i.e. prefix = word.orth_[:1]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">suffix / suffix_</tt></dt>
+<dd><p>A length-N substring from the end of the word.  Length may vary by
+language; currently for English n=3, i.e. suffix = word.orth_[-3:]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.lex_id">
+<tt class="descname">lex_id</tt><a class="headerlink" href="#Token.lex_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p><strong>Alignment and Output</strong></p>
+<dl class="attribute">
+<dt id="Token.idx">
+<tt class="descname">idx</tt><a class="headerlink" href="#Token.idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Token.__len__">
+<tt class="descname">__len__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#Token.__len__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Token.__unicode__">
+<tt class="descname">__unicode__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#Token.__unicode__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Token.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#Token.__str__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.string">
+<tt class="descname">string</tt><a class="headerlink" href="#Token.string" title="Permalink to this definition">¶</a></dt>
+<dd><p>The form of the word as it appears in the string, <strong>including trailing
+whitespace</strong>.  This is useful when you need to use linguistic features to
+add inline mark-up to the string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Token.nbor">
+<tt class="descname">nbor</tt><big>(</big><em>self</em>, <em>int i=1</em><big>)</big><a class="headerlink" href="#Token.nbor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <p><strong>Distributional Features</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">prob</span></tt></dt>
-<dd>The unigram log-probability of the word, estimated from counts from a
-large corpus, smoothed using Simple Good Turing estimation.</dd>
-<dt><tt class="code docutils literal"><span class="pre">cluster</span></tt></dt>
-<dd>The Brown cluster ID of the word.  These are often useful features for
-linear models.  If you&#8217;re using a non-linear model, particularly
-a neural net or random forest, consider using the real-valued word
-representation vector, in Token.repvec, instead.</dd>
-<dt><tt class="code docutils literal"><span class="pre">repvec</span></tt></dt>
-<dd>A &#8220;word embedding&#8221; representation: a dense real-valued vector that supports
+<dl class="attribute">
+<dt id="Token.repvec">
+<tt class="descname">repvec</tt><a class="headerlink" href="#Token.repvec" title="Permalink to this definition">¶</a></dt>
+<dd><p>A &#8220;word embedding&#8221; representation: a dense real-valued vector that supports
 similarity queries between words.  By default, spaCy currently loads
 vectors produced by the Levy and Goldberg (2014) dependency-based word2vec
-model.</dd>
-</dl>
-<p><strong>Syntactic Features</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">tag</span></tt></dt>
-<dd>A morphosyntactic tag, e.g. NN, VBZ, DT, etc.  These tags are
+model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.cluster">
+<tt class="descname">cluster</tt><a class="headerlink" href="#Token.cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Brown cluster ID of the word.  These are often useful features for
+linear models.  If you&#8217;re using a non-linear model, particularly
+a neural net or random forest, consider using the real-valued word
+representation vector, in Token.repvec, instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.prob">
+<tt class="descname">prob</tt><a class="headerlink" href="#Token.prob" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unigram log-probability of the word, estimated from counts from a
+large corpus, smoothed using Simple Good Turing estimation.</p>
+</dd></dl>
+
+<p><strong>Navigating the Dependency Tree</strong></p>
+<dl class="attribute">
+<dt>
+<tt class="descname">pos / pos_</tt></dt>
+<dd><p>A part-of-speech tag, from the Google Universal Tag Set, e.g. NOUN, VERB,
+ADV.  Constants for the 17 tag values are provided in spacy.parts_of_speech.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">tag / tag_</tt></dt>
+<dd><p>A morphosyntactic tag, e.g. NN, VBZ, DT, etc.  These tags are
 language/corpus specific, and typically describe part-of-speech and some
 amount of morphological information.  For instance, in the Penn Treebank
-tag set, VBZ is assigned to a present-tense singular verb.</dd>
-<dt><tt class="code docutils literal"><span class="pre">pos</span></tt></dt>
-<dd>A part-of-speech tag, from the Google Universal Tag Set, e.g. NOUN, VERB,
-ADV.  Constants for the 17 tag values are provided in spacy.parts_of_speech.</dd>
-<dt><tt class="code docutils literal"><span class="pre">dep</span></tt></dt>
-<dd>The type of syntactic dependency relation between the word and its
-syntactic head.</dd>
-<dt><tt class="code docutils literal"><span class="pre">n_lefts</span></tt></dt>
-<dd>The number of immediate syntactic children preceding the word in the
-string.</dd>
-<dt><tt class="code docutils literal"><span class="pre">n_rights</span></tt></dt>
-<dd>The number of immediate syntactic children following the word in the
-string.</dd>
-</dl>
-<p><strong>Navigating the Dependency Tree</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">head</span></tt></dt>
-<dd>The Token that is the immediate syntactic head of the word.  If the word is
-the root of the dependency tree, the same word is returned.</dd>
-<dt><tt class="code docutils literal"><span class="pre">lefts</span></tt></dt>
-<dd>An iterator for the immediate leftward syntactic children of the word.</dd>
-<dt><tt class="code docutils literal"><span class="pre">rights</span></tt></dt>
-<dd>An iterator for the immediate rightward syntactic children of the word.</dd>
-<dt><tt class="code docutils literal"><span class="pre">children</span></tt></dt>
-<dd>An iterator that yields from lefts, and then yields from rights.</dd>
-<dt><tt class="code docutils literal"><span class="pre">subtree</span></tt></dt>
-<dd>An iterator for the part of the sentence syntactically governed by the
-word, including the word itself.</dd>
-</dl>
+tag set, VBZ is assigned to a present-tense singular verb.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">dep / dep_</tt></dt>
+<dd><p>The type of syntactic dependency relation between the word and its
+syntactic head.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.head">
+<tt class="descname">head</tt><a class="headerlink" href="#Token.head" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Token that is the immediate syntactic head of the word.  If the word is
+the root of the dependency tree, the same word is returned.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.lefts">
+<tt class="descname">lefts</tt><a class="headerlink" href="#Token.lefts" title="Permalink to this definition">¶</a></dt>
+<dd><p>An iterator for the immediate leftward syntactic children of the word.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.rights">
+<tt class="descname">rights</tt><a class="headerlink" href="#Token.rights" title="Permalink to this definition">¶</a></dt>
+<dd><p>An iterator for the immediate rightward syntactic children of the word.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.n_lefts">
+<tt class="descname">n_lefts</tt><a class="headerlink" href="#Token.n_lefts" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of immediate syntactic children preceding the word in the
+string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.n_rights">
+<tt class="descname">n_rights</tt><a class="headerlink" href="#Token.n_rights" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of immediate syntactic children following the word in the
+string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.children">
+<tt class="descname">children</tt><a class="headerlink" href="#Token.children" title="Permalink to this definition">¶</a></dt>
+<dd><p>An iterator that yields from lefts, and then yields from rights.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.subtree">
+<tt class="descname">subtree</tt><a class="headerlink" href="#Token.subtree" title="Permalink to this definition">¶</a></dt>
+<dd><p>An iterator for the part of the sentence syntactically governed by the
+word, including the word itself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.left_edge">
+<tt class="descname">left_edge</tt><a class="headerlink" href="#Token.left_edge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.right_edge">
+<tt class="descname">right_edge</tt><a class="headerlink" href="#Token.right_edge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.conjuncts">
+<tt class="descname">conjuncts</tt><a class="headerlink" href="#Token.conjuncts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <p><strong>Named Entities</strong></p>
-<dl class="docutils">
-<dt><tt class="code docutils literal"><span class="pre">ent_type</span></tt></dt>
-<dd>If the token is part of an entity, its entity type</dd>
-<dt><tt class="code docutils literal"><span class="pre">ent_iob</span></tt></dt>
-<dd>The IOB (inside, outside, begin) entity recognition tag for the token</dd>
-</dl>
+<dl class="attribute">
+<dt id="Token.ent_type">
+<tt class="descname">ent_type</tt><a class="headerlink" href="#Token.ent_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the token is part of an entity, its entity type</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Token.ent_iob">
+<tt class="descname">ent_iob</tt><a class="headerlink" href="#Token.ent_iob" title="Permalink to this definition">¶</a></dt>
+<dd><p>The IOB (inside, outside, begin) entity recognition tag for the token</p>
+</dd></dl>
+
+<p><strong>Lexeme Flags</strong></p>
+<dl class="method">
+<dt id="Token.check_flag">
+<tt class="descname">check_flag</tt><big>(</big><em>self</em>, <em>attr_id_t flag_id</em><big>)</big><a class="headerlink" href="#Token.check_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_oov">
+<tt class="descname">is_oov</tt><a class="headerlink" href="#Token.is_oov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_alpha">
+<tt class="descname">is_alpha</tt><a class="headerlink" href="#Token.is_alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_ascii">
+<tt class="descname">is_ascii</tt><a class="headerlink" href="#Token.is_ascii" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_digit">
+<tt class="descname">is_digit</tt><a class="headerlink" href="#Token.is_digit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_lower">
+<tt class="descname">is_lower</tt><a class="headerlink" href="#Token.is_lower" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_title">
+<tt class="descname">is_title</tt><a class="headerlink" href="#Token.is_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_punct">
+<tt class="descname">is_punct</tt><a class="headerlink" href="#Token.is_punct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.is_space">
+<tt class="descname">is_space</tt><a class="headerlink" href="#Token.is_space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.like_url">
+<tt class="descname">like_url</tt><a class="headerlink" href="#Token.like_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.like_num">
+<tt class="descname">like_num</tt><a class="headerlink" href="#Token.like_num" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="Token.like_email">
+<tt class="descname">like_email</tt><a class="headerlink" href="#Token.like_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 
