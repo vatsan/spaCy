@@ -6,7 +6,6 @@ import plac
 import joblib
 from os import path
 import os
-import bz2
 import ujson
 import codecs
 from preshed.counter import PreshCounter
@@ -21,7 +20,7 @@ from spacy.vocab import Vocab
 
 
 def iter_comments(loc):
-    with bz2.BZ2File(loc) as file_:
+    with open(loc) as file_:
         for line in file_:
             yield ujson.loads(line)
 

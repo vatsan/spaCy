@@ -5,7 +5,6 @@ from libc.string cimport memset
 from libc.stdint cimport int32_t
 from libc.stdint cimport uint64_t
 
-import bz2
 from os import path
 import io
 import math
@@ -384,7 +383,7 @@ def write_binary_vectors(in_loc, out_loc):
     cdef int32_t word_len
     cdef int32_t vec_len
     cdef char* chars
-    with bz2.BZ2File(in_loc, 'r') as file_:
+    with open(in_loc, 'r') as file_:
         for line in file_:
             pieces = line.split()
             word = pieces.pop(0)

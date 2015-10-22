@@ -23,7 +23,6 @@ looking for, as the query language currently has no quantifiers)
 """
 from __future__ import print_function, unicode_literals, division
 from ast import literal_eval
-from bz2 import BZ2File
 import time
 import math
 import codecs
@@ -52,7 +51,7 @@ def read_gazetteer(tokenizer, loc, n=-1):
 
 
 def read_text(bz2_loc):
-    with BZ2File(bz2_loc) as file_:
+    with open(bz2_loc) as file_:
         for line in file_:
             yield line.decode('utf8')
 
